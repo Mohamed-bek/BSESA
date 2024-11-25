@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { generateTokens } from "../utitlitis/token.js";
 import validator from "validator";
 import Order from "../models/Order.js";
