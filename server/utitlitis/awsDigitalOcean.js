@@ -52,7 +52,7 @@ export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
   const params = {
     Bucket: process.env.DO_SPACE_NAME,
     Key: `uploads/${Date.now()}-${filename}`,
-    Body: isSavedLocaly ? fs.createReadStream(file.path) : file.buffer,
+    Expires: 60 * 60 * 24,
     ACL: isPrivate ? "private" : "public-read", // Set file permissions
     ContentType: contentType,
   };
