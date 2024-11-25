@@ -38,7 +38,8 @@ const AddVideo = () => {
       return;
     }
     if (videoFile) {
-      formData.append("video", videoFile);
+      formData.append("filename", videoFile.name);
+      formData.append("contentType", videoFile.type);
     } else {
       alert("Please upload a video before submitting.");
       return;
@@ -46,12 +47,23 @@ const AddVideo = () => {
 
     try {
       setIsLoading(true);
-      await axios.post("https://bsesa-ksem.vercel.app/video/create", formData, {
+      const { data } = await axios.post(
+        "https://bsesa-ksem.vercel.app/video/create",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+      console.log("Url : ", data?.video?.url);
+      const response = await axios.put(data?.video?.url, videoFile, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": file.type,
         },
-        withCredentials: true,
       });
+      console.log("Response: " + response);
       setPlate({
         title: "",
         description: "",

@@ -11,14 +11,10 @@ import { authenticateToken, authorizeRoles } from "../middleware/Auth.js";
 const VideoRouter = Router();
 
 VideoRouter.post(
-  "/createVideo",
+  "/video/create",
   authenticateToken,
   authorizeRoles(["admin"]),
-
-  uploadLargeFile.fields([
-    { name: "video", maxCount: 1 },
-    { name: "thumbnail", maxCount: 1 },
-  ]),
+  upload.single("thumbnail"),
   CreateVideo
 );
 VideoRouter.get(

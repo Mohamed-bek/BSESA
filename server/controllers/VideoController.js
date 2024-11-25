@@ -1,17 +1,14 @@
 import Video from "../models/Video.js";
-import uploadToSpaces from "../utitlitis/awsDigitalOcean.js";
+import uploadToSpaces, { GetVideoUrl } from "../utitlitis/awsDigitalOcean.js";
 
 export const CreateVideo = async (req, res) => {
   try {
-    console.log("Creating video");
-    const { title, description, links } = req.body;
-    const videoFile =
-      req.files && req.files["video"] ? req.files["video"][0] : null;
+    const { title, description, links, filename, contentType } = req.body;
     const thumbnailFile =
       req.files && req.files["thumbnail"] ? req.files["thumbnail"][0] : null;
 
     // Check if both files are uploaded
-    if (!videoFile) {
+    if (!filename || !contentType) {
       return res.status(400).json({ message: "No video file uploaded" });
     }
     if (!thumbnailFile) {
@@ -23,7 +20,7 @@ export const CreateVideo = async (req, res) => {
       "/VideoThumbnails",
       true
     );
-    const videoUrl = await uploadToSpaces(videoFile, "/Videos", true);
+    const videoUrl = await GetVideoUrl(filename, contentType);
 
     const newVideo = new Video({
       title,
