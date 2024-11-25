@@ -40,7 +40,9 @@ export const CreateVideo = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(error.status || 500).json({ err: error.message });
+    res
+      .status(error.status || 500)
+      .json({ message: "Uploading Error ", err: error.message });
   }
 };
 
