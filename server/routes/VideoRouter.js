@@ -11,7 +11,7 @@ import { authenticateToken, authorizeRoles } from "../middleware/Auth.js";
 const VideoRouter = Router();
 
 VideoRouter.post(
-  "/video/create",
+  "/createVideo",
   authenticateToken,
   authorizeRoles(["admin"]),
   uploadLargeFile.fields([
