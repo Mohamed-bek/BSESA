@@ -12,6 +12,8 @@ const VideoRouter = Router();
 
 VideoRouter.post(
   "/video/create",
+  authenticateToken,
+  authorizeRoles(["admin"]),
   uploadLargeFile.fields([
     { name: "video", maxCount: 1 },
     { name: "thumbnail", maxCount: 1 },
