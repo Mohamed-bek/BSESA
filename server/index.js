@@ -41,13 +41,6 @@ app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
-app.use((req, res, next) => {
-  res.setTimeout(10000000, () => {
-    console.log("Request timed out");
-    res.status(408).send("Request Timeout");
-  });
-  next();
-});
 
 app.use(UserRouter);
 app.use(CourseRouter);

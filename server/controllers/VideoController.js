@@ -6,19 +6,19 @@ export const CreateVideo = async (req, res) => {
     const { title, description, links, filename, contentType } = req.body;
     const thumbnailFile = req.file;
 
-    // Check if both files are uploaded
     if (!filename || !contentType) {
       return res.status(400).json({ message: "No video file uploaded" });
     }
+
     if (!thumbnailFile) {
       return res.status(400).json({ message: "No thumbnail file uploaded" });
     }
 
     const thumbnailUrl = await uploadToSpaces(
       thumbnailFile,
-      "/VideoThumbnails",
-      true
+      "/VideoThumbnails"
     );
+
     const videoUrl = await GetVideoUrl(filename, contentType);
 
     const newVideo = new Video({

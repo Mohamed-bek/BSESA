@@ -58,12 +58,12 @@ const AddVideo = () => {
         }
       );
       console.log("Url : ", data);
-      // const response = await axios.put(data?.video?.url, videoFile, {
-      //   headers: {
-      //     "Content-Type": videoFile.type,
-      //   },
-      // });
-      // console.log("Response: " + response);
+      const response = await axios.put(data?.video?.url, videoFile, {
+        headers: {
+          "Content-Type": videoFile.type,
+        },
+      });
+      console.log("Response: " + response);
       setPlate({
         title: "",
         description: "",
