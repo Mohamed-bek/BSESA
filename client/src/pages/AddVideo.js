@@ -32,7 +32,7 @@ const AddVideo = () => {
       formData.append(key, value);
     }
     if (imageFile) {
-      formData.append("thumbnail", imageFile);
+      formData.append("file", imageFile);
     } else {
       alert("Please upload an image before submitting.");
       return;

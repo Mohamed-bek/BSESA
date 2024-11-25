@@ -4,8 +4,7 @@ import uploadToSpaces, { GetVideoUrl } from "../utitlitis/awsDigitalOcean.js";
 export const CreateVideo = async (req, res) => {
   try {
     const { title, description, links, filename, contentType } = req.body;
-    const thumbnailFile =
-      req.files && req.files["thumbnail"] ? req.files["thumbnail"][0] : null;
+    const thumbnailFile = req.file;
 
     // Check if both files are uploaded
     if (!filename || !contentType) {

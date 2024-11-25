@@ -14,7 +14,7 @@ VideoRouter.post(
   "/video/create",
   authenticateToken,
   authorizeRoles(["admin"]),
-  upload.single("thumbnail"),
+  upload.single("file"),
   CreateVideo
 );
 VideoRouter.get(
