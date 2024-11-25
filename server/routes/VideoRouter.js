@@ -14,14 +14,12 @@ VideoRouter.post(
   "/createVideo",
   authenticateToken,
   authorizeRoles(["admin"]),
-  (req, res) => {
-    res.status(200).json({ success: true });
-  }
-  // uploadLargeFile.fields([
-  //   { name: "video", maxCount: 1 },
-  //   { name: "thumbnail", maxCount: 1 },
-  // ]),
-  // CreateVideo
+
+  uploadLargeFile.fields([
+    { name: "video", maxCount: 1 },
+    { name: "thumbnail", maxCount: 1 },
+  ]),
+  CreateVideo
 );
 VideoRouter.get(
   "/videos",
