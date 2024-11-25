@@ -31,8 +31,9 @@ const allowedOrigins = ["http://localhost:3000", "https://bsesa.vercel.app"];
 
 app.use(
   cors({
-    origin: allowedOrigins,
-    credentials: true,
+    origin: ["https://bsesa.vercel.app"], // Frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+    credentials: true, // If using cookies or authentication
   })
 );
 
