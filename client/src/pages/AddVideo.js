@@ -46,7 +46,7 @@ const AddVideo = () => {
 
     try {
       setIsLoading(true);
-      await axios.post("http://localhost:8000/video/create", formData, {
+      await axios.post("https://bsesa-ksem.vercel.app/video/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -72,7 +72,7 @@ function Blog() {
   const getCourse = async () => {
     try {
       const { data } = await axios.get(
-        process.env.REACT_APP_API_URL + "/course/" + id,
+        "https://bsesa-ksem.vercel.app/course/" + id,
         {
           withCredentials: true,
         }

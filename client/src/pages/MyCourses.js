@@ -6,9 +6,12 @@ function MyCourses() {
   const [courses, setCourses] = useState([]);
   const GetMyCourses = async () => {
     try {
-      const { data } = await axios.get("/my-courses", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(
+        "https://bsesa-ksem.vercel.app/my-courses",
+        {
+          withCredentials: true,
+        }
+      );
       setCourses(data.courses);
     } catch (error) {
       console.log(error);

@@ -16,7 +16,7 @@ const VideoPlayer = () => {
   const getVideo = async () => {
     try {
       const { data } = await axios.get(
-        process.env.REACT_APP_API_URL + `/video/${courseId}/${videoId}`,
+        `https://bsesa-ksem.vercel.app/video/${courseId}/${videoId}`,
         {
           withCredentials: true,
         }
@@ -30,7 +30,7 @@ const VideoPlayer = () => {
   const getCourse = async () => {
     try {
       const { data } = await axios.get(
-        process.env.REACT_APP_API_URL + "/course/" + courseId,
+        "https://bsesa-ksem.vercel.app/course/" + courseId,
         {
           withCredentials: true,
         }
@@ -57,7 +57,7 @@ const VideoPlayer = () => {
       setLastSentProgress(percent);
       axios
         .put(
-          process.env.REACT_APP_API_URL + "/progress",
+          "https://bsesa-ksem.vercel.app/progress",
           {
             courseId,
             videoId,

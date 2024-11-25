@@ -48,9 +48,13 @@ export default function Accountsetting() {
       const formData = new FormData();
       formData.append("file", file);
       console.log("profile picture changed");
-      const { data } = await axios.put("/avatar", formData, {
-        withCredentials: true,
-      });
+      const { data } = await axios.put(
+        "https://bsesa-ksem.vercel.app/avatar",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
       login(data.user);
     } catch (error) {
       console.log(error);

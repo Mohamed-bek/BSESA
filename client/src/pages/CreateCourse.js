@@ -37,12 +37,16 @@ const CreateCourse = () => {
     }
     try {
       setIsLoading(true);
-      await axios.post("/course/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-      });
+      await axios.post(
+        "https://bsesa-ksem.vercel.app/course/create",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
       setPlate({
         title: "",
         description: "",

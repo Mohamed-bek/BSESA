@@ -9,7 +9,9 @@ const Categories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/categories");
+        const response = await axios.get(
+          "https://bsesa-ksem.vercel.app/categories"
+        );
         setCategories(response.data.categorys);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -23,9 +25,12 @@ const Categories = () => {
   const handleAddCategory = async () => {
     if (!newCategory) return;
     try {
-      const response = await axios.post("http://localhost:8000/categories", {
-        name: newCategory,
-      });
+      const response = await axios.post(
+        "https://bsesa-ksem.vercel.app/categories",
+        {
+          name: newCategory,
+        }
+      );
       setCategories([...categories, response.data]); // Update categories state
       setNewCategory(""); // Clear the input field
     } catch (error) {
@@ -36,7 +41,9 @@ const Categories = () => {
   // Handle deleting a category
   const handleDeleteCategory = async (categoryId) => {
     try {
-      await axios.delete(`http://localhost:8000/categories/${categoryId}`);
+      await axios.delete(
+        `https://bsesa-ksem.vercel.app/categories/${categoryId}`
+      );
       setCategories(
         categories.filter((category) => category._id !== categoryId)
       ); // Remove the deleted category from state

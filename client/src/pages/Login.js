@@ -94,7 +94,7 @@ const Login = () => {
     setStatus("checking");
     try {
       const { data } = await axios.post(
-        process.env.REACT_APP_API_URL + "/userCreate",
+        "https://bsesa-ksem.vercel.app/userCreate",
         {
           firstName,
           lastName,
@@ -151,7 +151,7 @@ const Login = () => {
     const email = emailIn;
     try {
       const { data } = await axios.post(
-        process.env.REACT_APP_API_URL + "/login",
+        "https://bsesa-ksem.vercel.app/login",
         {
           password,
           email,

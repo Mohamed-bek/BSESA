@@ -23,11 +23,14 @@ const AdminCourseManager = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const { data } = await axios.get("/courses", {
-          params: {
-            title: courseTitle,
-          },
-        });
+        const { data } = await axios.get(
+          "https://bsesa-ksem.vercel.app/courses",
+          {
+            params: {
+              title: courseTitle,
+            },
+          }
+        );
         setCourses(data.courses);
       } catch (error) {
         console.error("Failed to fetch courses:", error);
@@ -46,12 +49,15 @@ const AdminCourseManager = () => {
     console.log("Fetch Video");
     const fetchVideos = async () => {
       try {
-        const { data } = await axios.get("/videos", {
-          params: {
-            title: videoTitle,
-          },
-          withCredentials: true,
-        });
+        const { data } = await axios.get(
+          "https://bsesa-ksem.vercel.app/videos",
+          {
+            params: {
+              title: videoTitle,
+            },
+            withCredentials: true,
+          }
+        );
         setAllVideos(data.videos);
       } catch (error) {
         console.error("Failed to fetch videos:", error);
@@ -72,7 +78,7 @@ const AdminCourseManager = () => {
     if (!selectedCourse || !selectedVideo) return;
     try {
       const { data } = await axios.put(
-        `/course/add_video/${selectedCourse._id}/`,
+        `https://bsesa-ksem.vercel.app/course/add_video/${selectedCourse._id}/`,
         { videoId: selectedVideo?._id },
         {
           withCredentials: true,
@@ -92,7 +98,7 @@ const AdminCourseManager = () => {
     if (!selectedCourse) return;
     try {
       const { data } = await axios.delete(
-        `/course/delete_video/${selectedCourse._id}/`,
+        `https://bsesa-ksem.vercel.app/course/delete_video/${selectedCourse._id}/`,
         {
           params: {
             videoId,

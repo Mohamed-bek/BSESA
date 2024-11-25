@@ -13,7 +13,7 @@ function Payment() {
     try {
       // Create an order and get the order ID
       const { data: orderData } = await axios.post(
-        process.env.REACT_APP_API_URL + "/order/",
+        "https://bsesa-ksem.vercel.app/order/",
         {
           courseId: id, // Replace with actual course ID
         },
@@ -23,7 +23,7 @@ function Payment() {
       );
       console.log("orderData : ", orderData);
       const { data: paymentData } = await axios.post(
-        process.env.REACT_APP_API_URL + "/payment_create",
+        "https://bsesa-ksem.vercel.app/payment_create",
         {
           amount: orderData.amount,
           orderId: orderData.order._id,

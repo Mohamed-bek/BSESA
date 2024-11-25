@@ -10,9 +10,12 @@ const CertificateList = () => {
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
-        const { data } = await axios.get("/certificate", {
-          withCredentials: true,
-        });
+        const { data } = await axios.get(
+          "https://bsesa-ksem.vercel.app/certificate",
+          {
+            withCredentials: true,
+          }
+        );
         console.log("data ", data);
         setCertificates(data.certificate);
       } catch (err) {

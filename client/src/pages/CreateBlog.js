@@ -35,7 +35,7 @@ const CreateBlog = () => {
     }
     try {
       setIsLoading(true);
-      await axios.post("http://localhost:8000/blog/create", formData, {
+      await axios.post("https://bsesa-ksem.vercel.app/blog/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

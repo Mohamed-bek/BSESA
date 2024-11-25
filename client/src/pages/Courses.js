@@ -35,7 +35,7 @@ const Page = () => {
   const GetFilterPlats = async () => {
     try {
       const { data } = await axios.get(
-        process.env.REACT_APP_API_URL + "/courses",
+        "https://bsesa-ksem.vercel.app/courses",
         {
           params: {
             minPrice,
@@ -58,7 +58,7 @@ const Page = () => {
   const getCategories = async () => {
     try {
       const { data } = await axios.get(
-        process.env.REACT_APP_API_URL + "/categories"
+        "https://bsesa-ksem.vercel.app/categories"
       );
       setCategories(data.categories);
     } catch (error) {

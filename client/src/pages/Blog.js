@@ -37,7 +37,7 @@ function Blog() {
     if (!comment || comment === "") return;
     try {
       const { data } = await axios.put(
-        process.env.REACT_APP_API_URL + "/blog/comment/" + id,
+        "https://bsesa-ksem.vercel.app/blog/comment/" + id,
         {
           content: comment,
         },
@@ -55,7 +55,7 @@ function Blog() {
   const likeBlog = async () => {
     try {
       const { data } = await axios.put(
-        process.env.REACT_APP_API_URL + "/blog/like/" + id,
+        "https://bsesa-ksem.vercel.app/blog/like/" + id,
         {},
         {
           withCredentials: true,
@@ -70,7 +70,7 @@ function Blog() {
   const GetBlog = async () => {
     try {
       const { data } = await axios.get(
-        process.env.REACT_APP_API_URL + "/blog/" + id
+        "https://bsesa-ksem.vercel.app/blog/" + id
       );
       setBlog(data.blog);
     } catch (error) {

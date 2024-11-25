@@ -15,7 +15,7 @@ const Plans = () => {
       try {
         console.log("Fetching Data");
         const { data } = await axios.get(
-          process.env.REACT_APP_API_URL + "/memberships"
+          "https://bsesa-ksem.vercel.app/memberships"
         );
         console.log(data);
         setPlans(data.plans);

@@ -12,7 +12,7 @@ const MultiSelectForm = ({ selectedCategories, setSelectedCategories }) => {
     const fetchCategories = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesatest.vercel.app/categories"
+          "https://bsesa-ksem.vercel.app/categories"
         );
         console.log("DATAA : ", data);
         setCategories(data.categories);
@@ -43,7 +43,7 @@ const MultiSelectForm = ({ selectedCategories, setSelectedCategories }) => {
 
     try {
       const response = await axios.post(
-        "https://bsesatest.vercel.app/categories",
+        "https://bsesa-ksem.vercel.app/categories",
         { name: newCategory },
         { withCredentials: true }
       );
