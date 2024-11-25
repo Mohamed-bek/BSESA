@@ -60,7 +60,7 @@ const AddVideo = () => {
       console.log("Url : ", data?.video?.url);
       const response = await axios.put(data?.video?.url, videoFile, {
         headers: {
-          "Content-Type": file.type,
+          "Content-Type": videoFile.type,
         },
       });
       console.log("Response: " + response);
