@@ -27,11 +27,11 @@ import ClubAppRouter from "./routes/ClubAppRouter.js";
 import CoachAppRouter from "./routes/CoachAppRouter.js";
 import ResearchRouter from "./routes/ResearchRouter.js";
 
-const allowedOrigins = ["http://localhost:3000", "https://bsesa.vercel.app"];
+const allowedOrigins = ["https://bsesa.vercel.app"];
 
 app.use(
   cors({
-    origin: ["https://bsesa.vercel.app"], // Frontend URL
+    origin: ["https://bsesa.vercel.app", "http://localhost:3000"], // Frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
     credentials: true, // If using cookies or authentication
   })

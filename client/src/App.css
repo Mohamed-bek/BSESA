@@ -21,10 +21,10 @@ input[type="number"] {
 }
 
 :root {
-  --primary-color: #e38e49;
-  --secondary-color: #80c4e9;
+  --primary-color: #00adb5;
+  --secondary-color: #eeeeee;
   --white-color: white;
-  --black-color: #1a1a19;
+  --black-color: #393e46;
   --shadow-color: #133e8770 0px 7px 29px 0px;
 }
 body {
