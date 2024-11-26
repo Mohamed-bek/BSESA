@@ -127,6 +127,10 @@ function AdminStat() {
       },
     },
   };
+  const pieOptions = {
+    responsive: true,
+    plugins: { legend: { position: "top" } },
+  };
   const coursedata = {
     labels: courseData.months,
     datasets: [
@@ -147,7 +151,7 @@ function AdminStat() {
       {
         label: "User ",
         data: orderData.counts,
-        backgroundColor: primaryColor,
+        backgroundColor: ["#FF6384", "#00adb5", "#FFCE56"],
         borderColor: "rgb(0 146 68)",
         borderWidth: 1,
         barThickness: 30,
@@ -289,17 +293,26 @@ function AdminStat() {
           </div>
         </div>
       </div>
-      <div className="flex items-center">
-        <div className="w-2/5">
+      <div className="flex items-center w-full">
+        <div className="w-1/2 flex justify-center items-center">
           <div className="w-full">
+            <h1 className="text-[2rem] text-center"> Users Analytics </h1>
             <ChartComponent data={data} options={options} type="bar" />
           </div>
-          <div className="w-full">
+          {/* <div className="w-full">
             <ChartComponent data={coursedata} options={options} type="bar" />
-          </div>
+          </div> */}
         </div>
-        <div className="w-3/5 min-w-[350px]">
-          <ChartComponent data={orderdata} options={options} type="pie" />
+        <div className="w-1/2 flex justify-center items-center ">
+          <div className="w-full  max-w-[450px] min-w-[350px]">
+            <h1 className="text-[2rem] text-center"> Orders Analytics </h1>
+            <ChartComponent
+              className="mx-auto block"
+              data={orderdata}
+              options={pieOptions}
+              type="pie"
+            />
+          </div>
         </div>
       </div>
     </div>

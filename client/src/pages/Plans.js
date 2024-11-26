@@ -40,11 +40,11 @@ const Plans = () => {
     }
 
     return (
-      <div className="flex w-full justify-center gap-10 flex-wrap items-stretch">
+      <div className="flex w-full justify-center gap-5 flex-wrap items-stretch">
         {filteredPlans.map((plan, i) => (
           <div
             key={plan._id}
-            className={`border relative text-blackColor rounded-lg py-10 shadow-md w-[350px] hover:shadow-lg transition bg-white px-4 pt-12 ${
+            className={`border relative text-blackColor mt-5 rounded-lg py-10 shadow-md w-[350px] hover:shadow-lg transition bg-white px-4 pt-12 ${
               i === 1 && filteredPlans.length === 3 ? "-translate-y-4" : ""
             } `}
           >
@@ -60,17 +60,17 @@ const Plans = () => {
             <p className="text-[1.2rem] overflow-hidden text-blackColor text-center">
               {plan.description}
             </p>
-            <p className="text-[3rem] text-secondary font-bold mt-2 text-center">
+            <p className="text-[3rem] text-primary font-bold mt-2 text-center">
               ${plan.price}
             </p>
-            <p className="text-center -mt-3 text-secondary">
+            <p className="text-center -mt-3 text-primary">
               {" "}
               ${plan.price}/per{" "}
               {selectedDuration === "month" ? "month" : "year"}{" "}
             </p>
             <Link
               target="_blank"
-              className="bg-secondary text-black min-w-[120px] py-3 my-5 block mx-auto w-[60%] text-center font-bold rounded-lg text-[1.2rem] cursor-pointer"
+              className="bg-primary text-whiteColor min-w-[120px] py-3 my-5 block mx-auto w-[60%] text-center font-bold rounded-lg text-[1.2rem] cursor-pointer"
               to={`${
                 user
                   ? `${plan.link}?prefilled_email=${user?.email}&userId=${user?._id}`

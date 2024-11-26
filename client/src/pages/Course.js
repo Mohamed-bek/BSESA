@@ -109,7 +109,7 @@ function Blog() {
           <div className="flex items-center justify-start gap-4 mt-5">
             {!isPurchased && (
               <Link
-                to={"/payment/" + course?._id}
+                to={user ? "/payment/" + course?._id : "/login"}
                 className="bg-primary text-white  hover:bg-secondary hover:text-black duration-300 px-5 py-3 rounded-md block "
               >
                 Buy For {course?.price}$
