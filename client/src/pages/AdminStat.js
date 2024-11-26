@@ -299,7 +299,7 @@ function AdminStat() {
           </div>
         </div>
         <div className="w-3/5 min-w-[350px]">
-          <ChartComponent data={orderdata} options={options} type="line" />
+          <ChartComponent data={orderdata} options={options} type="pie" />
         </div>
       </div>
     </div>
