@@ -86,10 +86,42 @@ export const getOrderById = async (req, res) => {
   }
 };
 
+// export const getOrderAnalyst = async (req, res) => {
+//   try {
+//     const { months, counts } = await generateLast6MonthsData(Order);
+//     res.status(200).json({ months, counts });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+import Order from "../models/Order.js"; // Import the Order model
+
 export const getOrderAnalyst = async (req, res) => {
   try {
-    const { months, counts } = await generateLast6MonthsData(Order);
-    res.status(200).json({ months, counts });
+    // Aggregate the count of orders based on their payment status
+    const statusCounts = await Order.aggregate([
+      {
+        $group: {
+          _id: "$paymentStatus",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    // Create an object to hold the counts for each status
+    const counts = {
+      pending: 0,
+      completed: 0,
+      cancelled: 0,
+    };
+
+    // Populate the counts object with the results from the aggregation
+    statusCounts.forEach((status) => {
+      counts[status._id] = status.count;
+    });
+
+    res.status(200).json({ counts });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

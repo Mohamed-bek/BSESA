@@ -44,7 +44,7 @@ const AddVideo = () => {
       alert("Please upload a video before submitting.");
       return;
     }
-
+    console.log(" Content-Type: " + formData.get("contentType"));
     try {
       setIsLoading(true);
       const { data } = await axios.post(
