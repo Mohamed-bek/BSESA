@@ -1,32 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { NavLink, Link } from "react-router-dom";
 import { useUserStore } from "../context/UserContext";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function Header() {
-  const [remove, setremove] = useState(false);
-  // useEffect(() => {
-  //   let lastScrollTop = 0;
-
-  //   const handleScroll = () => {
-  //     const currentScrollTop =
-  //       window.pageYOffset || document.documentElement.scrollTop;
-
-  //     if (currentScrollTop > lastScrollTop) {
-  //     } else {
-  //     }
-
-  //     lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-  //   };
-
-  //   // Attach the scroll event listener
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   // Cleanup the listener on component unmount
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
   const { user } = useUserStore();
+  const navRef = useRef(null);
   const [links, setLinks] = useState([
     {
       name: "Home",
@@ -54,18 +33,54 @@ function Header() {
       id: 4,
     },
   ]);
+
+  const toggleMenu = (e) => {
+    if (navRef.current) {
+      const liElements = Array.from(navRef.current.querySelectorAll("a"));
+
+      if (window.innerWidth <= 867) {
+        const isActive = navRef.current.classList.contains("active");
+
+        if (isActive) {
+          // Apply `exiting` class to all links and remove `active` after animation
+          liElements.forEach((a) => {
+            a.classList.add("exiting");
+          });
+
+          // Wait for CSS animation duration (500ms here) to remove classes
+          setTimeout(() => {
+            navRef.current.classList.remove("active");
+
+            liElements.forEach((a) => {
+              a.classList.remove("exiting");
+            });
+          }, 600); // Match with your CSS animation duration
+        } else {
+          // Activate the menu
+          navRef.current.classList.add("active");
+        }
+      } else {
+        liElements.forEach((a) => {
+          a.classList.remove("active");
+        });
+        e.target.classList.add("active");
+      }
+    }
+  };
+
   return (
-    <div className="container z-50 flex justify-between items-center HeaderShadow  h-fit bg-whiteColor text-blackColor rounded-full shadow-md fixed top-3 left-1/2 -translate-x-1/2 py-0 px-5">
+    <div className="w-full mx-auto md:w-[90%] z-50 flex justify-between items-center HeaderShadow  h-fit bg-whiteColor text-blackColor md:rounded-full shadow-md fixed top-0 md:top-3 left-1/2 -translate-x-1/2 py-0 md:px-5">
       <img src="/BSESA.png" className="h-20" alt="BSESA" />
-      <nav className="flex justify-center items-center">
+      <nav ref={navRef} className="flex justify-center items-center NavBar">
         {links.map((link) => (
-          <NavLink
+          <Link
             key={link.id}
-            className="py-2 link px-5 font-normal cursor-pointer relative"
+            onClick={(e) => toggleMenu(e)}
+            className="py-2 link px-5 font-normal cursor-pointer relative text-center"
             to={link.link}
           >
             {link.name}
-          </NavLink>
+          </Link>
         ))}
       </nav>
       {user ? (
@@ -86,6 +101,9 @@ function Header() {
           Log in
         </NavLink>
       )}
+      <div className="md:hidden mr-5" onClick={toggleMenu}>
+        <GiHamburgerMenu className="text-[1.8rem] cursor-pointer" />
+      </div>
     </div>
   );
 }

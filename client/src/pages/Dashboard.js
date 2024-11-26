@@ -23,12 +23,12 @@ const Dashboard = ({ links }) => {
   return (
     <div className="w-full h-dvh bg-blackColor p-5 pl-0">
       <div className="h-full w-full  flex items-center flex-wrap  ">
-        <div className="w-[100px] h-full bg-transparent flex justify-center items-center">
+        <div className="w-fit h-full bg-transparent flex justify-center items-center">
           <div className="w-full">
             {links &&
               links.map((link) => (
                 <NavLink
-                  className="dshb text-white text-center flex justify-center items-center mx-auto w-4/5 mb-5 rounded-3xl py-2 text-[1.2rem] font-semibold cursor-pointer"
+                  className="dshb text-nowrap px-5 text-white text-center flex justify-center items-center mx-auto w-4/5 mb-5 rounded-3xl py-2 text-[1.2rem] font-semibold cursor-pointer"
                   to={"/dashboard" + link.href}
                 >
                   {" "}

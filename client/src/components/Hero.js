@@ -33,7 +33,7 @@ function Hero() {
     },
   ];
   return (
-    <div className="w-full h-[100dvh] overflow-hidden">
+    <div className="w-full h-[60vh] md:h-[100dvh] overflow-hidden">
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         spaceBetween={0}
@@ -45,19 +45,19 @@ function Hero() {
         }}
       >
         {pages.map((page) => (
-          <SwiperSlide className="w-full min-h-[100dvh]">
+          <SwiperSlide className="w-full h-[60vh] md:min-h-[100dvh]">
             {" "}
             <img
-              className="w-full h-[100dvh] absolute top-0 left-0"
+              className="w-full h-[60vh] md:h-[100dvh] absolute top-0 left-0"
               src={page.image}
             />{" "}
             <div
-              className={`w-full h-[100dvh] flex items-center z-30 relative ${
+              className={`w-full h-[60vh] md:h-[100dvh] flex items-center z-30 relative ${
                 page.color === "black" ? "text-black" : "text-white"
               }`}
             >
-              <div className="w-1/2 pl-20">
-                <h1 className="text-[4rem] font-bold leading-[1.1] mb-8">
+              <div className="w-full pt-[120px] md:w-1/2 px-3 md:pl-20">
+                <h1 className="text-[2rem] md:text-[4rem] font-bold leading-[1.1] mb-8">
                   {" "}
                   {page.h1}{" "}
                 </h1>

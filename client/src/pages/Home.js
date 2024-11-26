@@ -53,13 +53,13 @@ function Home() {
   return (
     <div className="w-full relative">
       <Hero />
-      <div className="w-full min-h-[100dvh] bg-whiteColor overflow-hidden  flex justify-center items-center">
+      <div className="w-full h-fit py-5 bg-whiteColor overflow-hidden  flex justify-center items-center">
         <div className="w-full">
           <h1 className="text-[2rem] capitalize text-center font-bold mb-5 text-blackColor">
             {" "}
             Trusted by{" "}
           </h1>
-          <div className="flex h-[20dvh] justify-center items-center gap-10 py-4 animate-scroll mb-5">
+          <div className="flex h-[15dvh] md:h-[20dvh] justify-center items-center gap-10 py-4 animate-scroll mb-5">
             {LigueImages.map((ligue, index) => (
               <img key={index} className="h-full" src={ligue} alt="Ligue" />
             ))}
@@ -73,13 +73,13 @@ function Home() {
           />
         </div>
       </div>
-      <div className="w-full min-h-[100dvh] bg-whiteColor overflow-hidden  flex justify-center items-center pb-10">
-        <div className="w-full">
+      <div className="w-full h-fit py-5 bg-whiteColor overflow-hidden  flex justify-center items-center pb-10">
+        <div className="w-full ">
           <h1 className="text-[2rem] capitalize text-center font-bold mb-5 text-blackColor">
             {" "}
             Popular Topic{" "}
           </h1>
-          <div className="flex h-[160px] justify-center gap-10 py-4 animate-scroll mb-5">
+          <div className="flex h-[180px] justify-center gap-10 py-8 animate-scroll mb-5">
             {categories.map((categorie, i) => (
               <div
                 className={`px-5 py-7 h-[90px] bg-whiteColor relative text-[1.4rem] ShadowCLass ${
