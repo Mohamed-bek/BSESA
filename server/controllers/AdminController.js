@@ -1,4 +1,6 @@
 import User from "../models/User.js";
+import Order from "../models/Order.js";
+import Course from "../models/Course.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -75,5 +77,38 @@ export const deleteUser = async (req, res) => {
     res
       .status(500)
       .json({ message: "Deleting User Failed", err: error.message });
+  }
+};
+
+export const getCounts = async (req, res) => {
+  try {
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const [NewUsers, AllUsers, NewCourses, AllCourses, NewOrders, AllOrders] =
+      await Promise.all([
+        User.countDocuments({
+          createdAt: { $gte: startOfDay, $lte: endOfDay },
+        }),
+        User.countDocuments(),
+        Course.countDocuments({
+          createdAt: { $gte: startOfDay, $lte: endOfDay },
+        }),
+        Course.countDocuments(),
+        Order.countDocuments({
+          createdAt: { $gte: startOfDay, $lte: endOfDay },
+        }),
+        Order.countDocuments(),
+      ]);
+    res.status(200).json({
+      users: { today: NewUsers, total: AllUsers },
+      courses: { today: NewCourses, total: AllCourses },
+      orders: { today: NewOrders, total: AllOrders },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Get Stat Faild", err: error.message });
   }
 };

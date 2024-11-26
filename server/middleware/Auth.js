@@ -6,7 +6,8 @@ dotenv.config();
 export const authenticateToken = (req, res, next) => {
   const { accessToken } = req.cookies;
 
-  if (!accessToken) return res.sendStatus(401);
+  if (!accessToken)
+    return res.sendStatus(401).json({ error: "Access token is required" });
 
   jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);

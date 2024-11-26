@@ -25,7 +25,8 @@ input[type="number"] {
   --secondary-color: #eeeeee;
   --white-color: white;
   --black-color: #222831;
-  --shadow-color: #00acb580 0px 7px 29px 0px;
+  --primaryTra-color: #00acb551;
+  --shadow-color: var(--primaryTra-color) 0px 7px 29px 0px;
 }
 body {
   background-color: var(--black-color);

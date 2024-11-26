@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   deleteUser,
+  getCounts,
   getUsers,
   makeUserAdmin,
 } from "../controllers/AdminController.js";
@@ -40,6 +41,13 @@ AdminRouter.get(
   authenticateToken,
   authorizeRoles(["admin"]),
   getUserAnalytics
+);
+
+AdminRouter.get(
+  "/counts",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  getCounts
 );
 
 export default AdminRouter;

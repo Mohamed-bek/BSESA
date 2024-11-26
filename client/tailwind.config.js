@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         primary: "var(--primary-color)",
         secondary: "var(--secondary-color)",
+        primaryTra: "var(--primaryTra-color)",
         whiteColor: "var(--white-color)",
         blackColor: "var(--black-color)",
         background: "var(--background)",
