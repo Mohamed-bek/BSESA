@@ -1,24 +1,29 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import ChartComponent from "../components/ChartComponent";
-import { FaPen, FaPlus, FaUser } from "react-icons/fa";
+import { FaBloggerB, FaPen, FaPlus, FaUser } from "react-icons/fa";
 import { useUserStore } from "../context/UserContext";
 import { SiCoursera } from "react-icons/si";
 import { FaCartShopping } from "react-icons/fa6";
+import { FcConferenceCall } from "react-icons/fc";
 
 function AdminStat() {
   const [primaryColor, setprimaryColor] = useState("#00adb5");
   const inChangeImg = useRef();
   const [usersData, setusersData] = useState({ months: [], counts: [] });
+  const [courseData, setcourseData] = useState({ months: [], counts: [] });
+  const [orderData, setorderData] = useState({ months: [], counts: [] });
   const [users, setusers] = useState(null);
   const [courses, setcourses] = useState(null);
   const [orders, setorders] = useState(null);
+  const [conferences, setconferences] = useState(null);
+  const [blogs, setblogs] = useState(null);
   const { user, login } = useUserStore();
   useEffect(() => {
     const primaryColor = getComputedStyle(document.documentElement)
       .getPropertyValue("--primary-color")
       .trim();
-    setprimaryColor("#00adb5");
+    setprimaryColor(primaryColor);
   }, []);
 
   useEffect(() => {
@@ -38,6 +43,38 @@ function AdminStat() {
   }, []);
 
   useEffect(() => {
+    const GetCourseState = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://bsesa-ksem.vercel.app/admin/course_analytics",
+          { withCredentials: true }
+        );
+        setcourseData(data);
+        console.log("The Data Comming is : " + data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetCourseState();
+  }, []);
+
+  useEffect(() => {
+    const GetOrderState = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://bsesa-ksem.vercel.app/admin/order_analytics",
+          { withCredentials: true }
+        );
+        setorderData(data);
+        console.log("The Data Comming is : " + data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetOrderState();
+  }, []);
+
+  useEffect(() => {
     const GetCountsState = async () => {
       try {
         const { data } = await axios.get(
@@ -47,6 +84,8 @@ function AdminStat() {
         setusers(data.users);
         setcourses(data.courses);
         setorders(data.orders);
+        setblogs(data.blogs);
+        setconferences(data.conferences);
       } catch (error) {
         console.log(error);
       }
@@ -69,6 +108,64 @@ function AdminStat() {
   };
 
   const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: {
+          display: false, // Remove grid lines for the y-axis
+        },
+      },
+      x: {
+        grid: {
+          display: false, // Remove grid lines for the y-axis
+        },
+      },
+    },
+  };
+  const doursedata = {
+    labels: usersData.months,
+    datasets: [
+      {
+        label: "User ",
+        data: usersData.counts,
+        backgroundColor: primaryColor,
+        borderColor: "rgb(0 146 68)",
+        borderWidth: 1,
+        barThickness: 30,
+      },
+    ],
+  };
+
+  const courseOptions = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: {
+          display: false, // Remove grid lines for the y-axis
+        },
+      },
+      x: {
+        grid: {
+          display: false, // Remove grid lines for the y-axis
+        },
+      },
+    },
+  };
+  const orderdata = {
+    labels: orderData.months,
+    datasets: [
+      {
+        label: "User ",
+        data: usersData.counts,
+        backgroundColor: primaryColor,
+        borderColor: "rgb(0 146 68)",
+        borderWidth: 1,
+        barThickness: 30,
+      },
+    ],
+  };
+
+  const orderOptions = {
     scales: {
       y: {
         beginAtZero: true,
@@ -171,6 +268,38 @@ function AdminStat() {
         </div>
         <div className="flex shadow-md justify-center items-center gap-5 bg-whiteColor px-5 rounded-lg py-5">
           <div>
+            <FaBloggerB className="p-3 rounded-full block text-[4.5rem] bg-primaryTra text-primary " />
+          </div>
+          <div>
+            <h1 className="text-[1.15rem] text-center "> Total blogs </h1>
+            <h1 className="text-[2rem] font-bold text-center">
+              {" "}
+              {blogs?.total | 1000}{" "}
+            </h1>
+            <p className="bg-primaryTra  text-primary text-[0.9rem] flex justify-center items-center gap-1 rounded-full px-3 py-1">
+              {" "}
+              <FaPlus /> {blogs?.today | 0} blog{" "}
+            </p>
+          </div>
+        </div>
+        <div className="flex shadow-md justify-center items-center gap-5 bg-whiteColor px-5 rounded-lg py-5">
+          <div>
+            <FcConferenceCall className="p-3 rounded-full block text-[4.5rem] bg-primaryTra text-primary " />
+          </div>
+          <div>
+            <h1 className="text-[1.15rem] text-center "> Total conferences </h1>
+            <h1 className="text-[2rem] font-bold text-center">
+              {" "}
+              {conferences?.total | 1000}{" "}
+            </h1>
+            <p className="bg-primaryTra  text-primary text-[0.9rem] flex justify-center items-center gap-1 rounded-full px-3 py-1">
+              {" "}
+              <FaPlus /> {conferences?.today | 0} conference{" "}
+            </p>
+          </div>
+        </div>
+        <div className="flex shadow-md justify-center items-center gap-5 bg-whiteColor px-5 rounded-lg py-5">
+          <div>
             <FaCartShopping className="p-3 rounded-full block text-[4.5rem] bg-primaryTra text-primary " />
           </div>
           <div>
@@ -186,8 +315,22 @@ function AdminStat() {
           </div>
         </div>
       </div>
-      <div className="max-w-[500px] min-w-[350px]">
-        <ChartComponent data={data} options={options} type="bar" />
+      <div className="flex items-center">
+        <div className="w-2/5">
+          <div className="w-full">
+            <ChartComponent data={data} options={options} type="bar" />
+          </div>
+          <div className="w-full">
+            <ChartComponent
+              data={courseData}
+              options={courseOptions}
+              type="bar"
+            />
+          </div>
+        </div>
+        <div className="w-3/5 min-w-[350px]">
+          <ChartComponent data={orderData} options={orderOptions} type="line" />
+        </div>
       </div>
     </div>
   );

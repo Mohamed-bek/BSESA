@@ -5,6 +5,8 @@ import {
   getUsers,
   makeUserAdmin,
 } from "../controllers/AdminController.js";
+import { getCourseAnalyst } from "../controllers/CourseController.js";
+import { getOrderAnalyst } from "../controllers/OrderController.js";
 import { getUserAnalytics } from "../controllers/UserController.js";
 import { authenticateToken, authorizeRoles } from "../middleware/Auth.js";
 const AdminRouter = Router();
@@ -48,6 +50,20 @@ AdminRouter.get(
   authenticateToken,
   authorizeRoles(["admin"]),
   getCounts
+);
+
+AdminRouter.get(
+  "/order_analytics",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  getOrderAnalyst
+);
+
+AdminRouter.get(
+  "/course_analytics",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  getCourseAnalyst
 );
 
 export default AdminRouter;
