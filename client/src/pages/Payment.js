@@ -40,7 +40,7 @@ function Payment() {
   };
   const loadStripeScript = async () => {
     try {
-      const stripe = await loadStripe(process.env.REACT_APP_STRIPE_KEY);
+      const stripe = await loadStripe("whsec_RKxPRFXaqDdiq4IwTFIez5TkYd5mZYSP");
       if (!stripe) {
         throw new Error("Stripe.js failed to load");
       }
