@@ -66,7 +66,12 @@ function AdminStat() {
           { withCredentials: true }
         );
         setorderData(data);
-        console.log("The Data Comming is : " + data);
+        console.log(
+          "The Course Data Comming is : " +
+            data.counts +
+            " records " +
+            data.months
+        );
       } catch (error) {
         console.log(error);
       }
@@ -122,12 +127,12 @@ function AdminStat() {
       },
     },
   };
-  const doursedata = {
-    labels: usersData.months,
+  const coursedata = {
+    labels: courseData.months,
     datasets: [
       {
         label: "User ",
-        data: usersData.counts,
+        data: courseData.counts,
         backgroundColor: primaryColor,
         borderColor: "rgb(0 146 68)",
         borderWidth: 1,
@@ -151,12 +156,13 @@ function AdminStat() {
       },
     },
   };
+
   const orderdata = {
     labels: orderData.months,
     datasets: [
       {
         label: "User ",
-        data: usersData.counts,
+        data: orderData.counts,
         backgroundColor: primaryColor,
         borderColor: "rgb(0 146 68)",
         borderWidth: 1,
@@ -322,14 +328,14 @@ function AdminStat() {
           </div>
           <div className="w-full">
             <ChartComponent
-              data={courseData}
+              data={coursedata}
               options={courseOptions}
               type="bar"
             />
           </div>
         </div>
         <div className="w-3/5 min-w-[350px]">
-          <ChartComponent data={orderData} options={orderOptions} type="line" />
+          <ChartComponent data={orderdata} options={orderOptions} type="line" />
         </div>
       </div>
     </div>

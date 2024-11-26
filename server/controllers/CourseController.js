@@ -3,6 +3,7 @@ import UserMembership from "../models/UserMembership.js";
 import uploadToSpaces from "../utitlitis/awsDigitalOcean.js";
 import Order from "../models/Order.js";
 import Progress from "../models/Progress.js";
+import generateLast6MonthsData from "../utitlitis/analytics.js";
 
 export const CreateCourse = async (req, res) => {
   try {
