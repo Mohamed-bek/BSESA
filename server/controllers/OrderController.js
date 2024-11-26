@@ -107,19 +107,22 @@ export const getOrderAnalyst = async (req, res) => {
       },
     ]);
 
-    // Create an object to hold the counts for each status
-    const counts = {
-      pending: 0,
-      completed: 0,
-      cancelled: 0,
-    };
+    // Initialize labels and data arrays
+    const labels = ["Pending", "Completed", "Cancelled"];
+    const data = [0, 0, 0]; // Corresponds to pending, completed, cancelled
 
-    // Populate the counts object with the results from the aggregation
+    // Populate data array based on the results
     statusCounts.forEach((status) => {
-      counts[status._id] = status.count;
+      if (status._id === "pending") {
+        data[0] = status.count;
+      } else if (status._id === "completed") {
+        data[1] = status.count;
+      } else if (status._id === "cancelled") {
+        data[2] = status.count;
+      }
     });
 
-    res.status(200).json({ counts });
+    res.status(200).json({ months: labels, counts: data });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

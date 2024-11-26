@@ -12,7 +12,7 @@ function AdminStat() {
   const inChangeImg = useRef();
   const [usersData, setusersData] = useState({ months: [], counts: [] });
   const [courseData, setcourseData] = useState({ months: [], counts: [] });
-  const [orderData, setorderData] = useState([]);
+  const [orderData, setorderData] = useState({ months: [], counts: [] });
   const [users, setusers] = useState(null);
   const [courses, setcourses] = useState(null);
   const [orders, setorders] = useState(null);
@@ -65,7 +65,7 @@ function AdminStat() {
           "https://bsesa-ksem.vercel.app/admin/order_analytics",
           { withCredentials: true }
         );
-        setorderData(data.counts);
+        setorderData(data);
         console.log(
           "The Course Data Comming is : " +
             data.counts +
@@ -142,7 +142,7 @@ function AdminStat() {
   };
 
   const orderdata = {
-    labels: ["Red", "Blue", "Yellow"],
+    labels: orderData.months,
     datasets: [
       {
         label: "User ",
