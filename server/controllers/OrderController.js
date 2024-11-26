@@ -95,8 +95,6 @@ export const getOrderById = async (req, res) => {
 //   }
 // };
 
-import Order from "../models/Order.js"; // Import the Order model
-
 export const getOrderAnalyst = async (req, res) => {
   try {
     // Aggregate the count of orders based on their payment status
