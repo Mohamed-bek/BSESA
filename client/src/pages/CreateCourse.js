@@ -108,7 +108,7 @@ const CreateCourse = () => {
           ) : (
             <div
               onClick={() => fileRef.current?.click()}
-              className="w-[170px] h-[170px] p-4 absolute top-1/2 left-1/2 rounded-lg bg-gray-200 flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
+              className="w-[160px] h-[160px] cursor-pointer p-2 absolute top-1/2 left-1/2 rounded-lg bg-gray-200 flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
             >
               <p className="text-lg text-center">Add Image</p>
               <IoMdAdd className="text-5xl font-bold mx-auto" />
@@ -158,9 +158,9 @@ const CreateCourse = () => {
             />
             <button
               type="submit"
-              className="w-full mt-8 max-w-[200px] text-[1.2rem] cursor-pointer font-[300] px-3 py-2 bg-primary text-white rounded-md"
+              className="w-full mt-8 max-w-[200px] text-[1.2rem] cursor-pointer px-3 py-2 bg-primary text-whiteColor font-semibold rounded-md"
             >
-              Add Plate
+              Create Course
             </button>
           </form>
         </div>

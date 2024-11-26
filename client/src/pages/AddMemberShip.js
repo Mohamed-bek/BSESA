@@ -82,8 +82,8 @@ const CreateMembership = () => {
   };
 
   return (
-    <div className="w-full h-[100dvh] pt-[120px] flex justify-center items-center">
-      <div className="p-6 max-w-md mx-auto bg-white rounded-md shadow-md">
+    <div className="w-full h-full bg-whiteColor flex justify-center items-center">
+      <div className="p-6 max-w-md mx-auto bg-secondary rounded-md shadow-md">
         <h2 className="text-2xl font-semibold mb-4">Create New Membership</h2>
         <form onSubmit={handleSubmit}>
           {/* Name and Price */}
@@ -100,13 +100,13 @@ const CreateMembership = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm focus:outline-none"
+                className="block w-full  px-2 py-[6px] cursor-pointer rounded-md shadow-sm focus:outline-none"
                 required
               >
                 <option value="">Select a plan</option>
+                <option value="Basic">Basic</option>
+                <option value="Silver">Silver</option>
                 <option value="Gold">Gold</option>
-                <option value="Premium">Premium</option>
-                <option value="Pro">Pro</option>
               </select>
             </div>
             <div>
@@ -122,7 +122,7 @@ const CreateMembership = () => {
                 name="price"
                 value={formData.price}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm focus:outline-none"
+                className="block w-full px-2 py-1 rounded-md shadow-sm focus:outline-none"
                 required
               />
             </div>
@@ -137,15 +137,18 @@ const CreateMembership = () => {
               >
                 Duration
               </label>
-              <input
-                type="text"
+              <select
                 id="duration"
                 name="duration"
                 value={formData.duration}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm focus:outline-none"
+                className="block w-full  px-2 py-[6px] cursor-pointer rounded-md shadow-sm focus:outline-none"
                 required
-              />
+              >
+                <option value={null}>Select a Duration</option>
+                <option value="month">month</option>
+                <option value="year">year</option>
+              </select>
             </div>
             <div>
               <label
@@ -160,7 +163,7 @@ const CreateMembership = () => {
                 name="discount"
                 value={formData.discount}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm focus:outline-none"
+                className="block w-full px-2 py-1  rounded-md shadow-sm focus:outline-none"
               />
             </div>
           </div>
@@ -180,7 +183,7 @@ const CreateMembership = () => {
                 name="paymentId"
                 value={formData.paymentId}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm focus:outline-none"
+                className="block w-full px-2 py-1 rounded-md shadow-sm focus:outline-none"
                 required
               />
             </div>
@@ -197,7 +200,7 @@ const CreateMembership = () => {
                 name="link"
                 value={formData.link}
                 onChange={handleChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm focus:outline-none"
+                className="block w-full px-2 py-1  rounded-md shadow-sm focus:outline-none"
                 required
               />
             </div>
@@ -217,7 +220,7 @@ const CreateMembership = () => {
               value={formData.description}
               onChange={handleChange}
               rows="3"
-              className="block w-full resize-none h-[50px] border-gray-300 rounded-md shadow-sm focus:outline-none"
+              className="block w-full resize-none h-[50px]  rounded-md shadow-sm focus:outline-none"
             ></textarea>
           </div>
 
@@ -235,13 +238,13 @@ const CreateMembership = () => {
                 id="benefits"
                 value={benefitInput}
                 onChange={(e) => setBenefitInput(e.target.value)}
-                className="block w-full border-gray-300 rounded-md shadow-sm focus:outline-none"
+                className="block px-2 py-1 w-full  rounded-md shadow-sm focus:outline-none"
                 placeholder="Enter a benefit"
               />
               <button
                 type="button"
                 onClick={handleAddBenefit}
-                className="px-3 py-1 text-white rounded-md hover:bg-primary bg-blue-600 focus:outline-none"
+                className="px-3 py-1 text-white rounded-md hover:bg-primary bg-primary focus:outline-none"
               >
                 Add
               </button>
@@ -266,7 +269,7 @@ const CreateMembership = () => {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white  rounded-md hover:bg-primaryF bg-blue-600 focus:outline-none"
+            className="w-full px-4 py-2 text-white  rounded-md hover:bg-primaryF bg-primary focus:outline-none"
           >
             Create Membership
           </button>

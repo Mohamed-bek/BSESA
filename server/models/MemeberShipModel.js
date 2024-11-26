@@ -14,7 +14,7 @@ const membershipSchema = new Schema(
     name: {
       type: String,
       required: true,
-      enum: ["Gold", "Premium", "Pro"],
+      enum: ["Basic", "Silver", "Gold"],
     },
     duration: {
       type: String,

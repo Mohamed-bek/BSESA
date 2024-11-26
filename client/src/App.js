@@ -24,6 +24,12 @@ import CertificateList from "./pages/CertificateList";
 import MyCourses from "./pages/MyCourses";
 import { useUserStore } from "./context/UserContext";
 import AdminCourseManager from "./pages/AdminCourseManager";
+import { MdOutlineDashboard, MdOutlineManageHistory } from "react-icons/md";
+import { SiCoursera } from "react-icons/si";
+import { FaBloggerB } from "react-icons/fa6";
+import { CgDollar } from "react-icons/cg";
+import { IoVideocam } from "react-icons/io5";
+import AdminStat from "./pages/AdminStat";
 
 function App() {
   const { user } = useUserStore();
@@ -37,27 +43,38 @@ function App() {
           {
             id: 1,
             name: "Profile",
+            icon: <MdOutlineDashboard />,
             href: "",
           },
           {
             id: 2,
             name: "New Course",
+            icon: <SiCoursera />,
             href: "/new-course",
           },
           {
             id: 4,
             name: "New Video",
+            icon: <IoVideocam />,
             href: "/new-video",
           },
           {
             id: 5,
             name: "Manage Course",
+            icon: <MdOutlineManageHistory />,
             href: "/manage-course",
           },
           {
             id: 6,
             name: "New Blog",
+            icon: <FaBloggerB />,
             href: "/new-blog",
+          },
+          {
+            id: 6,
+            name: "New Membership",
+            icon: <CgDollar />,
+            href: "/new-membership",
           },
         ]
       : [
@@ -78,21 +95,25 @@ function App() {
           },
         ];
 
+  useEffect(() => {
+    console.log("Cnfition Of : ", !user?.role === "admin" ? "Good" : "Bad");
+  });
   return (
     <div className="App min-h-[100dvh] relative font-roboto overflow-x-hidden w-full bg-blackColor">
       <Message />
-      <Header />
+      {user?.role === "admin" ? null : <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/dashboard" element={<Dashboard links={links} />}>
-          <Route path="" element={<Profile />} />
+          <Route path="" element={<AdminStat />} />
           <Route path="certificates" element={<CertificateList />} />
           <Route path="my-courses" element={<MyCourses />} />
           <Route path="new-video" element={<AddVideo />} />
           <Route path="new-blog" element={<CreateBlog />} />
           <Route path="new-course" element={<CreateCourse />} />
           <Route path="manage-course" element={<AdminCourseManager />} />
+          <Route path="new-membership" element={<AddMemberShip />} />
         </Route>
         <Route path="/pricing" element={<Plans />} />
         <Route path="/blogs" element={<Blogs />} />

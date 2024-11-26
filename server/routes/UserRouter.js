@@ -41,6 +41,5 @@ UserRouter.put("/email", authenticateToken, UpdateEmail);
 UserRouter.put("/password", authenticateToken, UpdatePassword);
 UserRouter.put("/pass_recovery", initiatePasswordRecovery);
 UserRouter.put("/pass_reset", resetPassword);
-UserRouter.get("/user_analytics", getUserAnalytics);
 
 export default UserRouter;

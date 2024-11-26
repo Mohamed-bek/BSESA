@@ -4,6 +4,7 @@ import {
   getUsers,
   makeUserAdmin,
 } from "../controllers/AdminController.js";
+import { getUserAnalytics } from "../controllers/UserController.js";
 import { authenticateToken, authorizeRoles } from "../middleware/Auth.js";
 const AdminRouter = Router();
 
@@ -33,6 +34,12 @@ AdminRouter.put(
   authenticateToken,
   authorizeRoles(["admin"]),
   makeUserAdmin
+);
+AdminRouter.get(
+  "/user_analytics",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  getUserAnalytics
 );
 
 export default AdminRouter;

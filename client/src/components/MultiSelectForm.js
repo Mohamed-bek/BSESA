@@ -86,7 +86,7 @@ const MultiSelectForm = ({ selectedCategories, setSelectedCategories }) => {
         <button
           type="button" // Prevents form submission
           onClick={() => setShowInput((prev) => !prev)} // Toggle visibility
-          className=" bg-secondary text-white p-2 rounded-md w-fit "
+          className=" bg-primary text-whiteColor p-2 rounded-md w-fit "
         >
           {showInput ? "Cancel" : <FaPlus />}
         </button>
@@ -103,7 +103,7 @@ const MultiSelectForm = ({ selectedCategories, setSelectedCategories }) => {
           <button
             type="button"
             onClick={handleAddCategory}
-            className="mt-2 bg-secondary text-white p-2 rounded-md w-fit block mx-auto px-4"
+            className="mt-2 bg-primary text-whiteColor p-2 rounded-md w-fit block mx-auto px-2"
           >
             Add Category
           </button>

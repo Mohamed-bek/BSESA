@@ -3,6 +3,7 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useUserStore } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { MdLogout } from "react-icons/md";
 
 const Dashboard = ({ links }) => {
   const { logout } = useUserStore();
@@ -20,30 +21,36 @@ const Dashboard = ({ links }) => {
     }
   };
   return (
-    <div className="w-full h-dvh pt-[100px] bg-secondary">
-      <div className="h-[calc(100dvh-100px)] container flex items-center gap-8 flex-wrap">
-        <div className="w-1/4 h-[90%] bg-blackColor rounded-[30px] flex justify-center items-center">
+    <div className="w-full h-dvh bg-blackColor p-5 pl-0">
+      <div className="h-full w-full  flex items-center flex-wrap  ">
+        <div className="w-[100px] h-full bg-transparent flex justify-center items-center">
           <div className="w-full">
             {links &&
               links.map((link) => (
                 <NavLink
-                  className="dshb bg-white text-center block mx-auto w-4/5 mb-5 rounded-3xl py-2 text-[1.2rem] font-semibold"
+                  className="dshb text-white text-center flex justify-center items-center mx-auto w-4/5 mb-5 rounded-3xl py-2 text-[1.2rem] font-semibold cursor-pointer"
                   to={"/dashboard" + link.href}
                 >
                   {" "}
-                  {link.name}{" "}
+                  {link?.icon ? (
+                    <span className="text-[1.8rem] w-fit block mx-auto font-normal">
+                      {link?.icon}
+                    </span>
+                  ) : (
+                    link.name
+                  )}{" "}
                 </NavLink>
               ))}
             <button
               onClick={() => logOut()}
-              className="bg-white text-center text-black block mx-auto w-4/5 mb-5 rounded-3xl py-2 text-[1.2rem] font-semibold"
+              className="text-center text-whiteColor font-bold block mx-auto w-4/5 mb-5 rounded-3xl py-2 text-[1.2rem]"
             >
               {" "}
-              Log Out{" "}
+              <MdLogout className="text-[1.8rem] block mx-auto" />
             </button>
           </div>
         </div>
-        <div className="w-[calc(75%-32px)] bg-blackColor h-[90%] rounded-[30px] overflow-hidden">
+        <div className="flex-1 bg-blackColor h-full rounded-2xl overflow-hidden">
           <Outlet />
         </div>
       </div>

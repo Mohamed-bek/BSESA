@@ -169,7 +169,7 @@ const Login = () => {
       setTimeout(() => {
         setStatusIn("checked");
         setTimeout(() => {
-          Success("login", "/");
+          Success("login", data.user?.role === "admin" ? "/dashboard" : "/");
         }, 400);
       }, 400);
     } catch ({ response }) {
