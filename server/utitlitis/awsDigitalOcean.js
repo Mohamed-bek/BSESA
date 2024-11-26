@@ -11,6 +11,24 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
 });
 
+export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
+  const params = {
+    Bucket: process.env.DO_SPACE_NAME,
+    Key: `uploads/${Date.now()}-${filename}`,
+    Expires: 60 * 60 * 24,
+    ACL: isPrivate ? "private" : "public-read", // Set file permissions
+    ContentType: contentType,
+  };
+
+  try {
+    const url = await s3.getSignedUrlPromise("putObject", params);
+    return url;
+  } catch (error) {
+    console.error(`Error uploading file to Spaces: ${error.message}`);
+    throw new Error(`Error uploading file: ${error.message}`);
+  }
+};
+
 const uploadToSpaces = async (
   file,
   folder,
@@ -47,25 +65,6 @@ const uploadToSpaces = async (
     }
   }
 };
-
-export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
-  const params = {
-    Bucket: process.env.DO_SPACE_NAME,
-    Key: `uploads/${Date.now()}-${filename}`,
-    Expires: 60 * 60 * 24,
-    ACL: isPrivate ? "private" : "public-read", // Set file permissions
-    ContentType: contentType,
-  };
-
-  try {
-    const url = await s3.getSignedUrlPromise("putObject", params);
-    return url;
-  } catch (error) {
-    console.error(`Error uploading file to Spaces: ${error.message}`);
-    throw new Error(`Error uploading file: ${error.message}`);
-  }
-};
-
 // const uploadToSpaces = async (
 //   file,
 //   folder,

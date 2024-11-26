@@ -141,22 +141,6 @@ function AdminStat() {
     ],
   };
 
-  const courseOptions = {
-    scales: {
-      y: {
-        beginAtZero: true,
-        grid: {
-          display: false, // Remove grid lines for the y-axis
-        },
-      },
-      x: {
-        grid: {
-          display: false, // Remove grid lines for the y-axis
-        },
-      },
-    },
-  };
-
   const orderdata = {
     labels: orderData.months,
     datasets: [
@@ -169,22 +153,6 @@ function AdminStat() {
         barThickness: 30,
       },
     ],
-  };
-
-  const orderOptions = {
-    scales: {
-      y: {
-        beginAtZero: true,
-        grid: {
-          display: false, // Remove grid lines for the y-axis
-        },
-      },
-      x: {
-        grid: {
-          display: false, // Remove grid lines for the y-axis
-        },
-      },
-    },
   };
 
   const handleProfilePictureChange = async (e) => {
@@ -239,7 +207,7 @@ function AdminStat() {
           </div>
         </div>
       </div>
-      <div className="flex justify-start px-5 flex-wrap items-center gap-5 py-5">
+      <div className="flex justify-around px-5 flex-wrap items-center gap-5 py-5">
         <div className="flex shadow-md justify-center items-center gap-5 bg-whiteColor px-5 rounded-lg py-5">
           <div>
             <FaUser className="p-3 rounded-full block text-[4.5rem] bg-primaryTra text-primary " />
@@ -327,15 +295,11 @@ function AdminStat() {
             <ChartComponent data={data} options={options} type="bar" />
           </div>
           <div className="w-full">
-            <ChartComponent
-              data={coursedata}
-              options={courseOptions}
-              type="bar"
-            />
+            <ChartComponent data={coursedata} options={options} type="bar" />
           </div>
         </div>
         <div className="w-3/5 min-w-[350px]">
-          <ChartComponent data={orderdata} options={orderOptions} type="line" />
+          <ChartComponent data={orderdata} options={options} type="line" />
         </div>
       </div>
     </div>
