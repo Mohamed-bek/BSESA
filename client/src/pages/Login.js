@@ -118,16 +118,15 @@ const Login = () => {
           Success("login", "/activation/" + data.token);
         }, 400);
       }, 400);
-    } catch ({ response }) {
-      console.log(response);
-      const { message = null } = response?.data;
+    } catch (error) {
+      console.log(error);
       setStatus("error");
-      if (message.includes("User already exist")) {
+      if (error?.response?.data?.message.includes("User already exist")) {
         console.log(true);
         ErrorHandler(emailUpRef, "User already exist");
       }
       setErr(true);
-      setMessage(message);
+      setMessage(error?.response?.data?.message);
       setIcon(<IoClose />);
       setShow(true);
       setTimeout(() => setShow(false), 1200);
@@ -172,17 +171,17 @@ const Login = () => {
           Success("login", data.user?.role === "admin" ? "/dashboard" : "/");
         }, 400);
       }, 400);
-    } catch ({ response }) {
-      const { message = null } = response?.data;
+    } catch (error) {
+      // const { message = null } = response?.data;
       setStatus("error");
-      if (message.includes("Email Dosen't exist")) {
+      if (error?.response?.data?.message?.includes("Email Dosen't exist")) {
         ErrorHandler(emailInRef, "Email Dosen't exist");
       }
-      if (message.includes("Password incorrect")) {
+      if (error?.response?.data?.message?.includes("Password incorrect")) {
         ErrorHandler(passwordInRef, "Password incorrect");
       }
       setErr(true);
-      setMessage(message);
+      setMessage(error?.response?.data?.message);
       setIcon(<IoClose />);
 
       setShow(true);
@@ -343,11 +342,12 @@ const Login = () => {
             className=" translate-y-[-300%] h-full duration-300 flex items-center justify-center"
             ref={SuccessImg}
           >
-            <img
+            <h1 className="px-10 text-[4rem] text-white"> Success </h1>
+            {/* <img
               src="/images/success.png"
               alt="Example Image"
               className="w-full h-full"
-            />
+            /> */}
           </div>
         </div>
 
