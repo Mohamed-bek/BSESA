@@ -21,14 +21,11 @@ function MyCourses() {
     GetMyCourses();
   }, []);
   return (
-    <div className="w-full h-full p-5 overflow-y-auto bg-white flex justify-start items-start">
+    <div className="w-full h-full p-5 overflow-y-auto bg-white gap-5 flex justify-start items-stretch">
       {courses.map((course) => (
-        <CourseBox
-          course={course?.course}
-          desc={false}
-          isPurchased={true}
-          color="black"
-        />
+        <div className="">
+          <CourseBox course={course?.course} isPurchased={true} color="black" />
+        </div>
       ))}
     </div>
   );

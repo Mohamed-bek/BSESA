@@ -55,7 +55,7 @@ const CertificateList = () => {
         {certificates.length > 0 &&
           certificates.map((certificate, index) => (
             <div
-              key={certificate.id || index}
+              key={certificate._id || index}
               className="w-[250px] HeaderShadow rounded-lg overflow-hidden bg-white shadow pb-2"
             >
               <img src={certificate?.courseId?.thumbnail} className="w-full" />

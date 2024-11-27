@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { authenticateToken, authorizeRoles } from "../middleware/Auth.js";
+import {
+  authenticateToken,
+  authorizeRoles,
+  getIdUser,
+} from "../middleware/Auth.js";
 import {
   getAllMemberships,
   getMembershipById,
@@ -15,7 +19,7 @@ MemeberShipRouter.post(
   authorizeRoles(["admin"]),
   createMembership
 );
-MemeberShipRouter.get("/memberships", getAllMemberships);
+MemeberShipRouter.get("/memberships", getIdUser, getAllMemberships);
 MemeberShipRouter.get("/memberships/:id", getMembershipById);
 MemeberShipRouter.put(
   "/memberships/:id",

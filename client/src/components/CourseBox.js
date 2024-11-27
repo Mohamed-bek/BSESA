@@ -10,7 +10,7 @@ function CourseBox({
 }) {
   return (
     <div
-      className={`flex-1 max-w-[300px] h-full ShadowCLass pb-3 rounded-lg overflow-hidden ${
+      className={`flex-1 max-w-[300px] h-[420px] ShadowCLass pb-3 rounded-lg overflow-hidden ${
         color === "white"
           ? "bg-blackColor text-whiteColor"
           : "bg-whiteColor text-blackColor"
