@@ -101,12 +101,7 @@ export const toggleLikeBlogPost = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
 
-    const blog = await Blog.findById(id)
-      .populate("categories", "name")
-      .populate({
-        path: "comments",
-        populate: { path: "author", select: "firstName lastName image" }, // Optional: Populate comment author details
-      });
+    const blog = await Blog.findById(id);
 
     if (!blog) return res.status(404).json({ error: "Blog not found" });
 
@@ -117,30 +112,27 @@ export const toggleLikeBlogPost = async (req, res) => {
         (like) => like.toString() !== userId.toString()
       );
       await blog.save();
-      return res.status(200).json({ message: "like", blog });
+      return res.status(200).json({ message: "like" });
     } else {
       blog.likes.push(userId);
       await blog.save();
-      return res.status(200).json({ message: "unlike", blog });
+      return res.status(200).json({ message: "unlike" });
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ err: "Failed to toggle like", details: error });
+    res.status(500).json({ error: error.message });
   }
 };
 
 export const addCommentToBlog = async (req, res) => {
   try {
-    const { id } = req.params; // Blog post ID
+    const { id } = req.params;
     const { content } = req.body;
     const newComment = new Comment({ post: id, author: req.user.id, content });
     const savedComment = await newComment.save();
-
     const blog = await Blog.findById(id);
     blog.comments.push(savedComment._id);
     await blog.save();
-
-    res.status(201).json({ comment: savedComment });
+    res.status(201).json({ message: "Success" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ err: "Failed to add comment", details: error });

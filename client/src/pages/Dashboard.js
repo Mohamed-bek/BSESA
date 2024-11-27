@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 
 const Dashboard = ({ links }) => {
-  const { logout } = useUserStore();
+  const { logout, user } = useUserStore();
   const navigate = useNavigate();
   const logOut = async () => {
     try {
@@ -21,7 +21,11 @@ const Dashboard = ({ links }) => {
     }
   };
   return (
-    <div className="w-full h-dvh bg-blackColor p-5 pl-0">
+    <div
+      className={`w-full h-dvh bg-blackColor p-5 pl-0 ${
+        user?.role === "admin" ? null : "pt-[110px]"
+      }`}
+    >
       <div className="h-full w-full  flex items-center flex-wrap  ">
         <div className="w-fit h-full bg-transparent flex justify-center items-center">
           <div className="w-full">

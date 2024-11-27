@@ -6,6 +6,7 @@ import { useUserStore } from "../context/UserContext";
 const Plans = () => {
   const { user } = useUserStore();
   const [plans, setPlans] = useState([]);
+  const [IsUserMemberships, setIsUserMemberships] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedDuration, setSelectedDuration] = useState("month");
@@ -17,9 +18,9 @@ const Plans = () => {
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/memberships"
         );
-        console.log(data);
         setPlans(data.plans);
         setLoading(false);
+        setIsUserMemberships(data.IsUserMemberships | null);
       } catch (err) {
         console.error("Error fetching plans:", err);
         setError("Failed to load plans. Please try again later.");
@@ -44,7 +45,7 @@ const Plans = () => {
         {filteredPlans.map((plan, i) => (
           <div
             key={plan._id}
-            className={`border relative text-blackColor mt-5 rounded-lg py-10 shadow-md w-[350px] hover:shadow-lg transition bg-white px-4 pt-12 ${
+            className={`border relative text-blackColor mt-5 rounded-lg py-5 shadow-md w-[350px] hover:shadow-lg transition bg-white px-4 pt-12 ${
               i === 1 && filteredPlans.length === 3 ? "-translate-y-4" : ""
             } `}
           >
@@ -54,7 +55,7 @@ const Plans = () => {
                 Most Popular{" "}
               </div>
             )}
-            <h3 className="text-lg font-semibold text-[2.75rem] mb-5 text-center">
+            <h3 className="font-semibold text-[2.75rem] mb-3 text-center">
               {plan.name}
             </h3>
             <p className="text-[1.2rem] overflow-hidden text-blackColor text-center">
@@ -100,6 +101,10 @@ const Plans = () => {
 
   return (
     <div className="p-6 w-full mx-auto pt-[100px] bg-secondary min-h-[100dvh] overflow-y-auto">
+      <div className="w-[400px] px-5 py-5">
+        You Have Already A {IsUserMemberships?.membershipId?.name} Membership
+        For a {IsUserMemberships?.membershipId?.duration}
+      </div>
       <h2 className="text-[3rem] font-semibold capitalize text-black text-center mb-2">
         Pick your perfect plan
       </h2>

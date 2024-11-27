@@ -42,26 +42,35 @@ const CertificateList = () => {
     );
 
   return (
-    <div className="p-4 bg-blackColor text-white w-full h-full">
+    <div className="p-4 bg-whiteColor text-blackColor w-full h-full">
+      {certificates.length === 0 && (
+        <div className="w-full h-full flex justify-center items-center">
+          <h1 className=" text-[1.5rem] md:text-[4rem] text-center px-5">
+            {" "}
+            You Don't Have A Certificate{" "}
+          </h1>{" "}
+        </div>
+      )}
       <div className="flex flex-wrap justify-start items-center gap-5 ">
-        {certificates.map((certificate, index) => (
-          <div
-            key={certificate.id || index}
-            className="w-[250px] HeaderShadow rounded-lg overflow-hidden bg-white shadow pb-2"
-          >
-            <img src={certificate?.courseId?.thumbnail} className="w-full" />
-            <h2 className="text-lg  text-blackColor text-center px-1 mb-2 font-semibold">
-              {certificate?.courseId?.title}
-            </h2>
-            <a
-              href={certificate?.certificate}
-              target="_blank"
-              className="bg-secondary text-black cursor-pointer w-[90%] mx-auto block py-2 text-center rounded-lg"
+        {certificates.length > 0 &&
+          certificates.map((certificate, index) => (
+            <div
+              key={certificate.id || index}
+              className="w-[250px] HeaderShadow rounded-lg overflow-hidden bg-white shadow pb-2"
             >
-              View PDF
-            </a>
-          </div>
-        ))}
+              <img src={certificate?.courseId?.thumbnail} className="w-full" />
+              <h2 className="text-lg  text-blackColor text-center px-1 mb-2 font-semibold">
+                {certificate?.courseId?.title}
+              </h2>
+              <a
+                href={certificate?.certificate}
+                target="_blank"
+                className="bg-secondary text-black cursor-pointer w-[90%] mx-auto block py-2 text-center rounded-lg"
+              >
+                View PDF
+              </a>
+            </div>
+          ))}
       </div>
     </div>
   );

@@ -160,7 +160,9 @@ const Page = () => {
       <div className="container rounded-xl flex justify-center gap-5 gap-y-5 items-stretch flex-wrap py-5 pt-4 pb-20">
         {courses?.length > 0 &&
           courses.map((course) => (
-            <CourseBox key={course._id} course={course} color="black" />
+            <div>
+              <CourseBox key={course._id} course={course} color="black" />
+            </div>
           ))}
         {courses?.length === 0 && (
           <h1 className="text-[5rem] text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

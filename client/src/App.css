@@ -400,6 +400,9 @@ body {
   transform: translate(-50%, -70%) rotate(22deg); /* Rotate the square to make it a diamond */
   z-index: -1;
 }
+.course-item {
+  max-width: 330px !important;
+}
 
 .dshb.active {
   /* background-color: var(--secondary-color); */

@@ -87,7 +87,6 @@ export const stripeWebhook = async (req, res) => {
 
     // Handle successful subscription payment
     if (event.type === "invoice.payment_succeeded") {
-      console.log("Payment successful");
       const invoice = event.data.object;
       const subscriptionId = invoice.subscription; // Assuming this is the subscription ID from Stripe
       const email = invoice.customer_email; // Assuming the email is passed along

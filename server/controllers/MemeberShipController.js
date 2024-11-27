@@ -1,4 +1,5 @@
 import Membership from "../models/MemeberShipModel.js";
+import UserMembership from "../models/UserMembership.js";
 
 export const createMembership = async (req, res) => {
   try {
@@ -40,6 +41,14 @@ export const createMembership = async (req, res) => {
 export const getAllMemberships = async (req, res) => {
   try {
     const memberships = await Membership.find();
+    if (req.userId) {
+      const IsUserMemberships = await UserMembership.findOne({
+        userId: req.userId,
+        status: "active",
+      }).populate({ path: "membershipId", select: "name duration" });
+      if (IsUserMemberships)
+        return res.status(200).json({ plans: memberships, IsUserMemberships });
+    }
     res.status(200).json({ plans: memberships });
   } catch (error) {
     res

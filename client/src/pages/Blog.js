@@ -32,11 +32,25 @@ function Blog() {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [comment, setComment] = useState(null);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likes, setLikes] = useState(0);
 
   const AddComment = async () => {
+    if (!user) return;
     if (!comment || comment === "") return;
+    const commentId = Date.now().toString();
+    blog.comments.push({
+      _id: commentId,
+      content: comment,
+      createdAt: Date.now(),
+      author: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        image: user.image,
+      },
+    });
     try {
-      const { data } = await axios.put(
+      await axios.put(
         "https://bsesa-ksem.vercel.app/blog/comment/" + id,
         {
           content: comment,
@@ -45,14 +59,18 @@ function Blog() {
           withCredentials: true,
         }
       );
-      blog.comments.push(data.comment);
       setComment("");
     } catch (error) {
+      blog.comments = blog.comments.filter(
+        (comment) => comment._id !== commentId
+      );
       console.log(error);
     }
   };
 
   const likeBlog = async () => {
+    setLikes(isLiked ? likes - 1 : likes + 1);
+    setIsLiked(!isLiked);
     try {
       const { data } = await axios.put(
         "https://bsesa-ksem.vercel.app/blog/like/" + id,
@@ -63,6 +81,9 @@ function Blog() {
       );
       setBlog(data.blog);
     } catch (error) {
+      setLikes(!isLiked ? likes - 1 : likes + 1);
+      setIsLiked(!isLiked);
+      setLikes(likes - 1);
       console.log(error);
     }
   };
@@ -73,13 +94,15 @@ function Blog() {
         "https://bsesa-ksem.vercel.app/blog/" + id
       );
       setBlog(data.blog);
+      setIsLiked(blog?.likes?.includes(user?._id));
+      setLikes(blog?.likes?.length | 0);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     GetBlog();
-    console.log("GetBlog called");
+    console.log("Success");
   }, [id]);
   return (
     <div className="w-full min-h-[100dvh]  px-10 pt-[120px] pb-10 bg-whiteColor">
@@ -100,19 +123,14 @@ function Blog() {
             <h1 className="text-[1.5rem] font-medium pl-1"> {blog?.title} </h1>
             <p
               className={`text-center ${
-                blog?.likes?.includes(user?._id)
-                  ? "text-[red]"
-                  : "text-gray-700"
+                isLiked ? "text-[red]" : "text-gray-700"
               }`}
             >
               <HiHeart
                 onClick={() => (user ? likeBlog() : navigate("/login"))}
                 className={`text-[1.8rem] cursor-pointer `}
               />
-              <span className="block text-[0.9rem] -mt-1">
-                {" "}
-                {blog?.likes?.length | 0}{" "}
-              </span>
+              <span className="block text-[0.9rem] -mt-1"> {likes} </span>
             </p>
           </div>
           <h2 className="text-[1.25rem] font-bold mb-3 pl-1"> Summary : </h2>
@@ -127,7 +145,10 @@ function Blog() {
           </h2>
           <div className="px-2 h-[calc(100%-95px)] overflow-y-auto border-l border-b border-r border-solid border-gray-300">
             {blog?.comments.map((comment) => (
-              <div className="py-2 flex justify-start items-center gap-4">
+              <div
+                key={comment?._id}
+                className="py-2 flex justify-start items-center gap-4"
+              >
                 <div className="w-12 h-12 rounded-full overflow-hidden">
                   <img src={comment?.author?.image} className="w-full h-full" />
                 </div>

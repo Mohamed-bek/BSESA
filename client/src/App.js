@@ -106,7 +106,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/dashboard" element={<Dashboard links={links} />}>
-          <Route path="" element={<AdminStat />} />
+          <Route
+            path=""
+            element={user?.role === "admin" ? <AdminStat /> : <Profile />}
+          />
           <Route path="certificates" element={<CertificateList />} />
           <Route path="my-courses" element={<MyCourses />} />
           <Route path="new-video" element={<AddVideo />} />

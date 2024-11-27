@@ -35,7 +35,7 @@ function PopulairCourses({ courses, headerText }) {
             const index = parseInt(entry.target.dataset.index);
             setTimeout(() => {
               setVisibleIndexes((prev) => [...new Set([...prev, index])]);
-            }, index * 150); // Stagger by index
+            }, index * 100); // Stagger by index
           }
         });
       },
@@ -64,7 +64,7 @@ function PopulairCourses({ courses, headerText }) {
             key={`${headerText}-${course._id}-${index}`}
             data-index={index}
             data-header={headerText}
-            className={`course-item transform flex-1 min-w-[250px] max-w-[300px] transition-all duration-1000 ease-out ${
+            className={`course-item transform flex-1 w-[300px] transition-all duration-1000 ease-out ${
               visibleIndexes.includes(index)
                 ? "translate-y-0 opacity-100"
                 : "translate-y-40 opacity-0"
