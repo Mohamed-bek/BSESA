@@ -51,10 +51,11 @@ const CreateCourse = () => {
         title: "",
         description: "",
         price: null,
-        categorys: [],
-        published: true,
+        publicshed: true,
       });
       setImagePreview(null);
+      setImageFile(null);
+      setSelectedCategories([]);
       setErr(false);
       setMessage("Course Created Successfully");
       setIcon(<FaCheck />);

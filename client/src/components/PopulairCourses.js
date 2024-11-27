@@ -58,13 +58,13 @@ function PopulairCourses({ courses, headerText }) {
   return (
     <div className="rounded-xl container h-fit bg-secondary text-blackColor py-5 pb-10 overflow-y-hidden">
       <h1 className="text-[2.8rem] font-bold mb-8 text-center">{headerText}</h1>
-      <div className="w-full px-8 flex justify-center items-stretch gap-5 flex-wrap">
+      <div className="w-full px-5 flex justify-center items-stretch gap-5 flex-wrap">
         {courses.map((course, index) => (
           <div
             key={`${headerText}-${course._id}-${index}`}
             data-index={index}
             data-header={headerText}
-            className={`course-item transform flex-1 w-[300px] transition-all duration-1000 ease-out ${
+            className={`course-item transform flex-1 w-[290px] transition-all duration-1000 ease-out ${
               visibleIndexes.includes(index)
                 ? "translate-y-0 opacity-100"
                 : "translate-y-40 opacity-0"
