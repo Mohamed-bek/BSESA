@@ -70,7 +70,7 @@ const Blogs = () => {
   const navRef = useRef(null);
 
   return (
-    <div className="w-full bg-secondary relative pt-[100px] min-h-[100vh] z-10 flex justify-between flex-wrap">
+    <div className="w-full  bg-secondary relative pt-[100px] min-h-[100vh] z-10 flex justify-between flex-wrap">
       <nav
         ref={navRef}
         className="fixed pt-40 duration-500 h-[100vh] top-[0px] left-0 -translate-x-full bg-blackColor text-white w-full md:w-[300px] z-[99999999999999]"
@@ -117,7 +117,7 @@ const Blogs = () => {
           <Link to="/add-plat">Add Course</Link> <MdAdd />
         </h1>
       )}
-      <div className="w-full pb-20 container rounded-xl flex justify-center gap-5 gap-y-5 items-start flex-wrap pt-5">
+      <div className="w-full pb-20 xl:w-[90%] mx-auto rounded-xl flex justify-center gap-5 gap-y-5 items-start flex-wrap pt-5">
         {blogs?.length > 0 &&
           blogs.map((blog) => (
             <BlogBox key={blog._id} blog={blog} color="black" />

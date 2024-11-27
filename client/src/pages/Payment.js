@@ -56,17 +56,19 @@ function Payment() {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-white flex flex-col items-center justify-center pt-[120px]">
-      <h1 className="text-[1.5rem] font-bold mb-4">
-        Stripe Payment Integration
-      </h1>
-      {clientSecret ? (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm clientSecret={clientSecret} />
-        </Elements>
-      ) : (
-        <p>Loading payment form...</p>
-      )}
+    <div className="w-full min-h-screen bg-white flex flex-col items-center justify-center pt-[100px]">
+      <div className=" -translate-y-5">
+        <h1 className="text-[1.5rem] text-center font-bold mb-4">
+          Stripe Payment Integration
+        </h1>
+        {clientSecret ? (
+          <Elements stripe={stripePromise} options={{ clientSecret }}>
+            <CheckoutForm clientSecret={clientSecret} />
+          </Elements>
+        ) : (
+          <p>Loading payment form...</p>
+        )}
+      </div>
     </div>
   );
 }

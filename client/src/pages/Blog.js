@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HiHeart } from "react-icons/hi2";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUserStore } from "../context/UserContext";
-import { FaRegEye } from "react-icons/fa";
+import { FaHeart, FaRegEye } from "react-icons/fa";
 
 function timeAgo(createdAt) {
   const now = new Date();
@@ -28,6 +28,7 @@ function timeAgo(createdAt) {
 
 function Blog() {
   const navigate = useNavigate();
+  const likeRef = useRef(null);
   const { user } = useUserStore();
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
@@ -79,7 +80,6 @@ function Blog() {
           withCredentials: true,
         }
       );
-      setBlog(data.blog);
     } catch (error) {
       setLikes(!isLiked ? likes - 1 : likes + 1);
       setIsLiked(!isLiked);
@@ -94,8 +94,8 @@ function Blog() {
         "https://bsesa-ksem.vercel.app/blog/" + id
       );
       setBlog(data.blog);
-      setIsLiked(blog?.likes?.includes(user?._id));
-      setLikes(blog?.likes?.length | 0);
+      setIsLiked(data.blog?.likes?.includes(user?._id));
+      setLikes(data.blog?.likes?.length | 0);
     } catch (error) {
       console.log(error);
     }
@@ -105,24 +105,45 @@ function Blog() {
     console.log("Success");
   }, [id]);
   return (
-    <div className="w-full min-h-[100dvh]  px-10 pt-[120px] pb-10 bg-whiteColor">
-      <div className="w-full h-[calc(100dvh-160px)] flex justify-center items-stretch ">
-        <div className="w-[55%] relative h-full">
-          <div className=" absolute top-2 right-2 z-10 text-[1.35rem] text-center gap-1 p-1 text-white rounded-lg">
-            <FaRegEye className=" " />
+    <div className="w-full min-h-[100dvh] px-3 md:px-10 pt-[110px] pb-10 bg-whiteColor">
+      <div className="w-full min-h-[calc(100dvh-160px)] flex justify-center items-stretch flex-wrap">
+        <div className="w-full md:w-[55%] min-w-[350px] relative h-full">
+          <div className=" absolute top-2 left-2 md:right-2 z-10 w-fit  text-[1.5rem] text-center gap-1 p-1 text-white rounded-lg">
+            <FaRegEye className=" mx-auto block" />
             <span className="text-[0.9rem] -mt-1 block">
               {" "}
               {blog?.views | 0}{" "}
             </span>
           </div>
-          <img
-            className="w-full max-h-[430px] rounded-xl mb-2"
-            src={blog?.thumbnailUrl}
-          />
+          <div className="relative">
+            <div
+              className={`absolute right-2 top-1 md:hidden text-center w-fit ${
+                isLiked ? "text-[red]" : "text-gray-700"
+              }`}
+            >
+              <HiHeart
+                onClick={(e) => {
+                  user ? likeBlog() : navigate("/login");
+                }}
+                className={`  text-[1.8rem] cursor-pointer`}
+              />
+              <span className="block mx-auto -mt-1 text-[1.1rem] font-semibold">
+                {" "}
+                {likes}{" "}
+              </span>
+            </div>
+            <img
+              className="w-full max-h-[430px] rounded-xl mb-2"
+              src={blog?.thumbnailUrl}
+            />
+          </div>
           <div className="flex justify-between gap-5">
-            <h1 className="text-[1.5rem] font-medium pl-1"> {blog?.title} </h1>
+            <h1 className="text-[1.5rem] text-center md:text-left font-medium pl-1">
+              {" "}
+              {blog?.title}{" "}
+            </h1>
             <p
-              className={`text-center ${
+              className={`hidden md:block text-center ${
                 isLiked ? "text-[red]" : "text-gray-700"
               }`}
             >
@@ -133,17 +154,20 @@ function Blog() {
               <span className="block text-[0.9rem] -mt-1"> {likes} </span>
             </p>
           </div>
-          <h2 className="text-[1.25rem] font-bold mb-3 pl-1"> Summary : </h2>
-          <p className="text-[1.1rem] leading-7 font-medium px-1 w-11/12">
+          <h2 className="text-[1.25rem] font-bold mt-5 text-center md:text-left mb-3 pl-1">
+            {" "}
+            Summary{" "}
+          </h2>
+          <p className="text-[1.2rem] mb-5 md:mb-0 leading-7 font-medium px-1 w-11/12 md:text-left text-center fo">
             {blog?.content}
           </p>
         </div>
-        <div className="w-[45%] h-full px-4 ">
+        <div className="w-full md:w-[45%] h-full px-4 ">
           <h2 className="h-[50px] py-2 px-2 text-[1.3rem] border border-solid border-gray-300">
             {" "}
             Comments{" "}
           </h2>
-          <div className="px-2 h-[calc(100%-95px)] overflow-y-auto border-l border-b border-r border-solid border-gray-300">
+          <div className="px-2 max-h-[500px] md:max-h-[100%]  h-[calc(100%-95px)] overflow-y-auto border-l border-b border-r border-solid border-gray-300">
             {blog?.comments.map((comment) => (
               <div
                 key={comment?._id}

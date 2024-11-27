@@ -90,23 +90,23 @@ function Blog() {
     console.log("GetBlog called");
   }, [id]);
   return (
-    <div className="w-full min-h-[100dvh]  px-10 pt-[120px] pb-10 bg-whiteColor">
-      <div className="w-full min-h-[calc(100dvh-160px)] flex justify-center items-stretch ">
-        <div className="w-[55%] relative h-full">
+    <div className="w-full h-fit md:min-h-[100dvh] px-3 md:px-10 pt-[120px] pb-10 bg-whiteColor">
+      <div className="w-full min-h-[calc(100dvh-160px)] flex flex-wrap justify-center items-stretch ">
+        <div className="w-full md:w-[55%] relative h-full">
           <img
             className="w-full max-h-[430px] rounded-xl mb-2"
             src={course?.thumbnail}
           />
           <div className="flex justify-between gap-5">
-            <h1 className="text-[1.8rem] font-medium pl-1">
+            <h1 className="text-center md:text-left text-[1.8rem] font-medium pl-1">
               {" "}
               {course?.title}{" "}
             </h1>
           </div>
-          <p className="text-[1.1rem] leading-7 font-medium px-1 w-11/12">
+          <p className="text-[1.1rem] text-center md:text-left leading-7 font-medium px-1 w-11/12">
             {course?.description}
           </p>
-          <div className="flex items-center justify-start gap-4 mt-5">
+          <div className="flex w-fit mx-auto md:ml-0 items-cente my-5 justify-start gap-4">
             {!isPurchased && (
               <Link
                 to={user ? "/payment/" + course?._id : "/login"}
@@ -123,12 +123,12 @@ function Blog() {
             </Link>
           </div>
         </div>
-        <div className="w-[45%] h-full px-4 ">
+        <div className="w-full md:w-[45%] h-fit md:h-full px-4 ">
           <h2 className="h-[50px] py-2 px-2 text-[1.3rem] border border-solid border-gray-400">
             {" "}
             Videos
           </h2>
-          <div className="px-2 h-[calc(100%-95px)] overflow-y-auto border-l border-b border-r border-solid border-gray-400">
+          <div className="px-2 h-fit max-h-[700px] md:h-[calc(100%-95px)] overflow-y-auto border-l border-b border-r border-solid border-gray-400">
             {course?.videos.map((video) => (
               <Link
                 title={!isPurchased ? "You Have To purchase The Course" : null}
@@ -157,7 +157,7 @@ function Blog() {
                     <h2 className="text-[1.4rem] lowercase font-medium">
                       {video?.title}
                     </h2>
-                    <span className="ml-4 text-[0.8rem] font-bold text-gray-800">
+                    <span className="ml-4 hidden md:block text-[0.8rem] font-bold text-gray-800">
                       {timeAgo(video?.createdAt)}
                     </span>
                   </div>
@@ -169,6 +169,9 @@ function Blog() {
                 </div>
               </Link>
             ))}
+            {(course?.videos?.length === 0 || !course?.videos) && (
+              <h1 className="text-[1.8rem] mx-1"> No Videos Available </h1>
+            )}
           </div>
           {/* <div className="flex justify-center items-stretch border-l border-b border-r border-solid border-gray-400">
             <input
@@ -188,7 +191,7 @@ function Blog() {
           </div> */}
         </div>
       </div>
-      <div></div>
+      {/* <div></div> */}
     </div>
   );
 }

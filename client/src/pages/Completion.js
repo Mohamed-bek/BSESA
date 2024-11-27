@@ -11,8 +11,8 @@ const Completion = () => {
   const redirectStatus = searchParams.get("redirect_status");
 
   return (
-    <div className="flex flex-col items-center justify-center h-[100dvh] w-full bg-secondary ">
-      <div className="bg-white p-8 rounded-lg shadow-md text-center">
+    <div className="flex px-2 flex-col items-center justify-center h-[100dvh] w-full bg-secondary ">
+      <div className="bg-white p-5 md:p-8 rounded-lg shadow-md text-center">
         <h1 className="text-2xl font-bold mb-4">Payment Status</h1>
 
         {redirectStatus === "succeeded" ? (

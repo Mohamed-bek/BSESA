@@ -54,7 +54,7 @@ export default function CheckoutForm({ clientSecret, course }) {
   };
 
   return (
-    <div className="w-full h-[100vh] flex justify-center overflow-auto">
+    <div className="w-full h-fit shadow-lg flex justify-center overflow-auto">
       <form
         className="bg-white text-black text-[2rem] min-w-[400px] max-w-[800px] font-bold p-6 rounded-lg shadow-lg overflow-y-auto h-fit"
         onSubmit={handleSubmit}

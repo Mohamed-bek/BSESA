@@ -40,6 +40,7 @@ export const createMembership = async (req, res) => {
 
 export const getAllMemberships = async (req, res) => {
   try {
+    const c = 0;
     const memberships = await Membership.find();
     if (req.userId) {
       const IsUserMemberships = await UserMembership.findOne({

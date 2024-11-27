@@ -20,7 +20,7 @@ MemeberShipRouter.post(
   createMembership
 );
 MemeberShipRouter.get("/memberships", getIdUser, getAllMemberships);
-MemeberShipRouter.get("/memberships/:id", getMembershipById);
+MemeberShipRouter.get("/membership/:id", getMembershipById);
 MemeberShipRouter.put(
   "/memberships/:id",
   authenticateToken,

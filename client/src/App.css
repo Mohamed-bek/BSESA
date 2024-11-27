@@ -505,3 +505,24 @@ body {
     letter-spacing: 20px;
   }
 }
+
+.likeActive {
+  animation: like 1s ease-in-out forwards;
+}
+@keyframes like {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+}

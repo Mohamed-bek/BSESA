@@ -35,6 +35,7 @@ export const authorizeRoles = (allowedRoles) => {
 
 export const getIdUser = (req, res, next) => {
   try {
+    console.log("Getting user");
     const { accessToken } = req.cookies;
     if (!accessToken) return next();
 
