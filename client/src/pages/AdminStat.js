@@ -220,11 +220,11 @@ function AdminStat() {
             <h1 className="text-[1.15rem] text-center "> Total users </h1>
             <h1 className="text-[2rem] font-bold text-center">
               {" "}
-              {users?.total | 1000}{" "}
+              {users?.total || 0}{" "}
             </h1>
             <p className="bg-primaryTra  text-primary text-[0.9rem] flex justify-center items-center gap-1 rounded-full px-3 py-1">
               {" "}
-              <FaPlus /> {users?.today | 0} user{" "}
+              <FaPlus /> {users?.today || 0} user{" "}
             </p>
           </div>
         </div>
@@ -236,11 +236,11 @@ function AdminStat() {
             <h1 className="text-[1.15rem] text-center "> Total courses </h1>
             <h1 className="text-[2rem] font-bold text-center">
               {" "}
-              {courses?.total | 1000}{" "}
+              {courses?.total || 0}{" "}
             </h1>
             <p className="bg-primaryTra  text-primary text-[0.9rem] flex justify-center items-center gap-1 rounded-full px-3 py-1">
               {" "}
-              <FaPlus /> {courses?.today | 0} course{" "}
+              <FaPlus /> {courses?.today || 0} course{" "}
             </p>
           </div>
         </div>
@@ -252,11 +252,11 @@ function AdminStat() {
             <h1 className="text-[1.15rem] text-center "> Total blogs </h1>
             <h1 className="text-[2rem] font-bold text-center">
               {" "}
-              {blogs?.total | 1000}{" "}
+              {blogs?.total || 0}{" "}
             </h1>
             <p className="bg-primaryTra  text-primary text-[0.9rem] flex justify-center items-center gap-1 rounded-full px-3 py-1">
               {" "}
-              <FaPlus /> {blogs?.today | 0} blog{" "}
+              <FaPlus /> {blogs?.today || 0} blog{" "}
             </p>
           </div>
         </div>
@@ -268,11 +268,11 @@ function AdminStat() {
             <h1 className="text-[1.15rem] text-center "> Total conferences </h1>
             <h1 className="text-[2rem] font-bold text-center">
               {" "}
-              {conferences?.total | 1000}{" "}
+              {conferences?.total || 0}{" "}
             </h1>
             <p className="bg-primaryTra  text-primary text-[0.9rem] flex justify-center items-center gap-1 rounded-full px-3 py-1">
               {" "}
-              <FaPlus /> {conferences?.today | 0} conference{" "}
+              <FaPlus /> {conferences?.today || 0} conference{" "}
             </p>
           </div>
         </div>
@@ -284,11 +284,11 @@ function AdminStat() {
             <h1 className="text-[1.15rem] text-center "> Total orders </h1>
             <h1 className="text-[2rem] font-bold text-center">
               {" "}
-              {orders?.total | 1000}{" "}
+              {orders?.total || 1000}{" "}
             </h1>
             <p className="bg-primaryTra  text-primary text-[0.9rem] flex justify-center items-center gap-1 rounded-full px-3 py-1">
               {" "}
-              <FaPlus /> {orders?.today | 0} order{" "}
+              <FaPlus /> {orders?.today || 0} order{" "}
             </p>
           </div>
         </div>
