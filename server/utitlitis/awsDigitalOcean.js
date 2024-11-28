@@ -18,7 +18,7 @@ const s3 = new AWS.S3({
 export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
   const params = {
     Bucket: process.env.DO_SPACE_NAME,
-    Key: `${Date.now()}-${filename}`,
+    Key: filename,
     Expires: 60 * 60 * 24,
     ContentType: contentType,
     ACL: isPrivate ? "private" : "public-read",
