@@ -9,7 +9,6 @@ PageRouter.post(
   "/pages/hero",
   authenticateToken,
   authorizeRoles(["admin"]),
-  uploadLargeFiles.single("file"),
   createOrUpdateHero
 );
 

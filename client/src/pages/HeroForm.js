@@ -24,17 +24,20 @@ const HeroForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) {
-      return;
-    }
 
     const formDataToSend = new FormData();
+    if (file) {
+      formData.append("filename", file.name);
+      formData.append("contentType", file.type);
+    } else {
+      alert("Please upload a video before submitting.");
+      return;
+    }
     formDataToSend.append("name", formData.name);
     formDataToSend.append("h1", formData.h1);
     formDataToSend.append("p", formData.p);
     formDataToSend.append("link", formData.link);
     formDataToSend.append("asset_type", formData.asset_type);
-    formDataToSend.append("file", file);
 
     try {
       const { data } = await axios.post(
@@ -44,6 +47,15 @@ const HeroForm = () => {
           withCredentials: true,
         }
       );
+      console.log("Url : ", data.url);
+      const response = await axios.put(data?.url, file, {
+        headers: {
+          "Content-Type": file.type,
+          "x-amz-acl": "public-read",
+        },
+      });
+      console.log("Response: " + response);
+
       setMessageData({
         message: "Hero Page Updated Successfully",
         icon: <FaCheck />,

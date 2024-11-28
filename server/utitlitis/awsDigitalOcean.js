@@ -11,10 +11,15 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
 });
 
-export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
+export const GetVideoUrl = async (
+  filename,
+  contentType,
+  isPrivate = false,
+  folder = "coursesVideos"
+) => {
   const params = {
     Bucket: process.env.DO_SPACE_NAME,
-    Key: `uploads/${Date.now()}-${filename}`,
+    Key: `${folder}/${Date.now()}-${filename}`,
     Expires: 60 * 60 * 24,
     ACL: isPrivate ? "private" : "public-read", // Set file permissions
     ContentType: contentType,
