@@ -48,7 +48,7 @@ const HeroForm = () => {
             "x-amz-acl": "public-read",
           },
         });
-        console.log("Response: " + response);
+        console.log("Response: ", ...response);
       }
 
       setMessageData({
