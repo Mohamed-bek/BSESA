@@ -5,22 +5,17 @@ import uploadToSpaces, {
 
 export const createOrUpdateHero = async (req, res) => {
   try {
-    console.log("Creating");
     const { asset_type, name, h1, p, link } = req.body;
     const page = await Page.findOne({ name });
     const file = req.file;
-    console.log("Creating file");
     if (page) {
       h1 && (page.h1 = h1);
       p && (page.p = p);
       link && (page.link = link);
-      console.log("Creating file with page exist : ", page.h1);
       if (file && asset_type) {
-        console.log("file and asset_type");
-        page.asset?.url ? await deleteFromSpaces(url) : null;
-        console.log("Start Uploading file To Spaces");
+        const oldPath = page.asset?.url;
+        if (oldPath) await deleteFromSpaces(oldPath);
         const url = await uploadToSpaces(file, "/heroSection", true);
-        console.log("Uploading file To Spaces");
         page.asset = {
           asset_type,
           url,
