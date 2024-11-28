@@ -37,9 +37,7 @@ export const createOrUpdateHero = async (req, res) => {
       h1,
       asset: { asset_type, url },
     });
-    res
-      .status(200)
-      .json({ message: "Create Hero Section Success", page: newPage });
+    res.status(200).json({ message: "Create Hero Section Success", url });
   } catch (error) {
     res.status(500).json({ error: error });
   }
