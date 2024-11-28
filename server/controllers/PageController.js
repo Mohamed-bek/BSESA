@@ -16,16 +16,18 @@ export const createOrUpdateHero = async (req, res) => {
       p && (page.p = p);
       link && (page.link = link);
       if (fileName && contentType && asset_type) {
-        const oldPath = page.asset?.url;
+        const oldPath = page?.asset?.url;
         if (oldPath) await deleteFromSpaces(oldPath);
         const url = await GetVideoUrl(fileName, contentType, false, "/pages");
         page.asset = {
           asset_type,
           url,
         };
+        await page.save();
+        return res.status(200).json({ message: "Updated Success", url });
       }
       await page.save();
-      return res.status(200).json({ message: "Updated Success", url });
+      return res.status(200).json({ message: "Updated Success", url: null });
     }
     if (!fileName || !contentType || !asset_type || !link || !name || !p || !h1)
       return res.status(404).json({ error: "You Have To Upload All the Data" });
@@ -39,7 +41,7 @@ export const createOrUpdateHero = async (req, res) => {
     });
     res.status(200).json({ message: "Create Hero Section Success", url });
   } catch (error) {
-    res.status(500).json({ error: error });
+    res.status(500).json({ error: error.message });
   }
 };
 

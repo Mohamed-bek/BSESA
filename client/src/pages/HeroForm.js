@@ -41,13 +41,15 @@ const HeroForm = () => {
         }
       );
       console.log("Url : ", data.url);
-      const response = await axios.put(data?.url, file, {
-        headers: {
-          "Content-Type": file.type,
-          "x-amz-acl": "public-read",
-        },
-      });
-      console.log("Response: " + response);
+      if (data.url) {
+        const response = await axios.put(data?.url, file, {
+          headers: {
+            "Content-Type": file.type,
+            "x-amz-acl": "public-read",
+          },
+        });
+        console.log("Response: " + response);
+      }
 
       setMessageData({
         message: "Hero Page Updated Successfully",
