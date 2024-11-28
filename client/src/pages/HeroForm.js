@@ -49,7 +49,7 @@ const HeroForm = () => {
         //   },
         // });
         // console.log("Response: ", ...response);
-        const response = await fetch(data.ur, {
+        const response = await fetch(data.url, {
           method: "PUT",
           headers: {
             "Content-Type": file.type,
