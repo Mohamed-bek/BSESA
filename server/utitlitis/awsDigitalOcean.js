@@ -133,15 +133,15 @@ const uploadToSpaces = async (
 //   }
 // };
 
-export const deleteFromSpaces = async (filePath) => {
-  const params = {
-    Bucket: process.env.DO_SPACE_NAME,
-    Key: filePath,
-  };
-
+export const deleteFromSpaces = async (fileUrl) => {
   try {
+    const url = new URL(fileUrl);
+    const filePath = url.pathname.substring(1);
+    const params = {
+      Bucket: process.env.DO_SPACE_NAME,
+      Key: filePath,
+    };
     await s3.deleteObject(params).promise();
-    console.log(`File deleted successfully: ${filePath}`);
   } catch (error) {
     console.error(`Error deleting file: ${error.message}`);
     // throw new Error(`Failed to delete file: ${error.message}`);
