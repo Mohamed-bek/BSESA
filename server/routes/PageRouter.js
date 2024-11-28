@@ -6,7 +6,7 @@ import { uploadLargeFiles } from "../middleware/multerConfig.js";
 const PageRouter = Router();
 
 PageRouter.post(
-  "/page/hero",
+  "/pages/hero",
   authenticateToken,
   authorizeRoles(["admin"]),
   uploadLargeFiles.single("file"),

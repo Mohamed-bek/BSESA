@@ -38,7 +38,7 @@ const HeroForm = () => {
 
     try {
       const { data } = await axios.post(
-        "https://bsesa-ksem.vercel.app/page/hero",
+        "https://bsesa-ksem.vercel.app/pages/hero",
         formDataToSend,
         {
           withCredentials: true,
@@ -52,6 +52,7 @@ const HeroForm = () => {
       });
       setTimeout(() => setShow(false), 1200);
     } catch (err) {
+      console.log(err);
       setMessageData({
         message: "Failed to update Hero Page",
         icon: <FaExclamation />,
