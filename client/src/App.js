@@ -30,6 +30,7 @@ import { FaBloggerB } from "react-icons/fa6";
 import { CgDollar } from "react-icons/cg";
 import { IoVideocam } from "react-icons/io5";
 import AdminStat from "./pages/AdminStat";
+import HeroForm from "./pages/HeroForm";
 
 function App() {
   const { user } = useUserStore();
@@ -71,10 +72,16 @@ function App() {
             href: "/new-blog",
           },
           {
-            id: 6,
+            id: 7,
             name: "New Membership",
             icon: <CgDollar />,
             href: "/new-membership",
+          },
+          {
+            id: 8,
+            name: "Update Heor",
+            icon: <CgDollar />,
+            href: "/update-hero",
           },
         ]
       : [
@@ -117,6 +124,7 @@ function App() {
           <Route path="new-course" element={<CreateCourse />} />
           <Route path="manage-course" element={<AdminCourseManager />} />
           <Route path="new-membership" element={<AddMemberShip />} />
+          <Route path="update-hero" element={<HeroForm />} />
         </Route>
         <Route path="/pricing" element={<Plans />} />
         <Route path="/blogs" element={<Blogs />} />

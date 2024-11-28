@@ -23,4 +23,9 @@ export const useMessageData = create((set) => ({
   setIcon: (newIcon) => set(() => ({ icon: newIcon })),
   setErr: (newErr) => set(() => ({ err: newErr })),
   setShow: (newShow) => set(() => ({ show: newShow })),
+  setMessageData: (data) =>
+    set((state) => ({
+      ...state,
+      ...data,
+    })),
 }));
