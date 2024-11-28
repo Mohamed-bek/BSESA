@@ -21,21 +21,28 @@ const s3 = new AWS.S3({
   accessKeyId: process.env.DO_SPACE_ACCESS_KEY,
   secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
   signatureVersion: "v4",
-  s3ForcePathStyle: true,
-  region: "lon1",
+  region: "lon1", // Explicitly set the region
 });
 
+const DEFAULT_EXPIRATION = 60 * 5; // 5 minutes
+
 export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
+  if (!filename || !contentType) {
+    throw new Error("Filename and contentType are required.");
+  }
+
+  const key = `${Date.now()}-${filename}`;
   const params = {
     Bucket: process.env.DO_SPACE_NAME,
-    Key: `${Date.now()}-${filename}`,
-    Expires: 60 * 5,
+    Key: key,
+    Expires: DEFAULT_EXPIRATION,
     ContentType: contentType,
     ACL: isPrivate ? "private" : "public-read",
   };
 
   try {
-    return await s3.getSignedUrlPromise("putObject", params);
+    const url = await s3.getSignedUrlPromise("putObject", params);
+    return url; // Return both URL and key
   } catch (error) {
     console.error("Detailed Signing Error:", {
       message: error.message,
