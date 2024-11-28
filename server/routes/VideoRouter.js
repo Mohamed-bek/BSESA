@@ -4,7 +4,7 @@ import {
   GetAllVideos,
   GetVideo,
 } from "../controllers/VideoController.js";
-import { upload, uploadLargeFile } from "../middleware/multerConfig.js";
+import { upload } from "../middleware/multerConfig.js";
 import { checkVideoAccess } from "../middleware/CoursesProtection.js";
 import { authenticateToken, authorizeRoles } from "../middleware/Auth.js";
 

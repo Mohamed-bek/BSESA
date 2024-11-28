@@ -29,7 +29,7 @@ const diskStorage = multer.diskStorage({
 });
 
 // Multer middleware for large files
-export const uploadLargeFile = multer({
+export const uploadLargeFiles = multer({
   storage: diskStorage,
   limits: { fileSize: 10 * 1024 * 1024 * 1024 }, // Set max file size (10 GB)
 });

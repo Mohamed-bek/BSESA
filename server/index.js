@@ -15,17 +15,18 @@ import QuizRouter from "./routes/QuizRouter.js";
 import AdminRouter from "./routes/AdminRouter.js";
 import OrderRouter from "./routes/OrderRouter.js";
 import PaymentRouter from "./routes/PaymentRouter.js";
+import { stripeWebhook } from "./controllers/PaymentController.js";
+import ApplicationRouter from "./routes/ApplicationRouter.js";
+import ClubAppRouter from "./routes/ClubAppRouter.js";
+import CoachAppRouter from "./routes/CoachAppRouter.js";
+import ResearchRouter from "./routes/ResearchRouter.js";
+import PageRouter from "./routes/PageRouter.js";
 
 dotenv.config();
 
 const app = express();
 
 // Use PaymentRouter for payment-related routes with raw middleware for webhook
-import { stripeWebhook } from "./controllers/PaymentController.js";
-import ApplicationRouter from "./routes/ApplicationRouter.js";
-import ClubAppRouter from "./routes/ClubAppRouter.js";
-import CoachAppRouter from "./routes/CoachAppRouter.js";
-import ResearchRouter from "./routes/ResearchRouter.js";
 
 const allowedOrigins = ["https://bsesa.vercel.app"];
 
@@ -56,6 +57,7 @@ app.use(PaymentRouter);
 app.use(ClubAppRouter);
 app.use(CoachAppRouter);
 app.use(ApplicationRouter);
+app.use(PageRouter);
 app.use("/researches", ResearchRouter);
 app.use("/admin", AdminRouter);
 
