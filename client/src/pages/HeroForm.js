@@ -42,13 +42,31 @@ const HeroForm = () => {
       );
       console.log("Url : ", data.url);
       if (data.url) {
-        const response = await axios.put(data?.url, file, {
+        // const response = await axios.put(data?.url, file, {
+        //   headers: {
+        //     "Content-Type": file.type,
+        //     "x-amz-acl": "public-read",
+        //   },
+        // });
+        // console.log("Response: ", ...response);
+        const response = await fetch(signedUrl, {
+          method: "PUT",
           headers: {
             "Content-Type": file.type,
             "x-amz-acl": "public-read",
           },
+          body: file,
         });
-        console.log("Response: ", ...response);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Upload failed:", errorText);
+          throw new Error("Upload failed");
+        }
+
+        console.log(response);
+        console.log(...response);
+        console.log(response?.text());
       }
 
       setMessageData({
