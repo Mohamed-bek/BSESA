@@ -43,8 +43,8 @@ export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
     const url = await s3.getSignedUrlPromise("putObject", {
       Bucket: process.env.DO_SPACE_NAME,
       Key: key,
-      ContentType: contentType,
-      ACL: "public-read",
+      // ContentType: contentType,
+      // ACL: "public-read",
       Expires: 3600 * 24 * 60 * 60,
     });
     return url; // Return both URL and key
