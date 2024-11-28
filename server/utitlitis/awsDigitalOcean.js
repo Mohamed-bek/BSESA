@@ -4,39 +4,43 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Configure AWS SDK for DigitalOcean Spaces
-const spacesEndpoint = new AWS.Endpoint("lon1.digitaloceanspaces.com");
+// const spacesEndpoint = new AWS.Endpoint("lon1.digitaloceanspaces.com");
+// const s3 = new AWS.S3({
+//   endpoint: spacesEndpoint,
+//   accessKeyId: process.env.DO_SPACE_ACCESS_KEY,
+//   secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
+//   signatureVersion: "v4",
+//   s3ForcePathStyle: true, // Important for non-AWS S3-compatible services
+//   region: "lon1",
+// });
+
 const s3 = new AWS.S3({
-  endpoint: spacesEndpoint,
+  endpoint: new AWS.Endpoint(
+    process.env.DO_SPACE_ENDPOINT || "lon1.digitaloceanspaces.com"
+  ),
   accessKeyId: process.env.DO_SPACE_ACCESS_KEY,
   secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
   signatureVersion: "v4",
-  region: "lon1", // Add explicit region
+  s3ForcePathStyle: true,
+  region: "lon1",
 });
 
-export const GetVideoUrl = async (
-  filename,
-  contentType,
-  isPrivate = false,
-  folder = "coursesVideos"
-) => {
-  const s3Params = {
+export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
+  const params = {
     Bucket: process.env.DO_SPACE_NAME,
     Key: `${Date.now()}-${filename}`,
     Expires: 60 * 60 * 24,
-    ACL: isPrivate ? "private" : "public-read",
     ContentType: contentType,
+    ACL: isPrivate ? "private" : "public-read",
   };
 
   try {
-    const url = await s3.getSignedUrlPromise("putObject", s3Params);
-    console.log("Full S3 Params:", s3Params);
-    console.log("Generated URL:", url);
-    return url;
+    return s3.getSignedUrl("putObject", params);
   } catch (error) {
-    console.error("Detailed Error:", {
+    console.error("Detailed Signing Error:", {
       message: error.message,
       stack: error.stack,
-      params: s3Params,
+      params,
     });
     throw error;
   }
