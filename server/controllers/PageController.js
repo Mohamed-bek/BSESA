@@ -1,7 +1,9 @@
+import { fstat } from "fs";
 import Page from "../models/Page.js";
 import uploadToSpaces, {
   deleteFromSpaces,
 } from "../utitlitis/awsDigitalOcean.js";
+import fs from "fs";
 
 export const createOrUpdateHero = async (req, res) => {
   try {
@@ -38,7 +40,7 @@ export const createOrUpdateHero = async (req, res) => {
       .status(200)
       .json({ message: "Create Hero Section Success", page: newPage });
   } catch (error) {
-    res.status(500).json({ error: error.name });
+    res.status(500).json({ error: error });
   }
 };
 
