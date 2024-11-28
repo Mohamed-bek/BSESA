@@ -29,13 +29,13 @@ export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
   const params = {
     Bucket: process.env.DO_SPACE_NAME,
     Key: `${Date.now()}-${filename}`,
-    Expires: 60 * 60 * 24,
+    Expires: 60 * 5,
     ContentType: contentType,
     ACL: isPrivate ? "private" : "public-read",
   };
 
   try {
-    return s3.getSignedUrl("putObject", params);
+    return await s3.getSignedUrlPromise("putObject", params);
   } catch (error) {
     console.error("Detailed Signing Error:", {
       message: error.message,
