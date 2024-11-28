@@ -22,9 +22,7 @@ export const createOrUpdateHero = async (req, res) => {
         const url = await GetVideoUrl(Key, contentType);
         page.asset = {
           asset_type,
-          url: `https://${process.env.DO_SPACE_NAME}.${
-            process.env.DO_SPACE_ENDPOINT.split(".")[0]
-          }.cdn.digitaloceanspaces.com/${Key}`,
+          url: `${process.env.DO_PRESIGNED_URL}${Key}`,
         };
         await page.save();
         return res.status(200).json({ message: "Updated Success", url });
@@ -43,9 +41,7 @@ export const createOrUpdateHero = async (req, res) => {
       h1,
       asset: {
         asset_type,
-        url: `https://${process.env.DO_SPACE_NAME}.${
-          process.env.DO_SPACE_ENDPOINT.split(".")[0]
-        }.cdn.digitaloceanspaces.com/${Key}`,
+        url: `${process.env.DO_PRESIGNED_URL}${Key}`,
       },
     });
     res.status(200).json({ message: "Create Hero Section Success", url });

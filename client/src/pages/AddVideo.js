@@ -57,8 +57,8 @@ const AddVideo = () => {
           withCredentials: true,
         }
       );
-      console.log("Url : ", data.video.url);
-      const response = await axios.put(data?.video?.url, videoFile, {
+      console.log("Url : ", data.url);
+      const response = await axios.put(data?.url, videoFile, {
         headers: {
           "Content-Type": videoFile.type,
           "x-amz-acl": "public-read",

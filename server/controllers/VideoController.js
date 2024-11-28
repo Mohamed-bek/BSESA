@@ -18,13 +18,13 @@ export const CreateVideo = async (req, res) => {
       thumbnailFile,
       "/VideoThumbnails"
     );
-
-    const videoUrl = await GetVideoUrl(filename, contentType);
+    const Key = `${Date.now()}-${filename}`;
+    const videoUrl = await GetVideoUrl(Key, contentType);
 
     const newVideo = new Video({
       title,
       description,
-      url: videoUrl,
+      url: `${process.env.DO_PRESIGNED_URL}${Key}`,
       thumbnail: thumbnailUrl,
       links: links ? JSON.parse(links) : [],
     });
@@ -32,7 +32,7 @@ export const CreateVideo = async (req, res) => {
     await newVideo.save();
     res.status(201).json({
       message: "Upload successful and video saved",
-      video: newVideo,
+      url: videoUrl,
     });
   } catch (error) {
     console.error(error);
