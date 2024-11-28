@@ -13,6 +13,6 @@ PageRouter.post(
   createOrUpdateHero
 );
 
-PageRouter.get("/page", authenticateToken, authorizeRoles(["admin"]), getPage);
+PageRouter.get("/page", getPage);
 
 export default PageRouter;

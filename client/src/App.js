@@ -99,7 +99,7 @@ function App() {
     console.log("Cnfition Of : ", !user?.role === "admin" ? "Good" : "Bad");
   });
   return (
-    <div className="App min-h-[100dvh] relative font-roboto overflow-x-hidden w-full bg-blackColor">
+    <div className="App overflow-hidden min-h-[100dvh] relative font-roboto overflow-x-hidden w-full bg-blackColor">
       <Message />
       {user?.role === "admin" ? null : <Header />}
       <Routes>
