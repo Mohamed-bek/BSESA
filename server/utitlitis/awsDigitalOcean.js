@@ -20,7 +20,6 @@ const s3 = new AWS.S3({
   ),
   accessKeyId: process.env.DO_SPACE_ACCESS_KEY,
   secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
-  signatureVersion: "v4",
   region: "lon1", // Explicitly set the region
 });
 
@@ -41,7 +40,13 @@ export const GetVideoUrl = async (filename, contentType, isPrivate = false) => {
   };
 
   try {
-    const url = await s3.getSignedUrlPromise("putObject", params);
+    const url = await s3.getSignedUrlPromise("putObject", {
+      Bucket: process.env.DO_SPACE_NAME,
+      Key: key,
+      ContentType: contentType,
+      ACL: "public-read",
+      Expires: 3600 * 24 * 60 * 60,
+    });
     return url; // Return both URL and key
   } catch (error) {
     console.error("Detailed Signing Error:", {
