@@ -9,6 +9,7 @@ const s3 = new AWS.S3({
   endpoint: spacesEndpoint,
   accessKeyId: process.env.DO_SPACE_ACCESS_KEY,
   secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
+  signatureVersion: "v4",
 });
 
 export const GetVideoUrl = async (
@@ -19,7 +20,7 @@ export const GetVideoUrl = async (
 ) => {
   const s3Params = {
     Bucket: process.env.DO_SPACE_NAME,
-    Key: `${folder}/${Date.now()}-${filename}`,
+    Key: `/${Date.now()}-${filename}`,
     Expires: 60 * 60 * 24,
     ACL: isPrivate ? "private" : "public-read",
     ContentType: contentType,
@@ -27,6 +28,7 @@ export const GetVideoUrl = async (
 
   try {
     const url = await s3.getSignedUrl("putObject", s3Params);
+    console.log("The url Comming Is : ", url);
     return url;
   } catch (error) {
     console.error(`S3 URL Signing Error: ${error.message}`);
