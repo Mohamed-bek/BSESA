@@ -17,7 +17,7 @@ export const GetVideoUrl = async (
   isPrivate = false,
   folder = "coursesVideos"
 ) => {
-  const params = {
+  const s3Params = {
     Bucket: process.env.DO_SPACE_NAME,
     Key: `${folder}/${Date.now()}-${filename}`,
     Expires: 60 * 60 * 24,
@@ -26,13 +26,36 @@ export const GetVideoUrl = async (
   };
 
   try {
-    const url = await s3.getSignedUrlPromise("putObject", params);
+    const url = await s3.getSignedUrl("putObject", s3Params);
     return url;
   } catch (error) {
-    console.error(`Error uploading file to Spaces: ${error.message}`);
-    throw new Error(`Error uploading file: ${error.message}`);
+    console.error(`S3 URL Signing Error: ${error.message}`);
+    throw error;
   }
 };
+
+// export const GetVideoUrl = async (
+//   filename,
+//   contentType,
+//   isPrivate = false,
+//   folder = "coursesVideos"
+// ) => {
+//   const params = {
+//     Bucket: process.env.DO_SPACE_NAME,
+//     Key: `${folder}/${Date.now()}-${filename}`,
+//     Expires: 60 * 60 * 24,
+//     ACL: isPrivate ? "private" : "public-read",
+//     ContentType: contentType,
+//   };
+
+//   try {
+//     const url = await s3.getSignedUrlPromise("putObject", params);
+//     return url;
+//   } catch (error) {
+//     console.error(`Error uploading file to Spaces: ${error.message}`);
+//     throw new Error(`Error uploading file: ${error.message}`);
+//   }
+// };
 
 const uploadToSpaces = async (
   file,
