@@ -4,12 +4,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Configure AWS SDK for DigitalOcean Spaces
-const spacesEndpoint = new AWS.Endpoint(process.env.DO_SPACE_ENDPOINT);
+const spacesEndpoint = new AWS.Endpoint("lon1.digitaloceanspaces.com");
 const s3 = new AWS.S3({
   endpoint: spacesEndpoint,
   accessKeyId: process.env.DO_SPACE_ACCESS_KEY,
   secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
   signatureVersion: "v4",
+  region: "lon1", // Add explicit region
 });
 
 export const GetVideoUrl = async (
@@ -20,18 +21,23 @@ export const GetVideoUrl = async (
 ) => {
   const s3Params = {
     Bucket: process.env.DO_SPACE_NAME,
-    Key: `/${Date.now()}-${filename}`,
+    Key: `${Date.now()}-${filename}`,
     Expires: 60 * 60 * 24,
     ACL: isPrivate ? "private" : "public-read",
     ContentType: contentType,
   };
 
   try {
-    const url = await s3.getSignedUrl("putObject", s3Params);
-    console.log("The url Comming Is : ", url);
+    const url = await s3.getSignedUrlPromise("putObject", s3Params);
+    console.log("Full S3 Params:", s3Params);
+    console.log("Generated URL:", url);
     return url;
   } catch (error) {
-    console.error(`S3 URL Signing Error: ${error.message}`);
+    console.error("Detailed Error:", {
+      message: error.message,
+      stack: error.stack,
+      params: s3Params,
+    });
     throw error;
   }
 };
