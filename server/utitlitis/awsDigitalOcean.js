@@ -120,7 +120,7 @@ export const deleteFromSpaces = async (filePath) => {
     console.log(`File deleted successfully: ${filePath}`);
   } catch (error) {
     console.error(`Error deleting file: ${error.message}`);
-    throw new Error(`Failed to delete file: ${error.message}`);
+    // throw new Error(`Failed to delete file: ${error.message}`);
   }
 };
 
