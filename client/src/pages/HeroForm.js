@@ -59,13 +59,14 @@ const HeroForm = () => {
         });
 
         if (!response.ok) {
+          console.log("Error: ", response);
           const errorText = await response.text();
           console.error("Upload failed:", errorText);
           throw new Error("Upload failed");
         }
 
         console.log(response);
-        console.log(...response);
+        // console.log(...response);
         console.log(response?.text());
       }
 
