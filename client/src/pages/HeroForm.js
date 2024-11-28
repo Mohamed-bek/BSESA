@@ -24,25 +24,18 @@ const HeroForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formDataToSend = new FormData();
-    if (file) {
-      formDataToSend.append("filename", file.name);
-      formDataToSend.append("contentType", file.type);
-    } else {
+    if (!file) {
       alert("Please upload a video before submitting.");
       return;
     }
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("h1", formData.h1);
-    formDataToSend.append("p", formData.p);
-    formDataToSend.append("link", formData.link);
-    formDataToSend.append("asset_type", formData.asset_type);
-
     try {
       const { data } = await axios.post(
         "https://bsesa-ksem.vercel.app/pages/hero",
-        formDataToSend,
+        {
+          ...formData,
+          fileName: file.name,
+          contentType: file.type,
+        },
         {
           withCredentials: true,
         }

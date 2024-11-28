@@ -9,6 +9,7 @@ import fs from "fs";
 export const createOrUpdateHero = async (req, res) => {
   try {
     const { asset_type, name, h1, p, link, fileName, contentType } = req.body;
+    console.log(asset_type, name, h1, p, link, fileName, contentType);
     const page = await Page.findOne({ name });
     if (page) {
       h1 && (page.h1 = h1);

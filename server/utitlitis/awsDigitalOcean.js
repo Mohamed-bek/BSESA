@@ -21,7 +21,7 @@ export const GetVideoUrl = async (
     Bucket: process.env.DO_SPACE_NAME,
     Key: `${folder}/${Date.now()}-${filename}`,
     Expires: 60 * 60 * 24,
-    ACL: isPrivate ? "private" : "public-read", // Set file permissions
+    ACL: isPrivate ? "private" : "public-read",
     ContentType: contentType,
   };
 
