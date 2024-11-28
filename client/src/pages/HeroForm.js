@@ -27,8 +27,8 @@ const HeroForm = () => {
 
     const formDataToSend = new FormData();
     if (file) {
-      formData.append("filename", file.name);
-      formData.append("contentType", file.type);
+      formDataToSend.append("filename", file.name);
+      formDataToSend.append("contentType", file.type);
     } else {
       alert("Please upload a video before submitting.");
       return;
