@@ -8,6 +8,7 @@ import {
   GetPopularCourses,
   addOneVideosToCourse,
   deleteVideoFromCourse,
+  getCoursesForAdmin,
 } from "../controllers/CourseController.js";
 import { upload } from "../middleware/multerConfig.js";
 
@@ -43,5 +44,11 @@ CourseRouter.delete(
 CourseRouter.get("/course/populaire", GetPopularCourses);
 CourseRouter.get("/courses/", getIdUser, GetCoursesByFilter);
 CourseRouter.get("/course/:id", getIdUser, GetCourseById);
+CourseRouter.get(
+  "/admin/courses",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  getCoursesForAdmin
+);
 
 export default CourseRouter;

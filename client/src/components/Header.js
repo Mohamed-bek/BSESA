@@ -13,13 +13,25 @@ function Header() {
       id: 0,
     },
     {
-      name: "Courses",
-      link: "/courses",
+      name: "Services",
+      link: "/services",
+      subLinks: [
+        { name: "Courses", link: "/courses", id: 0 },
+        { name: "Academy Development", link: "#", id: 1 },
+        { name: "Coaches' Immersion", link: "/coaches-immersion", id: 2 },
+        { name: "Team Immersion", link: "/team-immersion", id: 3 },
+      ],
       id: 1,
     },
     {
       name: "Blogs",
       link: "/blogs",
+      subLinks: [
+        { name: "Research", link: "/research", id: 0 },
+        { name: "Blogs", link: "/blogs", id: 1 },
+        { name: "Conferences", link: "/conferences", id: 2 },
+        { name: "Laboratory Visit", link: "#", id: 3 },
+      ],
       id: 2,
     },
     {
@@ -28,15 +40,15 @@ function Header() {
       id: 3,
     },
     {
-      name: "Application",
-      link: "/application",
+      name: "About Us",
+      link: "/about-us",
       id: 4,
     },
   ]);
 
   const toggleMenu = (e) => {
     if (navRef.current) {
-      const liElements = Array.from(navRef.current.querySelectorAll("a"));
+      const liElements = Array.from(navRef.current.querySelectorAll(".link"));
 
       if (window.innerWidth <= 867) {
         const isActive = navRef.current.classList.contains("active");
@@ -69,18 +81,40 @@ function Header() {
   };
 
   return (
-    <div className="w-full mx-auto md:w-[90%] z-50 flex justify-between items-center HeaderShadow  h-fit bg-whiteColor text-blackColor md:rounded-full shadow-md fixed top-0 md:top-3 left-1/2 -translate-x-1/2 py-0 md:px-5">
-      <img src="/BSESA.png" className="h-20" alt="BSESA" />
-      <nav ref={navRef} className="flex justify-center items-center NavBar">
+    <div className="w-full h-[70px] z-50 flex justify-between items-center HeaderShadow  bg-whiteColor text-blackColor  shadow-md fixed top-0  left-1/2 -translate-x-1/2 py-0 md:px-5">
+      <img src="/BSESA.png" className="h-[70px]" alt="BSESA" />
+      <nav
+        ref={navRef}
+        className="flex justify-center items-center NavBar h-full"
+      >
         {links.map((link) => (
-          <Link
+          <div
             key={link.id}
             onClick={(e) => toggleMenu(e)}
-            className="py-2 link px-5 font-normal cursor-pointer relative text-center"
-            to={link.link}
+            className=" h-full link p-0 font-normal cursor-pointer text-center relative"
           >
-            {link.name}
-          </Link>
+            <NavLink
+              to={link.link}
+              className="font-semibold h-full flex items-center px-5"
+            >
+              {link.name}
+            </NavLink>
+
+            {link.subLinks?.length > 0 && (
+              <ul className="bg-whiteColor hidden  ListHide px-2 pt-3 absolute bottom-1 left-0  translate-y-full">
+                {link.subLinks.map((sublink) => (
+                  <NavLink
+                    to={sublink.link}
+                    className="px-5 text-nowrap text-left cursor-pointer w-full py-3 block border-b-[0.5px] border-solid border-blackColor"
+                    key={sublink.id}
+                  >
+                    {" "}
+                    {sublink.name}
+                  </NavLink>
+                ))}
+              </ul>
+            )}
+          </div>
         ))}
       </nav>
       {user ? (

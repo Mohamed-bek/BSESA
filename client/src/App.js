@@ -31,6 +31,8 @@ import { CgDollar } from "react-icons/cg";
 import { IoVideocam } from "react-icons/io5";
 import AdminStat from "./pages/AdminStat";
 import HeroForm from "./pages/HeroForm";
+import ManageCourses from "./pages/ManageCourses";
+import AdminCourse from "./pages/AdminCourse";
 
 function App() {
   const { user } = useUserStore();
@@ -51,7 +53,7 @@ function App() {
             id: 2,
             name: "New Course",
             icon: <SiCoursera />,
-            href: "/new-course",
+            href: "/manage-courses",
           },
           {
             id: 4,
@@ -121,6 +123,10 @@ function App() {
           <Route path="my-courses" element={<MyCourses />} />
           <Route path="new-video" element={<AddVideo />} />
           <Route path="new-blog" element={<CreateBlog />} />
+          <Route path="manage-courses" element={<AdminCourse />}>
+            <Route path="" element={<ManageCourses />} />
+            <Route path="new-course" element={<CreateCourse />} />
+          </Route>
           <Route path="new-course" element={<CreateCourse />} />
           <Route path="manage-course" element={<AdminCourseManager />} />
           <Route path="new-membership" element={<AddMemberShip />} />

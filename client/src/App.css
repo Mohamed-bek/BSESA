@@ -7,6 +7,9 @@
   padding: 0;
   box-sizing: border-box !important;
 }
+a {
+  cursor: pointer;
+}
 
 /* For Webkit browsers (Chrome, Safari, etc.) */
 input[type="number"]::-webkit-outer-spin-button,
@@ -412,9 +415,14 @@ body {
 }
 
 @media (min-width: 868px) {
-  .link.active {
-    font-weight: 500;
-    transition: 0.3s;
+  .link:hover > a:first-child,
+  .ListHide > a:hover,
+  .link > a.active {
+    transition: color 0.3s;
+    color: var(--primary-color);
+  }
+  .link:hover > .ListHide {
+    display: block !important;
   }
   .link.active::after {
     content: "";
@@ -429,6 +437,26 @@ body {
 
 .navbar {
   height: calc(100vh - 100px);
+}
+.subLink {
+  position: relative;
+  padding: 10px 0;
+}
+.subLink::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: var(--primary-color);
+  left: 0;
+  bottom: 4px;
+  transition: 0.5s;
+}
+.subLink.active::after {
+  width: 100%;
+}
+.subLink.active {
+  color: var(--primary-color);
 }
 
 @media (max-width: 867px) {
@@ -526,4 +554,8 @@ body {
   100% {
     transform: translate(-50%, -50%) scale(0);
   }
+}
+
+.ListHide a:last-of-type {
+  border: none;
 }

@@ -7,7 +7,6 @@ import generateLast6MonthsData from "../utitlitis/analytics.js";
 
 export const CreateCourse = async (req, res) => {
   try {
-    console.log("Starting CreateCourse");
     const { title, description, price, categorys } = req.body;
     let categoryIds = categorys;
     if (typeof categorys === "string") {
@@ -483,6 +482,42 @@ export const getCourseAnalyst = async (req, res) => {
     const { months, counts } = await generateLast6MonthsData(Course);
     res.status(200).json({ months, counts });
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getCoursesForAdmin = async (req, res) => {
+  try {
+    const { title, page = 1, limit = 20 } = req.query;
+    const filter = {};
+
+    if (title) {
+      filter.title = { $regex: title, $options: "i" };
+    }
+
+    let courses = await Course.find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .select("title price createdAt")
+      .lean();
+
+    courses = await Promise.all(
+      courses.map(async (course) => {
+        const NbOforders = await Order.countDocuments({
+          course: course._id,
+          paymentStatus: "completed",
+        });
+        return { ...course, NbOforders: NbOforders || 0 };
+      })
+    );
+
+    const NbOfCourses = await Course.countDocuments(filter);
+
+    res
+      .status(200)
+      .json({ courses, NbOfPages: Math.ceil(NbOfCourses / limit) });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };
