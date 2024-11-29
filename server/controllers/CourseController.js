@@ -1,4 +1,5 @@
 import Course from "../models/Course.js";
+import User from "../models/User.js";
 import UserMembership from "../models/UserMembership.js";
 import uploadToSpaces, {
   deleteFromSpaces,
@@ -162,8 +163,8 @@ export const addOneVideosToCourse = async (req, res) => {
 };
 
 export const deleteVideoFromCourse = async (req, res) => {
-  const { id } = req.params; // Course ID
-  const { videoId } = req.query; // Video ID to be deleted
+  const { id } = req.params;
+  const { videoId } = req.query;
 
   try {
     const course = await Course.findById(id); // Find the course by ID
@@ -589,6 +590,23 @@ export const getCoursesForAdmin = async (req, res) => {
       .json({ courses, NbOfPages: Math.ceil(NbOfCourses / limit) });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const deleteCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password } = req.body;
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    if (!(await user.comparePassword(password))) {
+      return res.status(401).json({ message: "Password incorrect" });
+    }
+    const course = await Course.findById(id);
+    await course.deleteOne();
+    res.status(200).json({ message: "Course Deleted Successfully" });
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };

@@ -12,6 +12,7 @@ const UpdateCourse = () => {
   const { id } = useParams();
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const fileRef = useRef(null);
   const [course, setCourse] = useState({
     title: "",
@@ -67,9 +68,6 @@ const UpdateCourse = () => {
 
     try {
       setIsLoading(true);
-      console.log(formData.get("title"));
-      console.log(formData.get("price"));
-      console.log(formData.get("description"));
       const { data } = await axios.put(
         `https://bsesa-ksem.vercel.app/course/update/${id}`,
         formData,
@@ -80,11 +78,10 @@ const UpdateCourse = () => {
           withCredentials: true,
         }
       );
-      console.log(data);
       setCourse({
         title: "",
         description: "",
-        price: null,
+        price: "",
         published: true,
       });
       setImagePreview(null);
@@ -131,6 +128,7 @@ const UpdateCourse = () => {
           <div className="loader"></div>
         </div>
       )}
+
       <div className="flex items-center justify-center w-full h-full">
         <div className="relative w-1/2 h-full bg-white flex items-center justify-center overflow-hidden">
           <div className="absolute top-1/2 left-0 w-[700px] h-[700px] bg-primary rounded-full  -translate-x-1/2 -translate-y-1/2"></div>
@@ -149,7 +147,6 @@ const UpdateCourse = () => {
               </div>
             </div>
           )}{" "}
-          ( )
           <input
             ref={fileRef}
             type="file"

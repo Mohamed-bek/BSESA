@@ -10,6 +10,7 @@ import {
   deleteVideoFromCourse,
   getCoursesForAdmin,
   updateCourse,
+  deleteCourse,
 } from "../controllers/CourseController.js";
 import { upload } from "../middleware/multerConfig.js";
 
@@ -42,6 +43,12 @@ CourseRouter.delete(
   authenticateToken,
   authorizeRoles(["admin"]),
   deleteVideoFromCourse
+);
+CourseRouter.delete(
+  "/course/:id",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  deleteCourse
 );
 CourseRouter.put(
   "/course/update/:id",
