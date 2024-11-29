@@ -47,6 +47,7 @@ CourseRouter.put(
   "/course/update/:id",
   authenticateToken,
   authorizeRoles(["admin"]),
+  upload.single("file"),
   updateCourse
 );
 CourseRouter.get("/course/populaire", GetPopularCourses);

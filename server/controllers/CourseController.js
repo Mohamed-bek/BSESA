@@ -47,8 +47,6 @@ export const updateCourse = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, price, categorys, published } = req.body;
-
-    // Validate course ID
     const course = await Course.findById(id);
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
