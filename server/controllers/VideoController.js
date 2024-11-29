@@ -21,12 +21,19 @@ export const CreateVideo = async (req, res) => {
     const Key = `${Date.now()}-${filename}`;
     const videoUrl = await GetVideoUrl(Key, contentType);
 
+    let Links = links;
+    if (links) {
+      if (typeof links === "string") {
+        Links = JSON.parse(links);
+      }
+    }
+
     const newVideo = new Video({
       title,
       description,
       url: `${process.env.DO_PRESIGNED_URL}${Key}`,
       thumbnail: thumbnailUrl,
-      links: links ? JSON.parse(links) : [],
+      links: Links ? Links : [],
     });
 
     await newVideo.save();
