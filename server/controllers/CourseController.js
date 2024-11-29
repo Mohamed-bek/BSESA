@@ -1,6 +1,8 @@
 import Course from "../models/Course.js";
 import UserMembership from "../models/UserMembership.js";
-import uploadToSpaces from "../utitlitis/awsDigitalOcean.js";
+import uploadToSpaces, {
+  deleteFromSpaces,
+} from "../utitlitis/awsDigitalOcean.js";
 import Order from "../models/Order.js";
 import Progress from "../models/Progress.js";
 import generateLast6MonthsData from "../utitlitis/analytics.js";
@@ -38,6 +40,47 @@ export const CreateCourse = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(error.status || 500).json({ err: error.message });
+  }
+};
+
+export const updateCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, price, categorys, published } = req.body;
+
+    // Validate course ID
+    const course = await Course.findById(id);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    let categoryIds = categorys;
+    if (categorys) {
+      if (typeof categorys === "string") {
+        categoryIds = JSON.parse(categorys);
+      }
+      course.categorys = categoryIds;
+    }
+
+    // Update course fields
+    if (title) course.title = title;
+    if (description) course.description = description;
+    if (price !== undefined) course.price = price;
+    if (published !== undefined) course.published = published;
+
+    if (req.file) {
+      const oldPath = course.thumbnail;
+      const newThumbnail = await uploadToSpaces(file, "/CourseImage");
+      await deleteFromSpaces(oldPath);
+      course.thumbnail = newThumbnail;
+    }
+
+    await course.save();
+
+    res.status(200).json({ message: "Course updated successfully", course });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
   }
 };
 

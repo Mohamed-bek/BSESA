@@ -41,6 +41,12 @@ CourseRouter.delete(
   authorizeRoles(["admin"]),
   deleteVideoFromCourse
 );
+CourseRouter.put(
+  "/course/update/:id",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  deleteVideoFromCourse
+);
 CourseRouter.get("/course/populaire", GetPopularCourses);
 CourseRouter.get("/courses/", getIdUser, GetCoursesByFilter);
 CourseRouter.get("/course/:id", getIdUser, GetCourseById);

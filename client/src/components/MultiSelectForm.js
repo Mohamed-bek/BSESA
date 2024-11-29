@@ -8,7 +8,6 @@ const MultiSelectForm = ({ selectedCategories, setSelectedCategories }) => {
   const [newCategory, setNewCategory] = useState(""); // New category name
 
   useEffect(() => {
-    console.log("Category selected selected for category");
     const fetchCategories = async () => {
       try {
         const { data } = await axios.get(
@@ -51,8 +50,8 @@ const MultiSelectForm = ({ selectedCategories, setSelectedCategories }) => {
         ...prevCategories,
         response.data.category,
       ]);
-      setNewCategory(""); // Clear input after adding
-      setShowInput(false); // Hide input field
+      setNewCategory("");
+      setShowInput(false);
     } catch (error) {
       console.error("Error adding category:", error);
       alert("There was an error adding the category.");
@@ -76,9 +75,10 @@ const MultiSelectForm = ({ selectedCategories, setSelectedCategories }) => {
             key={categorie._id}
             onClick={(e) => {
               handleCategoryClick(categorie);
-              e.target.classList.toggle("active");
             }}
-            className="bg-[#d8d6d6] text-[1.1rem] font-medium p-1 px-2 rounded-md cursor-pointer category"
+            className={`bg-[#d8d6d6] text-[1.1rem] font-medium p-1 px-2 rounded-md cursor-pointer category ${
+              selectedCategories.includes(categorie._id) ? "active" : ""
+            }`}
           >
             {categorie.name.toLowerCase()}
           </span>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { IoMdAdd } from "react-icons/io";
 import MultiSelectForm from "../components/MultiSelectForm";
 import { MdCancel } from "react-icons/md";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaPen } from "react-icons/fa";
 import { useMessageData } from "../context/UserContext";
 import { useParams } from "react-router-dom";
 
@@ -32,7 +32,12 @@ const UpdateCourse = () => {
         const { title, description, price, categorys, thumbnail } = data.course;
         console.log("Categories: " + categorys);
         setCourse({ title, description, price, published: true });
-        setSelectedCategories(categorys || []);
+        const categoryNames = categorys.map((category) => {
+          console.log("Category: " + category);
+          return category._id;
+        });
+        console.log("categoryNames : ", categoryNames);
+        setSelectedCategories(categoryNames || []);
         setImagePreview(thumbnail || null);
       } catch (error) {
         console.error("Error fetching course details:", error);
@@ -43,13 +48,13 @@ const UpdateCourse = () => {
         setTimeout(() => setShow(false), 1200);
       }
     };
-
     fetchCourseDetails();
-  }, [id, setErr, setMessage, setIcon, setShow]);
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+
     for (const [key, value] of Object.entries(course)) {
       formData.append(key, value);
     }
@@ -125,21 +130,22 @@ const UpdateCourse = () => {
       <div className="flex items-center justify-center w-full h-full">
         <div className="relative w-1/2 h-full bg-white flex items-center justify-center overflow-hidden">
           <div className="absolute top-1/2 left-0 w-[700px] h-[700px] bg-primary rounded-full  -translate-x-1/2 -translate-y-1/2"></div>
-          {imagePreview ? (
-            <img
-              className="w-[90%] relative z-50 ShadowCLass block mx-auto rounded-md"
-              src={imagePreview}
-              alt="Thumbnail"
-            />
-          ) : (
-            <div
-              onClick={() => fileRef.current?.click()}
-              className="w-[160px] h-[160px] cursor-pointer p-2 absolute top-1/2 left-1/2 rounded-lg bg-gray-200 flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
-            >
-              <p className="text-lg text-center">Add Image</p>
-              <IoMdAdd className="text-5xl font-bold mx-auto" />
+          {imagePreview && (
+            <div className="w-fit h-fit relative">
+              <img
+                className="w-[90%] relative z-50 ShadowCLass block mx-auto rounded-md"
+                src={imagePreview}
+                alt="Thumbnail"
+              />
+              <div
+                onClick={() => fileRef.current?.click()}
+                className="w-[35px] h-[35px] cursor-pointer p-2 absolute -bottom-2 right-5 rounded-full bg-secondary flex items-center justify-center transform  z-50"
+              >
+                <FaPen className="text-5xl font-bold mx-auto " />
+              </div>
             </div>
-          )}
+          )}{" "}
+          ( )
           <input
             ref={fileRef}
             type="file"
@@ -158,7 +164,7 @@ const UpdateCourse = () => {
               id="title"
               placeholder="Title"
               type="text"
-              className="w-full max-w-[300px] p-2 border-b-2 border-primary bg-transparent mb-5 focus:outline-none"
+              className="w-full max-w-[300px] p-2 border rounded-md bg-secondary border-primary mb-5 focus:outline-none"
               value={course?.title}
               onChange={(e) => updateField("title", e.target.value)}
             />
@@ -166,7 +172,7 @@ const UpdateCourse = () => {
               id="description"
               type="text"
               placeholder="Description"
-              className="w-full max-w-[300px] p-2 border-b-2 mb-5 border-primary bg-transparent focus:outline-none"
+              className="w-full max-w-[300px] p-2 border rounded-md bg-secondary border-primary mb-5 focus:outline-none"
               value={course?.description}
               onChange={(e) => updateField("description", e.target.value)}
             />
@@ -174,14 +180,16 @@ const UpdateCourse = () => {
               id="price"
               type="number"
               placeholder="Price"
-              className="w-full max-w-[300px] p-2 border-b-2 mb-8 border-primary bg-transparent focus:outline-none"
+              className="w-full max-w-[300px] p-2 border rounded-md bg-secondary border-primary mb-8  focus:outline-none"
               value={course?.price}
               onChange={(e) => updateField("price", e.target.value)}
             />
+
             <MultiSelectForm
               selectedCategories={selectedCategories}
               setSelectedCategories={setSelectedCategories}
             />
+
             <button
               type="submit"
               className="w-full mt-8 max-w-[200px] text-[1.2rem] cursor-pointer px-3 py-2 bg-primary text-whiteColor font-semibold rounded-md"
