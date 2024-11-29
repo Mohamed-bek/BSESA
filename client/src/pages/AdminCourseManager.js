@@ -133,12 +133,7 @@ const AdminCourseManager = () => {
   const availableVideos = getAvailableVideos();
 
   return (
-    <div className="p-6 bg-gray-100 h-full overflow-y-auto">
-      <h1 className="text-[2.5rem] text-center font-bold mb-4">
-        Course Administrator
-      </h1>
-
-      {/* Course Selection */}
+    <div className="p-6 bg-gray-100 h-full w-full overflow-y-auto">
       <div className="mb-6">
         <div className="w-full justify-between items-center flex mb-2">
           <h2 className="text-xl font-semibold">Courses</h2>

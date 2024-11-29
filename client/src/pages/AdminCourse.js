@@ -2,8 +2,9 @@ import React from "react";
 import { NavLink, Link, Outlet } from "react-router-dom";
 function AdminCourse() {
   const links = [
-    { id: 0, name: "Manage Courses", ref: "" },
-    { id: 1, name: "New Courses", ref: "/new-course" },
+    { id: 0, name: "Manage", ref: "" },
+    { id: 1, name: "New ", ref: "/new-course" },
+    { id: 1, name: "Playlist", ref: "/course-playlist" },
   ];
   return (
     <div className="w-full h-full bg-white">

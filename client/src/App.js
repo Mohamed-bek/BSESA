@@ -33,6 +33,7 @@ import AdminStat from "./pages/AdminStat";
 import HeroForm from "./pages/HeroForm";
 import ManageCourses from "./pages/ManageCourses";
 import AdminCourse from "./pages/AdminCourse";
+import UpdateCourse from "./pages/UpdateCourse";
 
 function App() {
   const { user } = useUserStore();
@@ -126,6 +127,8 @@ function App() {
           <Route path="manage-courses" element={<AdminCourse />}>
             <Route path="" element={<ManageCourses />} />
             <Route path="new-course" element={<CreateCourse />} />
+            <Route path="course-playlist" element={<AdminCourseManager />} />
+            <Route path="update-course/:id" element={<UpdateCourse />} />
           </Route>
           <Route path="new-course" element={<CreateCourse />} />
           <Route path="manage-course" element={<AdminCourseManager />} />

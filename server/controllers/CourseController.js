@@ -238,10 +238,12 @@ export const GetCourseById = async (req, res) => {
     let isPurchased = false;
 
     // Fetch the course and populate its videos
-    const course = await Course.findById(id).populate({
-      path: "videos.video",
-      select: "title thumbnail description createdAt",
-    });
+    const course = await Course.findById(id)
+      .populate({
+        path: "videos.video",
+        select: "title thumbnail description createdAt",
+      })
+      .populate({ path: "categorys", select: "name" });
 
     if (!course) throw new Error("Course does not exist");
 
@@ -490,6 +492,7 @@ export const getCoursesForAdmin = async (req, res) => {
   try {
     const { title, time, page = 1, limit = 20 } = req.query;
     const filter = {};
+    console.log(title, time);
 
     if (title) {
       filter.title = { $regex: title, $options: "i" };
@@ -517,6 +520,7 @@ export const getCoursesForAdmin = async (req, res) => {
       }
 
       if (startDate) {
+        console.log("Start date: " + startDate);
         filter.createdAt = { $gte: startDate };
       }
     }

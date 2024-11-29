@@ -70,7 +70,7 @@ const MultiSelectForm = ({ selectedCategories, setSelectedCategories }) => {
       className="bg-whiteColor rounded-lg w-full max-w-[400px] mx-auto"
     >
       <p className="block mb-2 text-center text-[1.5rem]">Choose categories</p>
-      <div className="w-full max-w-[500px] h-fit px-2 py-1 flex justify-center items-center flex-wrap gap-2">
+      <div className="w-full max-w-[500px] h-fit max-h-[150px] overflow-y-auto px-2 py-1 flex justify-center items-center flex-wrap gap-2">
         {categories?.map((categorie) => (
           <span
             key={categorie._id}

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -10,37 +11,16 @@ const ManageCourses = () => {
   const [timeFilter, setTimeFilter] = useState("all"); // time filter state
 
   // Function to calculate the date based on the selected time filter
-  const getTimeFilterDate = (filter) => {
-    const now = new Date();
-    switch (filter) {
-      case "last_day":
-        now.setDate(now.getDate() - 1);
-        break;
-      case "last_week":
-        now.setDate(now.getDate() - 7);
-        break;
-      case "last_month":
-        now.setMonth(now.getMonth() - 1);
-        break;
-      case "last_year":
-        now.setFullYear(now.getFullYear() - 1);
-        break;
-      default:
-        return null;
-    }
-    return now.toISOString();
-  };
 
   useEffect(() => {
     const getCoursesForAdmin = async () => {
       try {
-        const timeFilterDate = getTimeFilterDate(timeFilter);
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/admin/courses",
           {
             params: {
               title: searchQuery,
-              time: timeFilterDate, // Pass time filter to the backend
+              time: timeFilter,
               page: currentPage,
               limit: 10,
             },
@@ -109,9 +89,12 @@ const ManageCourses = () => {
               {new Date(course.createdAt).toLocaleDateString()}
             </div>
             <div className="w-[120px] text-center">
-              <button className="text-blue-500">
+              <Link
+                to={"/dashboard/manage-courses/update-course/" + course._id}
+                className="text-blue-500"
+              >
                 <FaEdit />
-              </button>
+              </Link>
               <button className="text-red-500 ml-2">
                 <FaTrash />
               </button>
