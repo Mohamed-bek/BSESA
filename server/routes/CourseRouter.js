@@ -9,6 +9,7 @@ import {
   addOneVideosToCourse,
   deleteVideoFromCourse,
   getCoursesForAdmin,
+  updateCourse,
 } from "../controllers/CourseController.js";
 import { upload } from "../middleware/multerConfig.js";
 
@@ -27,6 +28,7 @@ CourseRouter.post(
   upload.single("file"),
   CreateCourse
 );
+
 CourseRouter.get("/course/newest", GetNewestCourse);
 CourseRouter.put("/course/add_videos/:id", addVideosToCourse);
 CourseRouter.put(
@@ -45,7 +47,7 @@ CourseRouter.put(
   "/course/update/:id",
   authenticateToken,
   authorizeRoles(["admin"]),
-  deleteVideoFromCourse
+  updateCourse
 );
 CourseRouter.get("/course/populaire", GetPopularCourses);
 CourseRouter.get("/courses/", getIdUser, GetCoursesByFilter);
