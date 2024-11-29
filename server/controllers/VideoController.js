@@ -44,15 +44,43 @@ export const CreateVideo = async (req, res) => {
 
 export const GetAllVideos = async (req, res) => {
   try {
-    const { page = 1, NumberVideos = 14 } = req.params;
-    const { title } = req.query;
-    let filter = {};
+    const { title, time, page = 1, limit = 10 } = req.query;
+    const filter = {};
+
     if (title) {
       filter.title = { $regex: title, $options: "i" };
     }
-    const videos = await Video.find(filter, { url: req.videoAccess ? 1 : 0 }) // Exclude the URL field
+
+    if (time) {
+      const now = new Date();
+      let startDate;
+
+      switch (time) {
+        case "last_day":
+          startDate = new Date(now.setDate(now.getDate() - 1));
+          break;
+        case "last_week":
+          startDate = new Date(now.setDate(now.getDate() - 7));
+          break;
+        case "last_month":
+          startDate = new Date(now.setMonth(now.getMonth() - 1));
+          break;
+        case "last_year":
+          startDate = new Date(now.setFullYear(now.getFullYear() - 1));
+          break;
+        default:
+          startDate = null;
+      }
+
+      if (startDate) {
+        console.log("Start date: " + startDate);
+        filter.createdAt = { $gte: startDate };
+      }
+    }
+    const videos = await Video.find(filter)
       .skip((page - 1) * NumberVideos)
-      .limit(NumberVideos);
+      .limit(NumberVideos)
+      .select("title createdAt url");
 
     res.status(200).json({ videos });
   } catch (error) {

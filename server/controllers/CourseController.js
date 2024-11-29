@@ -532,9 +532,8 @@ export const getCourseAnalyst = async (req, res) => {
 
 export const getCoursesForAdmin = async (req, res) => {
   try {
-    const { title, time, page = 1, limit = 20 } = req.query;
+    const { title, time, page = 1, limit = 10 } = req.query;
     const filter = {};
-    console.log(title, time);
 
     if (title) {
       filter.title = { $regex: title, $options: "i" };

@@ -16,7 +16,12 @@ const videoSchema = new Schema(
       // required: [true, "The Video Must Have a Thumbnail"],
     },
     pdf: { type: String },
-    links: [String],
+    links: [
+      {
+        description: { type: String, required: true },
+        to: { type: String, required: true },
+      },
+    ],
   },
   {
     timestamps: true,

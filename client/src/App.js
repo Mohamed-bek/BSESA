@@ -34,6 +34,9 @@ import HeroForm from "./pages/HeroForm";
 import ManageCourses from "./pages/ManageCourses";
 import AdminCourse from "./pages/AdminCourse";
 import UpdateCourse from "./pages/UpdateCourse";
+import AdminVideos from "./pages/AdminVideos";
+import ManageVideos from "./pages/ManageVideos";
+import UpdateVideo from "./pages/UpdateVideo";
 
 function App() {
   const { user } = useUserStore();
@@ -52,15 +55,15 @@ function App() {
           },
           {
             id: 2,
-            name: "New Course",
+            name: "Manage Course",
             icon: <SiCoursera />,
             href: "/manage-courses",
           },
           {
             id: 4,
-            name: "New Video",
+            name: "Manage Video",
             icon: <IoVideocam />,
-            href: "/new-video",
+            href: "/manage-videos",
           },
           {
             id: 5,
@@ -129,6 +132,11 @@ function App() {
             <Route path="new-course" element={<CreateCourse />} />
             <Route path="course-playlist" element={<AdminCourseManager />} />
             <Route path="update-course/:id" element={<UpdateCourse />} />
+          </Route>
+          <Route path="manage-videos" element={<AdminVideos />}>
+            <Route path="" element={<ManageVideos />} />
+            <Route path="new-video" element={<AddVideo />} />
+            <Route path="update-video/:id" element={<UpdateVideo />} />
           </Route>
           <Route path="new-course" element={<CreateCourse />} />
           <Route path="manage-course" element={<AdminCourseManager />} />

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { useMessageData } from "../context/UserContext";
+import AddLinkWithDescription from "../context/AddLinkWithDescription";
 
 const AddVideo = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const AddVideo = () => {
   const [plate, setPlate] = useState({
     title: "",
     description: "",
+    links: [],
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -57,17 +59,16 @@ const AddVideo = () => {
           withCredentials: true,
         }
       );
-      console.log("Url : ", data.url);
-      const response = await axios.put(data?.url, videoFile, {
+      await axios.put(data?.url, videoFile, {
         headers: {
           "Content-Type": videoFile.type,
           "x-amz-acl": "public-read",
         },
       });
-      console.log("Response: " + response);
       setPlate({
         title: "",
         description: "",
+        links: [],
       });
       setImagePreview(null);
       setVideoPreview(null);
@@ -245,14 +246,14 @@ const AddVideo = () => {
           </div>
           <form
             onSubmit={handleSubmit}
-            className="h-3/5 flex pt-5 flex-col justify-center items-center"
+            className="h-3/5 flex pt-5 justify-center items-center"
           >
-            <div>
+            <div className="text-center">
               <input
                 id="title"
                 placeholder="Title"
                 type="text"
-                className="w-full max-w-[300px] p-2 border-b-2 border-primary bg-transparent mb-5 focus:outline-none"
+                className="w-full max-w-[300px] p-2 border-b-2 border-primary bg-transparent mb-5 focus:outline-none block mx-auto"
                 value={plate.title}
                 onChange={(e) => updateField("title", e.target.value)}
               />
@@ -260,9 +261,13 @@ const AddVideo = () => {
                 id="description"
                 type="text"
                 placeholder="Description"
-                className="w-full max-w-[300px] p-2 border-b-2 mb-8 border-primary bg-transparent focus:outline-none"
+                className="w-full max-w-[300px] p-2 border-b-2 mb-8 border-primary bg-transparent focus:outline-none mx-auto"
                 value={plate.description}
                 onChange={(e) => updateField("description", e.target.value)}
+              />
+              <AddLinkWithDescription
+                links={plate.links}
+                setLinks={(links) => setPlate({ ...plate, links })}
               />
               <button
                 type="submit"
