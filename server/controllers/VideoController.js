@@ -1,5 +1,8 @@
 import Video from "../models/Video.js";
-import uploadToSpaces, { GetVideoUrl } from "../utitlitis/awsDigitalOcean.js";
+import uploadToSpaces, {
+  deleteFromSpaces,
+  GetVideoUrl,
+} from "../utitlitis/awsDigitalOcean.js";
 
 export const CreateVideo = async (req, res) => {
   try {
@@ -44,6 +47,53 @@ export const CreateVideo = async (req, res) => {
     res.status(201).json({
       message: "Upload successful and video saved",
       url: videoUrl,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(error.status || 500)
+      .json({ message: "Uploading Error ", err: error.message });
+  }
+};
+
+export const UpdateVideo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, links } = req.body;
+
+    const video = await Video.findById(id);
+    if (!video) return res.status(404).json({ message: "Video not found" });
+
+    if (req.file) {
+      const OldPath = video.thumbnail;
+      const newThumbnail = await uploadToSpaces(req.file, "/VideoThumbnails");
+      video.thumbnail = newThumbnail;
+      await deleteFromSpaces(OldPath);
+    }
+
+    if (links) {
+      let linksArray = [];
+      if (typeof links === "string") {
+        try {
+          linksArray = JSON.parse(links);
+        } catch (err) {
+          return res.status(400).json({ message: "Invalid links format" });
+        }
+      } else if (Array.isArray(links)) {
+        linksArray = links;
+      }
+      video.links = linksArray;
+    }
+
+    if (title) video.title = title;
+
+    if (description) video.description = description;
+
+    await video.save();
+
+    res.status(201).json({
+      message: "Upload successful and video saved",
+      video,
     });
   } catch (error) {
     console.error(error);
