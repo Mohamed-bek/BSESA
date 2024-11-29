@@ -21,11 +21,15 @@ export const CreateVideo = async (req, res) => {
     const Key = `${Date.now()}-${filename}`;
     const videoUrl = await GetVideoUrl(Key, contentType);
 
-    let Links = links;
-    if (links) {
-      if (typeof links === "string") {
-        Links = JSON.parse(links);
+    let linksArray = [];
+    if (typeof links === "string") {
+      try {
+        linksArray = JSON.parse(links); // Convert serialized JSON string to array
+      } catch (err) {
+        return res.status(400).json({ message: "Invalid links format" });
       }
+    } else if (Array.isArray(links)) {
+      linksArray = links;
     }
 
     const newVideo = new Video({
@@ -33,7 +37,7 @@ export const CreateVideo = async (req, res) => {
       description,
       url: `${process.env.DO_PRESIGNED_URL}${Key}`,
       thumbnail: thumbnailUrl,
-      links: Links ? Links : [],
+      links: linksArray,
     });
 
     await newVideo.save();

@@ -31,8 +31,13 @@ const AddVideo = () => {
     e.preventDefault();
     const formData = new FormData();
     for (const [key, value] of Object.entries(plate)) {
-      formData.append(key, value);
+      if (Array.isArray(value)) {
+        formData.append(key, JSON.stringify(value));
+      } else {
+        formData.append(key, value);
+      }
     }
+
     if (imageFile) {
       formData.append("file", imageFile);
     } else {
