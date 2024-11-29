@@ -19,7 +19,7 @@ const videoSchema = new Schema(
     links: [
       {
         description: { type: String, required: true },
-        to: { type: String, required: true },
+        link: { type: String, required: true },
       },
     ],
   },
