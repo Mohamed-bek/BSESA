@@ -488,11 +488,37 @@ export const getCourseAnalyst = async (req, res) => {
 
 export const getCoursesForAdmin = async (req, res) => {
   try {
-    const { title, page = 1, limit = 20 } = req.query;
+    const { title, time, page = 1, limit = 20 } = req.query;
     const filter = {};
 
     if (title) {
       filter.title = { $regex: title, $options: "i" };
+    }
+
+    if (time) {
+      const now = new Date();
+      let startDate;
+
+      switch (time) {
+        case "last_day":
+          startDate = new Date(now.setDate(now.getDate() - 1));
+          break;
+        case "last_week":
+          startDate = new Date(now.setDate(now.getDate() - 7));
+          break;
+        case "last_month":
+          startDate = new Date(now.setMonth(now.getMonth() - 1));
+          break;
+        case "last_year":
+          startDate = new Date(now.setFullYear(now.getFullYear() - 1));
+          break;
+        default:
+          startDate = null;
+      }
+
+      if (startDate) {
+        filter.createdAt = { $gte: startDate };
+      }
     }
 
     let courses = await Course.find(filter)
