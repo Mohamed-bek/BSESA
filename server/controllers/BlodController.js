@@ -26,7 +26,12 @@ export const createBlogPost = async (req, res) => {
 
 export const getAllBlogPosts = async (req, res) => {
   try {
-    const { page = 1, limit = 20, category } = req.query;
+    const { page = 1, limit = 20, category, title } = req.query;
+
+    if (title) {
+      filter.title = { $regex: title, $options: "i" };
+    }
+
     const filter = category ? { categories: category } : {};
 
     const blogs = await Blog.find(filter)

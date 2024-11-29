@@ -37,6 +37,8 @@ import UpdateCourse from "./pages/UpdateCourse";
 import AdminVideos from "./pages/AdminVideos";
 import ManageVideos from "./pages/ManageVideos";
 import UpdateVideo from "./pages/UpdateVideo";
+import ManageBlogs from "./pages/ManageBlogs";
+import AdminBlogs from "./pages/AdminBlogs";
 
 function App() {
   const { user } = useUserStore();
@@ -73,9 +75,9 @@ function App() {
           },
           {
             id: 6,
-            name: "New Blog",
+            name: "Blogs",
             icon: <FaBloggerB />,
-            href: "/new-blog",
+            href: "/manage-blogs",
           },
           {
             id: 7,
@@ -137,6 +139,11 @@ function App() {
             <Route path="" element={<ManageVideos />} />
             <Route path="new-video" element={<AddVideo />} />
             <Route path="update-video/:videoId" element={<UpdateVideo />} />
+          </Route>
+          <Route path="manage-blogs" element={<AdminBlogs />}>
+            <Route path="" element={<ManageBlogs />} />
+            <Route path="new-blog" element={<CreateBlog />} />
+            {/* <Route path="update-blog/:blogId" element={<UpdateBlog />} /> */}
           </Route>
           <Route path="new-course" element={<CreateCourse />} />
           <Route path="manage-course" element={<AdminCourseManager />} />
