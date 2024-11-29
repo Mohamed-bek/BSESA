@@ -69,6 +69,7 @@ const UpdateCourse = () => {
       setIsLoading(true);
       console.log(formData.get("title"));
       console.log(formData.get("price"));
+      console.log(formData.get("description"));
       const { data } = await axios.put(
         `https://bsesa-ksem.vercel.app/course/update/${id}`,
         formData,

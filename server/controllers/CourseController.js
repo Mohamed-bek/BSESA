@@ -68,7 +68,7 @@ export const updateCourse = async (req, res) => {
 
     if (req.file) {
       const oldPath = course.thumbnail;
-      const newThumbnail = await uploadToSpaces(file, "/CourseImage");
+      const newThumbnail = await uploadToSpaces(req.file, "/CourseImage");
       await deleteFromSpaces(oldPath);
       course.thumbnail = newThumbnail;
     }
