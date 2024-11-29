@@ -47,7 +47,7 @@ const ManageVideos = () => {
     e.preventDefault();
     try {
       const { data } = await axios.delete(
-        `https://your-api-endpoint/video/${id}`,
+        `https://bsesa-ksem.vercel.app/admin/video/${id}`,
         {
           data: {
             password,

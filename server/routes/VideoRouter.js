@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   CreateVideo,
+  deleteVideoAndRemoveFromCourses,
   GetAllVideos,
   GetVideo,
   GetVideoForAdmin,
@@ -37,6 +38,13 @@ VideoRouter.put(
   authorizeRoles(["admin"]),
   upload.single("file"),
   UpdateVideo
+);
+
+VideoRouter.delete(
+  "/admin/video/:id",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  deleteVideoAndRemoveFromCourses
 );
 VideoRouter.get("/video/:courseId/:videoId", checkVideoAccess, GetVideo);
 

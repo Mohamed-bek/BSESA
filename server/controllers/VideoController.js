@@ -3,6 +3,8 @@ import uploadToSpaces, {
   deleteFromSpaces,
   GetVideoUrl,
 } from "../utitlitis/awsDigitalOcean.js";
+import Course from "../models/Course.js";
+import User from "../models/User.js";
 
 export const CreateVideo = async (req, res) => {
   try {
@@ -233,3 +235,36 @@ export const GetVideoForAdmin = async (req, res) => {
 //       uploadVideo(file, videoData);
 //     }
 //   });
+
+export const deleteVideoAndRemoveFromCourses = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { password } = req.body;
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    if (!(await user.comparePassword(password))) {
+      return res.status(401).json({ message: "Password incorrect" });
+    }
+
+    const deletedVideo = await Video.findByIdAndDelete(id);
+
+    if (!deletedVideo) {
+      res.status(404).json({ error: "Video not found" });
+    }
+    if (deletedVideo.url) {
+      await deleteFromSpaces(deletedVideo.url);
+    }
+
+    await Course.updateMany(
+      { "videos.video": id },
+      { $pull: { videos: { video: id } } }
+    );
+
+    res.status(200).json({
+      message: "Video and references removed successfully.",
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

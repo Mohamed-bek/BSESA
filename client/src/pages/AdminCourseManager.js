@@ -131,7 +131,6 @@ const AdminCourseManager = () => {
   };
 
   const availableVideos = getAvailableVideos();
-  console.log("availableVideos : ", availableVideos);
 
   return (
     <div className="p-6 bg-gray-100 h-full w-full overflow-y-auto">
