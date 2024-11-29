@@ -17,14 +17,18 @@ const ManageVideos = () => {
   useEffect(() => {
     const getVideosForAdmin = async () => {
       try {
-        const { data } = await axios.get("https://your-api-endpoint/videos", {
-          params: {
-            title: searchQuery,
-            page: currentPage,
-            limit: 10,
-          },
-          withCredentials: true,
-        });
+        const { data } = await axios.get(
+          "https://bsesa-ksem.vercel.app/videos",
+          {
+            params: {
+              title: searchQuery,
+              page: currentPage,
+              limit: 10,
+            },
+            withCredentials: true,
+          }
+        );
+        console.log("Videos Videos Videos : ", data);
         setVideos(data.videos);
         setNbOfPages(data.NbOfPages);
       } catch (error) {

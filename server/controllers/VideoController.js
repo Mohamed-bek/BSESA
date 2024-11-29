@@ -78,11 +78,13 @@ export const GetAllVideos = async (req, res) => {
       }
     }
     const videos = await Video.find(filter)
-      .skip((page - 1) * NumberVideos)
-      .limit(NumberVideos)
+      .skip((page - 1) * limit)
+      .limit(limit)
       .select("title createdAt url");
 
-    res.status(200).json({ videos });
+    const NbOfVideos = await Video.countDocuments(filter);
+
+    res.status(200).json({ videos, NbOfPages: Math.ceil(NbOfVideos / limit) });
   } catch (error) {
     console.error(error);
     res.status(500).json({ err: error.message });
