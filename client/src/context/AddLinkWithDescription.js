@@ -46,7 +46,7 @@ const AddLinkWithDescription = ({ links, setLinks }) => {
             Add
           </button>
         </div>
-        {links.length > 0 && (
+        {links?.length > 0 && (
           <ul className="mt-2 space-y-2 max-h-[100px] overflow-y-auto">
             {links.map((item, index) => (
               <li

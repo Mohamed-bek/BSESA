@@ -3,6 +3,7 @@ import {
   CreateVideo,
   GetAllVideos,
   GetVideo,
+  GetVideoForAdmin,
 } from "../controllers/VideoController.js";
 import { upload } from "../middleware/multerConfig.js";
 import { checkVideoAccess } from "../middleware/CoursesProtection.js";
@@ -22,6 +23,12 @@ VideoRouter.get(
   authenticateToken,
   authorizeRoles(["admin"]),
   GetAllVideos
+);
+VideoRouter.get(
+  "/admin/video/:id",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  GetVideoForAdmin
 );
 VideoRouter.get("/video/:courseId/:videoId", checkVideoAccess, GetVideo);
 

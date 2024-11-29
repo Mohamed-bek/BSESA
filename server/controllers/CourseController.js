@@ -61,7 +61,6 @@ export const updateCourse = async (req, res) => {
       course.categorys = categoryIds;
     }
 
-    // Update course fields
     if (title) course.title = title;
     if (description) course.description = description;
     if (price !== undefined) course.price = price;

@@ -136,7 +136,7 @@ function App() {
           <Route path="manage-videos" element={<AdminVideos />}>
             <Route path="" element={<ManageVideos />} />
             <Route path="new-video" element={<AddVideo />} />
-            <Route path="update-video/:id" element={<UpdateVideo />} />
+            <Route path="update-video/:videoId" element={<UpdateVideo />} />
           </Route>
           <Route path="new-course" element={<CreateCourse />} />
           <Route path="manage-course" element={<AdminCourseManager />} />

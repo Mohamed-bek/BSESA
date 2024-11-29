@@ -51,7 +51,6 @@ const AddVideo = () => {
       alert("Please upload a video before submitting.");
       return;
     }
-    console.log(" Content-Type: " + formData.get("contentType"));
     try {
       setIsLoading(true);
       const { data } = await axios.post(
@@ -120,54 +119,6 @@ const AddVideo = () => {
       setVideoFile(file);
     }
   };
-
-  // const compressVideo = async (videoFile) => {
-  //   console.log("Compressing video From the Compressed");
-
-  //   const ffmpeg = new FFmpeg();
-  //   await ffmpeg.load();
-
-  //   try {
-  //     const videoData = await fetchFile(videoFile);
-  //     console.log("Video file fetched successfully");
-
-  //     await ffmpeg.writeFile("input.mp4", videoData);
-  //     console.log("File written to FFmpeg virtual file system");
-  //   } catch (error) {
-  //     console.error("Error writing file:", error);
-  //     return null;
-  //   }
-
-  //   try {
-  //     await ffmpeg.exec([
-  //       "-i",
-  //       "input.mp4",
-  //       "-vcodec",
-  //       "libx264",
-  //       "-crf",
-  //       "28",
-  //       "output.mp4",
-  //     ]);
-  //     console.log("FFmpeg execution completed successfully");
-  //   } catch (error) {
-  //     console.error("Error executing ffmpeg command:", error);
-  //     return null;
-  //   }
-
-  //   try {
-  //     const data = await ffmpeg.readFile("output.mp4");
-  //     console.log("Compressed video read successfully");
-
-  //     const videoBlobCompressed = new Blob([data.buffer], {
-  //       type: "video/mp4",
-  //     });
-
-  //     return videoBlobCompressed;
-  //   } catch (error) {
-  //     console.error("Error reading compressed file:", error);
-  //     return null;
-  //   }
-  // };
 
   const updateField = (field, value) => {
     setPlate((prev) => ({ ...prev, [field]: value }));

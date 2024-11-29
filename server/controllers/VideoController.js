@@ -24,7 +24,7 @@ export const CreateVideo = async (req, res) => {
     let linksArray = [];
     if (typeof links === "string") {
       try {
-        linksArray = JSON.parse(links); // Convert serialized JSON string to array
+        linksArray = JSON.parse(links);
       } catch (err) {
         return res.status(400).json({ message: "Invalid links format" });
       }
@@ -84,7 +84,6 @@ export const GetAllVideos = async (req, res) => {
       }
 
       if (startDate) {
-        console.log("Start date: " + startDate);
         filter.createdAt = { $gte: startDate };
       }
     }
@@ -124,6 +123,24 @@ export const GetVideo = async (req, res) => {
       videoData.url = video.url;
     }
     res.status(200).json({ video: videoData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching video" });
+  }
+};
+
+export const GetVideoForAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const video = await Video.findById(id).select(
+      "title description links thumbnail url"
+    );
+
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    res.status(200).json({ video });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching video" });
