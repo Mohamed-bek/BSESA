@@ -131,6 +131,7 @@ const AdminCourseManager = () => {
   };
 
   const availableVideos = getAvailableVideos();
+  console.log("availableVideos : ", availableVideos);
 
   return (
     <div className="p-6 bg-gray-100 h-full w-full overflow-y-auto">
@@ -226,8 +227,8 @@ const AdminCourseManager = () => {
                     onClick={() => setSelectedVideo(video)}
                   >
                     <img
-                      src={video.thumbnail}
-                      alt={video.title}
+                      src={video?.thumbnail}
+                      alt={video?.title}
                       className="w-16 h-16 rounded mr-4"
                     />
                     <div>

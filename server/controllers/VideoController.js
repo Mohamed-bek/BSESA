@@ -140,7 +140,7 @@ export const GetAllVideos = async (req, res) => {
     const videos = await Video.find(filter)
       .skip((page - 1) * limit)
       .limit(limit)
-      .select("title createdAt url");
+      .select("title createdAt url thumbnail");
 
     const NbOfVideos = await Video.countDocuments(filter);
 

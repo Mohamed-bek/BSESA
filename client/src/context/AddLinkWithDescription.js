@@ -23,7 +23,7 @@ const AddLinkWithDescription = ({ links, setLinks }) => {
   return (
     <div className="mb-4 w-full  mx-auto ">
       <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <input
             type="text"
             value={linkInput}
