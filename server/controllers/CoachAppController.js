@@ -32,6 +32,15 @@ export const createCoachApplication = async (req, res) => {
       return res.status(404).json({
         error: "The Application That You Want To Subscribe To Is Not Found",
       });
+
+    const isExist = await CoachApplication.findOne({
+      contactEmail,
+      applicationId,
+    });
+    if (isExist)
+      return res
+        .status(401)
+        .json({ error: "You’ve already requested to register" });
     if (!req.file)
       return res.status(404).json({
         error: "The Image Of the Coach Is messing",

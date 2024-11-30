@@ -5,7 +5,7 @@ function Message() {
   const { message, err, icon, show } = useMessageData();
   return (
     <div
-      className={`absolute flex items-center gap-2 -top-20 left-1/2 -translate-x-1/2   text-white text-[1.3rem] font-bold z-[9999] rounded-full px-7 py-3 ${
+      className={`fixed flex items-center gap-2 -top-20 left-1/2 -translate-x-1/2   text-white text-[1.3rem] font-bold z-[9999] rounded-full px-7 py-3 ${
         err ? "bg-[#d70f0f] ShadoBottonError" : "bg-primary ShadoBotton"
       } ${show ? "show" : ""} `}
     >

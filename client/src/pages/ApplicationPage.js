@@ -132,8 +132,8 @@ const ApplicationPage = () => {
           <Link
             to={
               application?.applicantType === "ClubApplication"
-                ? "/application-form/" + application?._id
-                : null
+                ? "/club-application-form/" + application?._id
+                : "/coach-application-form/" + application?._id
             }
             className="bg-primary p-4 text-center w-full text-whiteColor font-semibold block mx-auto"
           >

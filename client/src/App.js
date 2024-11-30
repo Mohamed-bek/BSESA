@@ -43,6 +43,7 @@ import UpdateBlog from "./pages/UpdateBlogs";
 import Applications from "./pages/Applications";
 import ApplicationPage from "./pages/ApplicationPage";
 import ClubApplicationForm from "./pages/ClubApplicationForm";
+import CoachApplicationForm from "./pages/CoachApplicationForm";
 
 function App() {
   const { user } = useUserStore();
@@ -149,7 +150,14 @@ function App() {
           <Route path="update-hero" element={<HeroForm />} />
         </Route>
         <Route path="/pricing" element={<Plans />} />
-        <Route path="/application-form/:id" element={<ClubApplicationForm />} />
+        <Route
+          path="/club-application-form/:id"
+          element={<ClubApplicationForm />}
+        />
+        <Route
+          path="/coach-application-form/:id"
+          element={<CoachApplicationForm />}
+        />
         <Route path="/applications/:type" element={<Applications />} />
         <Route path="/application/:id" element={<ApplicationPage />} />
         <Route path="/blogs" element={<Blogs />} />
