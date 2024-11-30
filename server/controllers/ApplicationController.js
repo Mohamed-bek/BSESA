@@ -35,7 +35,14 @@ export const createApplication = async (req, res) => {
 // Get all applications
 export const getApplications = async (req, res) => {
   try {
-    const { applicantType, level, isDeadlinePassed, name } = req.query;
+    const {
+      applicantType,
+      level,
+      isDeadlinePassed,
+      name,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const filter = {};
 
     if (applicantType) {
@@ -56,9 +63,13 @@ export const getApplications = async (req, res) => {
         filter.deadline = { $gte: currentDate };
       }
     }
-    const applications = await Application.find(filter);
-
-    res.status(200).json(applications);
+    const applications = await Application.find(filter).skip(
+      (page - 1) * limit
+    );
+    const NbOfApps = Application.countDocuments(filter);
+    res
+      .status(200)
+      .json({ applications, NbOfPages: Math.ceil(NbOfApps / limit) });
   } catch (error) {
     res.status(500).json({ message: "Error fetching applications", error });
   }

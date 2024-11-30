@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import CourseBox from "../components/CourseBox";
+import CourseBox from "../../components/CourseBox";
 
 function MyCourses() {
   const [courses, setCourses] = useState([]);

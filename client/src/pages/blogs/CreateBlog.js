@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { IoMdAdd } from "react-icons/io";
-import MultiSelectForm from "../components/MultiSelectForm";
-import { useMessageData } from "../context/UserContext";
+import MultiSelectForm from "../../components/MultiSelectForm";
+import { useMessageData } from "../../context/UserContext";
 import { FaCheck } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 

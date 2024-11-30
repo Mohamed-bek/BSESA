@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { timeAgo } from "./Course";
+import { timeAgo } from "../courses/Course";
 import { MdOutlineDoNotDisturbAlt } from "react-icons/md";
 const VideoPlayer = () => {
   const { courseId, videoId } = useParams();

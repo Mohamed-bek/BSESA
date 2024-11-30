@@ -1,5 +1,5 @@
 import { LuSettings2 } from "react-icons/lu";
-import CourseBox from "../components/CourseBox";
+import CourseBox from "../../components/CourseBox";
 import React, { useEffect, useRef, useState } from "react";
 import { RiStarSFill } from "react-icons/ri";
 import axios from "axios";

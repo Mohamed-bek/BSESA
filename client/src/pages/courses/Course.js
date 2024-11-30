@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { HiHeart } from "react-icons/hi2";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useUserStore } from "../context/UserContext";
+import { useUserStore } from "../../context/UserContext";
 import { FaRegEye } from "react-icons/fa";
 import { MdOutlineDoNotDisturbAlt } from "react-icons/md";
 

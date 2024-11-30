@@ -1,29 +1,29 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import AddVideo from "./pages/AddVideo";
-import CreateCourse from "./pages/CreateCourse";
-import CreateBlog from "./pages/CreateBlog";
+import AddVideo from "./pages/videos/AddVideo";
+import CreateCourse from "./pages/courses/CreateCourse";
+import CreateBlog from "./pages/blogs/CreateBlog";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import { useEffect } from "react";
 import Activation from "./pages/Activation";
-import Courses from "./pages/Courses";
-import Course from "./pages/Course";
+import Courses from "./pages/courses/Courses";
+import Course from "./pages/courses/Course";
 import Message from "./components/Message";
 import Home from "./pages/Home";
-import Blogs from "./pages/Blogs";
-import Blog from "./pages/Blog";
+import Blogs from "./pages/blogs/Blogs";
+import Blog from "./pages/blogs/Blog";
 import Payment from "./pages/Payment";
 import Completion from "./pages/Completion";
 import AddMemberShip from "./pages/AddMemberShip";
 import Plans from "./pages/Plans";
 import Profile from "./pages/Profile";
-import VideoPlayer from "./pages/Video";
+import VideoPlayer from "./pages/videos/Video";
 import Dashboard from "./pages/Dashboard";
 import CertificateList from "./pages/CertificateList";
-import MyCourses from "./pages/MyCourses";
+import MyCourses from "./pages/courses/MyCourses";
 import { useUserStore } from "./context/UserContext";
-import AdminCourseManager from "./pages/AdminCourseManager";
+import AdminCourseManager from "./pages/courses/AdminCourseManager";
 import { MdOutlineDashboard, MdOutlineManageHistory } from "react-icons/md";
 import { SiCoursera } from "react-icons/si";
 import { FaBloggerB } from "react-icons/fa6";
@@ -31,19 +31,21 @@ import { CgDollar } from "react-icons/cg";
 import { IoVideocam } from "react-icons/io5";
 import AdminStat from "./pages/AdminStat";
 import HeroForm from "./pages/HeroForm";
-import ManageCourses from "./pages/ManageCourses";
-import AdminCourse from "./pages/AdminCourse";
-import UpdateCourse from "./pages/UpdateCourse";
-import AdminVideos from "./pages/AdminVideos";
-import ManageVideos from "./pages/ManageVideos";
-import UpdateVideo from "./pages/UpdateVideo";
-import ManageBlogs from "./pages/ManageBlogs";
-import AdminBlogs from "./pages/AdminBlogs";
-import UpdateBlog from "./pages/UpdateBlogs";
-import Applications from "./pages/Applications";
-import ApplicationPage from "./pages/ApplicationPage";
-import ClubApplicationForm from "./pages/ClubApplicationForm";
-import CoachApplicationForm from "./pages/CoachApplicationForm";
+import ManageCourses from "./pages/courses/ManageCourses";
+import AdminCourse from "./pages/courses/AdminCourse";
+import UpdateCourse from "./pages/courses/UpdateCourse";
+import AdminVideos from "./pages/videos/AdminVideos";
+import ManageVideos from "./pages/videos/ManageVideos";
+import UpdateVideo from "./pages/videos/UpdateVideo";
+import ManageBlogs from "./pages/blogs/ManageBlogs";
+import AdminBlogs from "./pages/blogs/AdminBlogs";
+import UpdateBlog from "./pages/blogs/UpdateBlogs";
+import Applications from "./pages/applications/Applications";
+import ApplicationPage from "./pages/applications/ApplicationPage";
+import ClubApplicationForm from "./pages/applications/ClubApplicationForm";
+import CoachApplicationForm from "./pages/applications/CoachApplicationForm";
+import { FaApple } from "react-icons/fa";
+import ManageApplications from "./pages/applications/ManageApplications";
 
 function App() {
   const { user } = useUserStore();
@@ -77,6 +79,12 @@ function App() {
             name: "Blogs",
             icon: <FaBloggerB />,
             href: "/manage-blogs",
+          },
+          {
+            id: 6,
+            name: "Applications",
+            icon: <FaApple />,
+            href: "/manage-applications",
           },
           {
             id: 7,
@@ -141,6 +149,11 @@ function App() {
           </Route>
           <Route path="manage-blogs" element={<AdminBlogs />}>
             <Route path="" element={<ManageBlogs />} />
+            <Route path="new-blog" element={<CreateBlog />} />
+            <Route path="update-blog/:id" element={<UpdateBlog />} />
+          </Route>
+          <Route path="manage-applications" element={<AdminBlogs />}>
+            <Route path="" element={<ManageApplications />} />
             <Route path="new-blog" element={<CreateBlog />} />
             <Route path="update-blog/:id" element={<UpdateBlog />} />
           </Route>

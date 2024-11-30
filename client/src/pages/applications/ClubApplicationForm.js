@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { FaCheck, FaExclamation, FaFileUpload } from "react-icons/fa";
-import { useMessageData } from "../context/UserContext";
 import { useParams } from "react-router-dom";
+import { useMessageData } from "../../context/UserContext";
 
-const CoachApplicationForm = () => {
+const ClubApplicationForm = () => {
   const { setErr, setMessage, setIcon, setShow } = useMessageData();
   const { id } = useParams();
-
   const [formData, setFormData] = useState({
     applicationId: id,
     name: "",
-    dateOfBirth: "",
+    location: "",
+    establishedYear: "",
     contactEmail: "",
     contactPhone: "",
-    experienceYears: "",
-    qualifications: "",
-    specialties: "",
-    currentClub: "",
-    biography: "",
-    coachingLevel: "",
-    languagesSpoken: "",
+    website: "",
+    description: "",
+    level: "",
+    clubSize: "",
   });
-  const [file, setFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [ImagePreview, setImagePreview] = useState(null);
+  const [file, setfile] = useState(null);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -34,44 +31,49 @@ const CoachApplicationForm = () => {
     }));
   };
 
-  const handleImageUpload = () => {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      setfile(file);
     }
   };
 
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.dateOfBirth)
-      newErrors.dateOfBirth = "Date of birth is required";
-    if (!formData.contactEmail.trim())
-      newErrors.contactEmail = "Contact email is required";
+    if (!formData.name.trim()) newErrors.name = "Club name is required";
+    if (!formData.location.trim()) newErrors.location = "Location is required";
+
+    const currentYear = new Date().getFullYear();
+    const establishedYear = parseInt(formData.establishedYear);
+    if (!establishedYear) {
+      newErrors.establishedYear = "Established year is required";
+    } else if (establishedYear < 1800 || establishedYear > currentYear) {
+      newErrors.establishedYear = `Year must be between 1800 and ${currentYear}`;
+    }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.contactEmail && !emailRegex.test(formData.contactEmail)) {
+    if (!formData.contactEmail.trim()) {
+      newErrors.contactEmail = "Contact email is required";
+    } else if (!emailRegex.test(formData.contactEmail)) {
       newErrors.contactEmail = "Invalid email format";
     }
 
     const phoneRegex = /^[+]?[\d\s-]{10,}$/;
-    if (!formData.contactPhone.trim())
+    if (!formData.contactPhone.trim()) {
       newErrors.contactPhone = "Contact phone is required";
-    else if (!phoneRegex.test(formData.contactPhone)) {
+    } else if (!phoneRegex.test(formData.contactPhone)) {
       newErrors.contactPhone = "Invalid phone number";
     }
 
-    if (!formData.experienceYears || isNaN(formData.experienceYears)) {
-      newErrors.experienceYears =
-        "Experience years are required and should be a number";
-    }
+    if (!formData.level) newErrors.level = "Club level is required";
 
-    if (!formData.coachingLevel)
-      newErrors.coachingLevel = "Coaching level is required";
+    const clubSize = parseInt(formData.clubSize);
+    if (!clubSize) {
+      newErrors.clubSize = "Club size is required";
+    } else if (clubSize < 1) {
+      newErrors.clubSize = "Club size must be at least 1";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -80,7 +82,6 @@ const CoachApplicationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
     const formDataSend = new FormData();
     for (const [key, value] of Object.entries(formData)) {
       formDataSend.append(key, value);
@@ -91,22 +92,21 @@ const CoachApplicationForm = () => {
       alert("Please upload an image before submitting.");
       return;
     }
-
     try {
       const { data } = await axios.post(
-        "https://bsesa-ksem.vercel.app/coach/application",
+        "https://bsesa-ksem.vercel.app/club/application",
         formDataSend
       );
       setIcon(<FaCheck />);
-      setMessage("Application Success");
+      setMessage("Registration Success");
       setErr(false);
       setShow(true);
       setTimeout(() => setShow(false), 1200);
     } catch (error) {
       setIcon(<FaExclamation />);
       setMessage(
-        error.response.data.error === "You’ve already requested to register"
-          ? "You’ve already requested to register"
+        error?.response?.data?.error == "You Already Requested This"
+          ? "You Already Requested This"
           : "Registration Failed"
       );
       setErr(true);
@@ -115,10 +115,13 @@ const CoachApplicationForm = () => {
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageUpload = (e) => {
     if (file) {
-      setFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -129,12 +132,14 @@ const CoachApplicationForm = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 pt-[100px]">
       <div className="max-w-2xl mx-auto bg-white shadow-xl rounded-xl p-8">
-        <h2 className="text-3xl font-extrabold text-gray-900 text-center">
-          Coach Application Form
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Apply to become a coach and join our network
-        </p>
+        <div className="mb-8">
+          <h2 className="text-3xl font-extrabold text-gray-900 text-center">
+            Club Application Form
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Create your club's official application
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
@@ -144,7 +149,7 @@ const CoachApplicationForm = () => {
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
               >
-                Name
+                Club Name
               </label>
               <input
                 type="text"
@@ -162,24 +167,73 @@ const CoachApplicationForm = () => {
 
             <div>
               <label
-                htmlFor="dateOfBirth"
+                htmlFor="location"
                 className="block text-sm font-medium text-gray-700"
               >
-                Date of Birth
+                Location
               </label>
               <input
-                type="date"
-                name="dateOfBirth"
-                value={formData.dateOfBirth}
+                type="text"
+                name="location"
+                value={formData.location}
                 onChange={handleChange}
                 className={`mt-1 block w-full rounded-md border ${
-                  errors.dateOfBirth ? "border-red-500" : "border-gray-300"
+                  errors.location ? "border-red-500" : "border-gray-300"
                 } shadow-sm py-2 px-3`}
               />
-              {errors.dateOfBirth && (
+              {errors.location && (
+                <p className="text-red-500 text-xs mt-1">{errors.location}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Additional Details */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="establishedYear"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Established Year
+              </label>
+              <input
+                type="number"
+                name="establishedYear"
+                value={formData.establishedYear}
+                onChange={handleChange}
+                className={`mt-1 block w-full rounded-md border ${
+                  errors.establishedYear ? "border-red-500" : "border-gray-300"
+                } shadow-sm py-2 px-3`}
+              />
+              {errors.establishedYear && (
                 <p className="text-red-500 text-xs mt-1">
-                  {errors.dateOfBirth}
+                  {errors.establishedYear}
                 </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="level"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Club Level
+              </label>
+              <select
+                name="level"
+                value={formData.level}
+                onChange={handleChange}
+                className={`mt-1 block w-full rounded-md border ${
+                  errors.level ? "border-red-500" : "border-gray-300"
+                } shadow-sm py-2 px-3`}
+              >
+                <option value="">Select Club Level</option>
+                <option value="Professional">Professional</option>
+                <option value="Semi-professional">Semi-professional</option>
+                <option value="Amateur">Amateur</option>
+              </select>
+              {errors.level && (
+                <p className="text-red-500 text-xs mt-1">{errors.level}</p>
               )}
             </div>
           </div>
@@ -233,77 +287,64 @@ const CoachApplicationForm = () => {
             </div>
           </div>
 
-          {/* Experience and Qualifications */}
+          {/* Additional Optional Fields */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <label
-                htmlFor="experienceYears"
+                htmlFor="website"
                 className="block text-sm font-medium text-gray-700"
               >
-                Years of Experience
+                Website (Optional)
               </label>
               <input
-                type="number"
-                name="experienceYears"
-                value={formData.experienceYears}
+                type="url"
+                name="website"
+                value={formData.website}
                 onChange={handleChange}
-                className={`mt-1 block w-full rounded-md border ${
-                  errors.experienceYears ? "border-red-500" : "border-gray-300"
-                } shadow-sm py-2 px-3`}
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm py-2 px-3"
               />
-              {errors.experienceYears && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.experienceYears}
-                </p>
-              )}
             </div>
 
             <div>
               <label
-                htmlFor="coachingLevel"
+                htmlFor="clubSize"
                 className="block text-sm font-medium text-gray-700"
               >
-                Coaching Level
+                Club Size
               </label>
-              <select
-                name="coachingLevel"
-                value={formData.coachingLevel}
+              <input
+                type="number"
+                name="clubSize"
+                value={formData.clubSize}
                 onChange={handleChange}
                 className={`mt-1 block w-full rounded-md border ${
-                  errors.coachingLevel ? "border-red-500" : "border-gray-300"
+                  errors.clubSize ? "border-red-500" : "border-gray-300"
                 } shadow-sm py-2 px-3`}
-              >
-                <option value="">Select Coaching Level</option>
-                <option value="Youth">Youth</option>
-                <option value="Amateur">Amateur</option>
-                <option value="Professional">Professional</option>
-              </select>
-              {errors.coachingLevel && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.coachingLevel}
-                </p>
+              />
+              {errors.clubSize && (
+                <p className="text-red-500 text-xs mt-1">{errors.clubSize}</p>
               )}
             </div>
           </div>
 
-          {/* Biography */}
+          {/* Description */}
           <div>
             <label
-              htmlFor="biography"
+              htmlFor="description"
               className="block text-sm font-medium text-gray-700"
             >
-              Biography
+              Description (Optional)
             </label>
             <textarea
-              name="biography"
-              value={formData.biography}
+              name="description"
+              value={formData.description}
               onChange={handleChange}
-              rows="4"
               className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm py-2 px-3"
+              rows="4"
             />
           </div>
 
-          {/* Drag and Drop Image Upload */}
+          {/* Logo Upload */}
           <div
             className="mt-6 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
             onDragOver={(e) => e.preventDefault()}
@@ -311,7 +352,7 @@ const CoachApplicationForm = () => {
               e.preventDefault();
               const file = e.dataTransfer.files[0];
               if (file) {
-                setFile(file);
+                setfile(file);
               }
             }}
           >
@@ -340,22 +381,25 @@ const CoachApplicationForm = () => {
                   PNG, JPG, GIF up to 10MB
                 </p>
               </div>
-              {imagePreview && (
-                <img className="h-[100px] block mx-auto" src={imagePreview} />
+              {ImagePreview && (
+                <img className="h-[100px] block mx-auto" src={ImagePreview} />
               )}
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
-          >
-            Submit Application
-          </button>
+          {/* Submit Button */}
+          <div className="mt-6 text-center">
+            <button
+              type="submit"
+              className="block justify-center py-2 px-4 mx-auto text-white  bg-primary border border-transparent rounded-md hover:bg-primary text-[1.1rem] font-semibold"
+            >
+              Registration Request
+            </button>
+          </div>
         </form>
       </div>
     </div>
   );
 };
 
-export default CoachApplicationForm;
+export default ClubApplicationForm;

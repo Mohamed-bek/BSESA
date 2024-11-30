@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { FaCheck, FaEdit, FaExclamation, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useMessageData } from "../context/UserContext";
+import { useMessageData } from "../../context/UserContext";
 
 const ManageBlogs = () => {
   const { setShow, setMessageData } = useMessageData();

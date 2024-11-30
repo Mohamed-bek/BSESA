@@ -2,52 +2,56 @@ import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { FaCheck, FaEdit, FaExclamation, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useMessageData } from "../context/UserContext";
+import { useMessageData } from "../../context/UserContext";
 
-const ManageVideos = () => {
+const ManageCourses = () => {
   const { setShow, setMessageData } = useMessageData();
-  const [videos, setVideos] = useState([]);
+  const [courses, setCourses] = useState([]);
   const [NbOfPages, setNbOfPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [password, setPassword] = useState("");
   const deleteRef = useRef(null);
   const [id, setId] = useState(null);
-
+  const [timeFilter, setTimeFilter] = useState("all");
   useEffect(() => {
-    const getVideosForAdmin = async () => {
+    const getCoursesForAdmin = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/videos",
+          "https://bsesa-ksem.vercel.app/admin/courses",
           {
             params: {
               title: searchQuery,
+              time: timeFilter,
               page: currentPage,
               limit: 10,
             },
             withCredentials: true,
           }
         );
-        console.log("Videos Videos Videos : ", data);
-        setVideos(data.videos);
+        setCourses(data.courses);
         setNbOfPages(data.NbOfPages);
       } catch (error) {
         console.log(error);
       }
     };
 
-    getVideosForAdmin();
-  }, [searchQuery, currentPage]);
+    getCoursesForAdmin();
+  }, [searchQuery, timeFilter, currentPage]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  const deleteVideo = async (e) => {
+  const handleTimeFilterChange = (e) => {
+    setTimeFilter(e.target.value);
+  };
+
+  const deleteCourse = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.delete(
-        `https://bsesa-ksem.vercel.app/admin/video/${id}`,
+        `https://bsesa-ksem.vercel.app/course/${id}`,
         {
           data: {
             password,
@@ -56,11 +60,11 @@ const ManageVideos = () => {
         }
       );
       deleteRef.current.classList.add("scale-0");
-      const newVideos = videos.filter((v) => v._id !== id);
-      setVideos(newVideos);
+      const NewCourses = courses.filter((c) => c._id !== id);
+      setCourses(NewCourses);
       setId(null);
       setMessageData({
-        message: "Video deleted successfully",
+        message: "Course deleted successfully",
         icon: <FaCheck />,
         err: false,
         show: true,
@@ -69,7 +73,7 @@ const ManageVideos = () => {
     } catch (error) {
       console.log(error);
       setMessageData({
-        message: "Video deletion failed",
+        message: "Course deleted Failed",
         icon: <FaExclamation />,
         err: true,
         show: true,
@@ -95,10 +99,11 @@ const ManageVideos = () => {
           />
           <div className="flex justify-center gap-2 items-center">
             <button
-              onClick={(e) => deleteVideo(e)}
+              onClick={(e) => deleteCourse(e)}
               className="bg-red-500 text-whiteColor px-4 py-2 cursor-pointer font-semibold block rounded-md"
             >
-              Delete
+              {" "}
+              Delete{" "}
             </button>
             <button
               onClick={(e) => {
@@ -108,7 +113,8 @@ const ManageVideos = () => {
               }}
               className="bg-blue-500 text-whiteColor px-4 py-2 cursor-pointer font-semibold block rounded-md"
             >
-              Cancel
+              {" "}
+              Cancel{" "}
             </button>
           </div>
         </form>
@@ -118,36 +124,46 @@ const ManageVideos = () => {
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
-          className="w-[260px] p-2 focus:outline-none bg-secondary border border-primary rounded-lg"
+          className="w-[260px] p-2 focus:outline-none bg-secondary  border border-primary rounded-lg"
           placeholder="Search by title"
         />
+        <select
+          id="timeFilter"
+          value={timeFilter}
+          onChange={handleTimeFilterChange}
+          className="p-2 border border-primary cursor-pointer rounded-lg focus:outline-none"
+        >
+          <option value="all">All Time</option>
+          <option value="last_day">Last Day</option>
+          <option value="last_week">Last Week</option>
+          <option value="last_month">Last Month</option>
+          <option value="last_year">Last Year</option>
+        </select>
       </div>
       <header className="flex items-center text-white justify-between p-4 bg-primary border-b border-gray-200">
         <div className="flex-1 min-w-[250px]">Title</div>
-        <div className="flex-1 min-w-[250px]">URL</div>
+        <div className="w-[120px] text-center">Price</div>
+        <div className="w-[120px] text-center">Purchasers</div>
         <div className="w-[180px] text-center">Created</div>
         <div className="w-[120px] text-center">Manage</div>
       </header>
 
       <div className="h-[calc(100%-160px)] overflow-y-auto">
-        {videos.map((video) => (
+        {courses.map((course) => (
           <div
-            key={video._id}
+            key={course._id}
             className="flex items-center justify-between p-4 border-b font-normal text-[1.1rem] border-secondary hover:bg-secondary"
           >
-            <div className="flex-1 min-w-[250px]">{video.title}</div>
-            <div className="flex-1 min-w-[250px] text-blue-500 underline">
-              <a href={video.url} target="_blank" rel="noopener noreferrer">
-                View Video
-              </a>
-            </div>
-            <div className="w-[180px] text-center">
-              {new Date(video.createdAt).toLocaleDateString()}
+            <div className="flex-1 min-w-[250px]">{course.title}</div>
+            <div className="w-[120px] text-center ">{course.price} USD</div>
+            <div className="w-[120px] text-center ">{course.NbOforders}</div>
+            <div className="w-[180px] text-center ">
+              {new Date(course.createdAt).toLocaleDateString()}
             </div>
             <div className="w-[120px] text-center flex items-center justify-center gap-2">
               <Link
                 title="edit"
-                to={`/dashboard/manage-videos/update-video/${video._id}`}
+                to={"/dashboard/manage-courses/update-course/" + course._id}
                 className="text-blue-500"
               >
                 <FaEdit />
@@ -155,7 +171,7 @@ const ManageVideos = () => {
               <button
                 title="delete"
                 onClick={() => {
-                  setId(video._id);
+                  setId(course._id);
                   deleteRef.current.classList.remove("scale-0");
                 }}
                 className="text-red-500 ml-2"
@@ -185,4 +201,4 @@ const ManageVideos = () => {
   );
 };
 
-export default ManageVideos;
+export default ManageCourses;

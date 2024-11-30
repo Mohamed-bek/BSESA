@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMessageData, useUserStore } from "../context/UserContext";
+import { useMessageData, useUserStore } from "../../context/UserContext";
 import {
   FaCheck,
   FaHeart,

@@ -4,8 +4,8 @@ import { RiStarSFill } from "react-icons/ri";
 import axios from "axios";
 import { MdAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useUserStore } from "../context/UserContext";
-import BlogBox from "../components/BlogBox";
+import { useUserStore } from "../../context/UserContext";
+import BlogBox from "../../components/BlogBox";
 
 const Blogs = () => {
   const [isLoading, setIsLoading] = useState(false);

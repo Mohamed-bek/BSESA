@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { FaCheck, FaPen } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
-import AddLinkWithDescription from "../context/AddLinkWithDescription";
-import { useMessageData } from "../context/UserContext";
+import AddLinkWithDescription from "../../context/AddLinkWithDescription";
+import { useMessageData } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 
 const UpdateVideo = () => {

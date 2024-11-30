@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { HiHeart } from "react-icons/hi2";
 import { useNavigate, useParams } from "react-router-dom";
-import { useUserStore } from "../context/UserContext";
+import { useUserStore } from "../../context/UserContext";
 import { FaHeart, FaRegEye } from "react-icons/fa";
 
 function timeAgo(createdAt) {

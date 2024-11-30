@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaCheck, FaSearch } from "react-icons/fa";
-import { useMessageData } from "../context/UserContext";
+import { useMessageData } from "../../context/UserContext";
 import { MdOutlineCancel } from "react-icons/md";
 
 const AdminCourseManager = () => {

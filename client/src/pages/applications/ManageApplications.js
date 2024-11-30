@@ -2,56 +2,50 @@ import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { FaCheck, FaEdit, FaExclamation, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useMessageData } from "../context/UserContext";
+import { useMessageData } from "../../context/UserContext";
 
-const ManageCourses = () => {
+const ManageApplications = () => {
   const { setShow, setMessageData } = useMessageData();
-  const [courses, setCourses] = useState([]);
+  const [applications, setApplications] = useState([]);
   const [NbOfPages, setNbOfPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [password, setPassword] = useState("");
   const deleteRef = useRef(null);
   const [id, setId] = useState(null);
-  const [timeFilter, setTimeFilter] = useState("all");
+
   useEffect(() => {
-    const getCoursesForAdmin = async () => {
+    const getApplicationsForAdmin = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/admin/courses",
+          "https://bsesa-ksem.vercel.app/applications",
           {
             params: {
-              title: searchQuery,
-              time: timeFilter,
+              name: searchQuery,
               page: currentPage,
               limit: 10,
             },
-            withCredentials: true,
           }
         );
-        setCourses(data.courses);
-        setNbOfPages(data.NbOfPages);
+        setApplications(applications);
+        // setNbOfPages(data.NbofPages);
       } catch (error) {
         console.log(error);
       }
     };
 
-    getCoursesForAdmin();
-  }, [searchQuery, timeFilter, currentPage]);
+    getApplicationsForAdmin();
+  }, [searchQuery, currentPage]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  const handleTimeFilterChange = (e) => {
-    setTimeFilter(e.target.value);
-  };
-
-  const deleteCourse = async (e) => {
+  const deleteApplication = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.delete(
-        `https://bsesa-ksem.vercel.app/course/${id}`,
+        `https://bsesa-ksem.vercel.app/admin/application/${id}`,
         {
           data: {
             password,
@@ -60,11 +54,11 @@ const ManageCourses = () => {
         }
       );
       deleteRef.current.classList.add("scale-0");
-      const NewCourses = courses.filter((c) => c._id !== id);
-      setCourses(NewCourses);
+      const newApplications = applications.filter((a) => a._id !== id);
+      setApplications(newApplications);
       setId(null);
       setMessageData({
-        message: "Course deleted successfully",
+        message: "Application deleted successfully",
         icon: <FaCheck />,
         err: false,
         show: true,
@@ -73,7 +67,7 @@ const ManageCourses = () => {
     } catch (error) {
       console.log(error);
       setMessageData({
-        message: "Course deleted Failed",
+        message: "Application deletion failed",
         icon: <FaExclamation />,
         err: true,
         show: true,
@@ -95,15 +89,14 @@ const ManageCourses = () => {
             type="password"
             required
             placeholder="Enter your password"
-            className="bg-secondary border-none rounded-md p-2  focus:outline-none mb-6"
+            className="bg-secondary border-none rounded-md p-2 focus:outline-none mb-6"
           />
           <div className="flex justify-center gap-2 items-center">
             <button
-              onClick={(e) => deleteCourse(e)}
+              onClick={(e) => deleteApplication(e)}
               className="bg-red-500 text-whiteColor px-4 py-2 cursor-pointer font-semibold block rounded-md"
             >
-              {" "}
-              Delete{" "}
+              Delete
             </button>
             <button
               onClick={(e) => {
@@ -113,8 +106,7 @@ const ManageCourses = () => {
               }}
               className="bg-blue-500 text-whiteColor px-4 py-2 cursor-pointer font-semibold block rounded-md"
             >
-              {" "}
-              Cancel{" "}
+              Cancel
             </button>
           </div>
         </form>
@@ -124,46 +116,42 @@ const ManageCourses = () => {
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
-          className="w-[260px] p-2 focus:outline-none bg-secondary  border border-primary rounded-lg"
-          placeholder="Search by title"
+          className="w-[260px] p-2 focus:outline-none bg-secondary border border-primary rounded-lg"
+          placeholder="Search by name"
         />
-        <select
-          id="timeFilter"
-          value={timeFilter}
-          onChange={handleTimeFilterChange}
-          className="p-2 border border-primary cursor-pointer rounded-lg focus:outline-none"
-        >
-          <option value="all">All Time</option>
-          <option value="last_day">Last Day</option>
-          <option value="last_week">Last Week</option>
-          <option value="last_month">Last Month</option>
-          <option value="last_year">Last Year</option>
-        </select>
       </div>
       <header className="flex items-center text-white justify-between p-4 bg-primary border-b border-gray-200">
-        <div className="flex-1 min-w-[250px]">Title</div>
-        <div className="w-[120px] text-center">Price</div>
-        <div className="w-[120px] text-center">Purchasers</div>
-        <div className="w-[180px] text-center">Created</div>
+        <div className="flex-1 min-w-[250px]">Name</div>
+        <div className="w-[120px] text-center">Type</div>
+        <div className="w-[120px] text-center">Deadline</div>
+        <div className="w-[120px] text-center">Subscribers</div>
+        <div className="w-[120px] text-center">Level</div>
+        <div className="w-[120px] text-center">Created</div>
         <div className="w-[120px] text-center">Manage</div>
       </header>
 
       <div className="h-[calc(100%-160px)] overflow-y-auto">
-        {courses.map((course) => (
+        {applications.map((application) => (
           <div
-            key={course._id}
+            key={application._id}
             className="flex items-center justify-between p-4 border-b font-normal text-[1.1rem] border-secondary hover:bg-secondary"
           >
-            <div className="flex-1 min-w-[250px]">{course.title}</div>
-            <div className="w-[120px] text-center ">{course.price} USD</div>
-            <div className="w-[120px] text-center ">{course.NbOforders}</div>
-            <div className="w-[180px] text-center ">
-              {new Date(course.createdAt).toLocaleDateString()}
+            <div className="flex-1 min-w-[250px]">{application.name}</div>
+            <div className="w-[120px] text-center">{application.type}</div>
+            <div className="w-[120px] text-center">
+              {new Date(application.deadline).toLocaleDateString()}
+            </div>
+            <div className="w-[120px] text-center">
+              {application.subscribersIds?.length}
+            </div>
+            <div className="w-[120px] text-center">{application.level}</div>
+            <div className="w-[120px] text-center">
+              {new Date(application.createdAt).toLocaleDateString()}
             </div>
             <div className="w-[120px] text-center flex items-center justify-center gap-2">
               <Link
                 title="edit"
-                to={"/dashboard/manage-courses/update-course/" + course._id}
+                to={`/dashboard/manage-applications/update-application/${application._id}`}
                 className="text-blue-500"
               >
                 <FaEdit />
@@ -171,7 +159,7 @@ const ManageCourses = () => {
               <button
                 title="delete"
                 onClick={() => {
-                  setId(course._id);
+                  setId(application._id);
                   deleteRef.current.classList.remove("scale-0");
                 }}
                 className="text-red-500 ml-2"
@@ -201,4 +189,4 @@ const ManageCourses = () => {
   );
 };
 
-export default ManageCourses;
+export default ManageApplications;
