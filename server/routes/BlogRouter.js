@@ -28,6 +28,7 @@ BlogRouter.put(
   "/blog/:id",
   authenticateToken,
   authorizeRoles(["admin"]),
+  upload.single("file"),
   updateBlogPost
 );
 BlogRouter.delete(

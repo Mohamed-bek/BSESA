@@ -77,8 +77,6 @@ function UpdateBlog() {
           withCredentials: true,
         }
       );
-      setBlog(data?.blog);
-      setImagePreview(data?.blog?.thumbnailUrl);
       setImageFile(null);
       setErr(false);
       setMessage("Course Updated Successfully");
