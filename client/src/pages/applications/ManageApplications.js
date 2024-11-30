@@ -27,8 +27,9 @@ const ManageApplications = () => {
             },
           }
         );
-        setApplications(applications);
-        // setNbOfPages(data.NbofPages);
+        console.log("Data returned: ", data);
+        setApplications(data.applications);
+        setNbOfPages(data.NbOfPages);
       } catch (error) {
         console.log(error);
       }

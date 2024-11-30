@@ -69,7 +69,7 @@ export const getApplications = async (req, res) => {
     const NbOfApps = Application.countDocuments(filter);
     res
       .status(200)
-      .json({ applications, NbOfPages: Math.ceil(NbOfApps / limit) });
+      .json({ applications, NbOfApps, NbOfPages: Math.ceil(NbOfApps / limit) });
   } catch (error) {
     res.status(500).json({ message: "Error fetching applications", error });
   }
