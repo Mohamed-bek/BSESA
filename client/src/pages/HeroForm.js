@@ -90,85 +90,90 @@ const HeroForm = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-4">Create or Update Hero Section</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* <div>
-          <label className="block font-medium mb-1">Page Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded focus:outline-none"
-            placeholder="Enter the page name"
-            required
-          />
-        </div> */}
-        <div>
-          <label className="block font-medium mb-1">Heading (H1)</label>
-          <input
-            type="text"
-            name="h1"
-            value={formData.h1}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded focus:outline-none"
-            placeholder="Enter the heading"
-            required
-          />
-        </div>
-        <div>
-          <label className="block font-medium mb-1">Paragraph</label>
-          <textarea
-            name="p"
-            value={formData.p}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded focus:outline-none"
-            placeholder="Enter the paragraph text"
-            required
-          />
-        </div>
-        <div>
-          <label className="block font-medium mb-1">Link</label>
-          <input
-            type="text"
-            name="link"
-            value={formData.link}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded focus:outline-none"
-            placeholder="Enter the link URL"
-            required
-          />
-        </div>
-        <div>
-          <label className="block font-medium mb-1">Asset Type</label>
-          <select
-            name="asset_type"
-            value={formData.asset_type}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded focus:outline-none"
+    <div className="w-full h-full flex justify-center items-center bg-whiteColor">
+      {" "}
+      <div className="mx-auto bg-secondary rounded-lg shadow-lg overflow-hidden">
+        <h1 className="text-2xl font-bold mb-4 bg-primary text-whiteColor text-center px-6 py-4">
+          Create or Update Hero Section
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4 px-6 pb-5">
+          {/* <div>
+      <label className="block font-medium mb-1">Page Name</label>
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleInputChange}
+        className="w-full p-2 border rounded focus:outline-none"
+        placeholder="Enter the page name"
+        required
+      />
+    </div> */}
+          <div>
+            <label className="block font-medium mb-1">Heading (H1)</label>
+            <input
+              type="text"
+              name="h1"
+              value={formData.h1}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded focus:outline-none"
+              placeholder="Enter the heading"
+              required
+            />
+          </div>
+          <div>
+            <label className="block font-medium mb-1">Paragraph</label>
+            <textarea
+              name="p"
+              value={formData.p}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded focus:outline-none"
+              placeholder="Enter the paragraph text"
+              required
+            />
+          </div>
+          <div>
+            <label className="block font-medium mb-1">Link</label>
+            <input
+              type="text"
+              name="link"
+              value={formData.link}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded focus:outline-none"
+              placeholder="Enter the link URL"
+              required
+            />
+          </div>
+          <div>
+            <label className="block font-medium mb-1">Asset Type</label>
+            <select
+              name="asset_type"
+              value={formData.asset_type}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded focus:outline-none"
+            >
+              <option value="image">Image</option>
+              <option value="video">Video</option>
+            </select>
+          </div>
+          <div>
+            <label className="block font-medium mb-1">Upload Asset</label>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className="w-full p-2 border rounded focus:outline-none"
+              accept="image/*,video/*"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-primary  text-[1.2rem] font-semibold text-whiteColor mx-auto block py-2 px-4 rounded cursor-pointer "
           >
-            <option value="image">Image</option>
-            <option value="video">Video</option>
-          </select>
-        </div>
-        <div>
-          <label className="block font-medium mb-1">Upload Asset</label>
-          <input
-            type="file"
-            onChange={handleFileChange}
-            className="w-full p-2 border rounded focus:outline-none"
-            accept="image/*,video/*"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-        >
-          Submit
-        </button>
-      </form>
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

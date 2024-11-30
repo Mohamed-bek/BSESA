@@ -64,7 +64,7 @@ function PopulairCourses({ courses, headerText }) {
             key={`${headerText}-${course._id}-${index}`}
             data-index={index}
             data-header={headerText}
-            className={`course-item transform flex-1 w-[290px] transition-all duration-1000 ease-out ${
+            className={`course-item transform w-[290px] transition-all duration-1000 ease-out ${
               visibleIndexes.includes(index)
                 ? "translate-y-0 opacity-100"
                 : "translate-y-40 opacity-0"

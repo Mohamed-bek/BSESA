@@ -83,9 +83,11 @@ const CreateMembership = () => {
 
   return (
     <div className="w-full h-full bg-whiteColor flex justify-center items-center">
-      <div className="p-6 max-w-md mx-auto bg-secondary rounded-md shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Create New Membership</h2>
-        <form onSubmit={handleSubmit}>
+      <div className="max-w-md mx-auto bg-secondary shadow-lg rounded-lg overflow-hidden">
+        <h2 className="text-[1.6rem] bg-primary text-whiteColor text-center px-6 py-4 font-semibold mb-4">
+          Create New Membership
+        </h2>
+        <form className="px-6 pb-5" onSubmit={handleSubmit}>
           {/* Name and Price */}
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
@@ -269,7 +271,7 @@ const CreateMembership = () => {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white  rounded-md hover:bg-primaryF bg-primary focus:outline-none"
+            className="px-5 block mx-auto text-[1.2rem] font-semibold mt-5 py-2 text-white  rounded-md hover:bg-primaryF bg-primary focus:outline-none"
           >
             Create Membership
           </button>

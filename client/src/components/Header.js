@@ -18,8 +18,16 @@ function Header() {
       subLinks: [
         { name: "Courses", link: "/courses", id: 0 },
         { name: "Academy Development", link: "#", id: 1 },
-        { name: "Coaches' Immersion", link: "/coaches-immersion", id: 2 },
-        { name: "Team Immersion", link: "/team-immersion", id: 3 },
+        {
+          name: "Coaches' Immersion",
+          link: "/applications/coach",
+          id: 2,
+        },
+        {
+          name: "Team Immersion",
+          link: "/applications/team",
+          id: 3,
+        },
       ],
       id: 1,
     },

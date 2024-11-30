@@ -40,6 +40,9 @@ import UpdateVideo from "./pages/UpdateVideo";
 import ManageBlogs from "./pages/ManageBlogs";
 import AdminBlogs from "./pages/AdminBlogs";
 import UpdateBlog from "./pages/UpdateBlogs";
+import Applications from "./pages/Applications";
+import ApplicationPage from "./pages/ApplicationPage";
+import ClubApplicationForm from "./pages/ClubApplicationForm";
 
 function App() {
   const { user } = useUserStore();
@@ -70,12 +73,6 @@ function App() {
           },
           {
             id: 5,
-            name: "Manage Course",
-            icon: <MdOutlineManageHistory />,
-            href: "/manage-course",
-          },
-          {
-            id: 6,
             name: "Blogs",
             icon: <FaBloggerB />,
             href: "/manage-blogs",
@@ -152,6 +149,9 @@ function App() {
           <Route path="update-hero" element={<HeroForm />} />
         </Route>
         <Route path="/pricing" element={<Plans />} />
+        <Route path="/application-form/:id" element={<ClubApplicationForm />} />
+        <Route path="/applications/:type" element={<Applications />} />
+        <Route path="/application/:id" element={<ApplicationPage />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/membership/create" element={<AddMemberShip />} />
         <Route path="/blog/:id" element={<Blog />} />

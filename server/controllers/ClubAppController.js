@@ -29,6 +29,12 @@ export const createClubApplication = async (req, res) => {
         error: "The Application That You went To Subscribe Is Not Found",
       });
 
+    const IsAlredyRequest = await ClubApplication.findOne({
+      applicationId,
+      contactEmail,
+    });
+    if (IsAlredyRequest)
+      return res.status(401).json({ error: "You Already Requested This" });
     if (!req.file) {
       return res
         .status(400)

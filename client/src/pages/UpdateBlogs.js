@@ -115,7 +115,7 @@ function UpdateBlog() {
           withCredentials: true,
         }
       );
-      blog?.comments = blog?.comments?.filter(
+      blog.comments = blog?.comments?.filter(
         (comment) => comment._id !== commentId
       );
       setErr(false);
@@ -180,7 +180,7 @@ function UpdateBlog() {
           />
           <button
             onClick={() => UpdateBlog()}
-            className="px-5 py-2 font-semibold bg-primary text-whiteColor mt-5 mx-auto block cursor-pointer rounded-xl"
+            className="px-5 py-2 mb-5 font-semibold bg-primary text-whiteColor mt-5 mx-auto block cursor-pointer rounded-xl"
           >
             {" "}
             Update Blog{" "}
