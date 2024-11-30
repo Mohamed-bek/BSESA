@@ -27,7 +27,6 @@ const ManageBlogs = () => {
             },
           }
         );
-        console.log("Blogs Blogs Blogs : ", data);
         setBlogs(data.blogs);
         setNbOfPages(data.NbOfPages);
       } catch (error) {

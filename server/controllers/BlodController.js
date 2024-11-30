@@ -1,6 +1,8 @@
 import Blog from "../models/Blog.js";
 import Comment from "../models/Comment.js";
-import uploadToSpaces from "../utitlitis/awsDigitalOcean.js";
+import uploadToSpaces, {
+  deleteFromSpaces,
+} from "../utitlitis/awsDigitalOcean.js";
 
 export const createBlogPost = async (req, res) => {
   try {
@@ -74,12 +76,20 @@ export const getBlogPostById = async (req, res) => {
 export const updateBlogPost = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedData = req.body;
-    const updatedPost = await Blog.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
-    if (!updatedPost) return res.status(404).json({ error: "Post not found" });
-    res.status(200).json(updatedPost);
+    const { title, content } = req.body;
+    const blog = await Blog.findById(id);
+    if (!blog) return res.status(404).json({ error: "Not Found" });
+
+    if (title) blog.title = title;
+    if (content) blog.content = content;
+    if (req.file) {
+      const OldPath = blog.thumbnailUrl;
+      const newThumbnailUrl = await uploadToSpaces(req.file, "/BlogThumbnails");
+      await deleteFromSpaces(OldPath);
+      blog.thumbnailUrl = newThumbnailUrl;
+    }
+    await blog.save();
+    res.status(200).json({ blog });
   } catch (error) {
     res
       .status(500)
