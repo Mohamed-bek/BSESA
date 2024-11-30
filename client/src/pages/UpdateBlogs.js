@@ -40,6 +40,7 @@ function UpdateBlog() {
   const [ImageFile, setImageFile] = useState(null);
   const [ImagePreview, setImagePreview] = useState(null);
   const iputFileRef = useRef();
+
   const GetBlog = async () => {
     try {
       const { data } = await axios.get(
@@ -67,16 +68,12 @@ function UpdateBlog() {
     if (ImageFile) formData.append("file", ImageFile);
 
     try {
-      const { data } = await axios.put(
-        `https://bsesa-ksem.vercel.app/video/update/${id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
+      await axios.put(`https://bsesa-ksem.vercel.app/blog/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
       setImageFile(null);
       setErr(false);
       setMessage("Course Updated Successfully");
@@ -104,6 +101,34 @@ function UpdateBlog() {
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const deleteComent = async (commentId) => {
+    try {
+      await axios.delete(
+        `https://bsesa-ksem.vercel.app/blog/comment/${commentId}`,
+        {
+          params: {
+            blogId: id,
+          },
+          withCredentials: true,
+        }
+      );
+      blog?.comments = blog?.comments?.filter(
+        (comment) => comment._id !== commentId
+      );
+      setErr(false);
+      setMessage("Comment Deleted Successfully");
+      setIcon(<FaCheck />);
+      setShow(true);
+      setTimeout(() => setShow(false), 1200);
+    } catch (error) {
+      setErr(true);
+      setMessage("Failed To Delete Comment");
+      setIcon(<MdCancel />);
+      setShow(true);
+      setTimeout(() => setShow(false), 1200);
     }
   };
 
@@ -197,7 +222,10 @@ function UpdateBlog() {
                     </p>
                   </div>
                 </div>
-                <FaTrash className="text-[1.2rem] text-red-500 cursor-pointer" />
+                <FaTrash
+                  onClick={() => deleteComent(comment?._id)}
+                  className="text-[1.2rem] text-red-500 cursor-pointer"
+                />
               </div>
             ))}
           </div>

@@ -152,3 +152,27 @@ export const addCommentToBlog = async (req, res) => {
     res.status(500).json({ err: "Failed to add comment", details: error });
   }
 };
+
+export const deleteCommentFromBlog = async (req, res) => {
+  const { id } = req.params;
+  const { blogId } = req.query;
+  try {
+    const comment = await Comment.findByIdAndDelete(id);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    blog.comments = blog.comments.filter(
+      (comment) => comment._id.toString() !== id
+    );
+    await blog.save();
+
+    res.status(200).json({ message: "Comment deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};

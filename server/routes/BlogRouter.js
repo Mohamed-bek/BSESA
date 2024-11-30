@@ -3,6 +3,7 @@ import {
   addCommentToBlog,
   createBlogPost,
   deleteBlogPost,
+  deleteCommentFromBlog,
   getAllBlogPosts,
   getBlogPostById,
   toggleLikeBlogPost,
@@ -24,6 +25,12 @@ BlogRouter.get("/blogs", getAllBlogPosts);
 BlogRouter.get("/blog/:id", getBlogPostById);
 BlogRouter.put("/blog/like/:id", authenticateToken, toggleLikeBlogPost);
 BlogRouter.put("/blog/comment/:id", authenticateToken, addCommentToBlog);
+BlogRouter.delete(
+  "/blog/comment/:id",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  deleteCommentFromBlog
+);
 BlogRouter.put(
   "/blog/:id",
   authenticateToken,
