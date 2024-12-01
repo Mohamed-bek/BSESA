@@ -1,14 +1,12 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { IoMdAdd } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { useMessageData } from "../../context/UserContext";
 import AddLinkWithDescription from "../../context/AddLinkWithDescription";
 
 const AddVideo = () => {
-  const navigate = useNavigate();
   const [comprising, setComprising] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
