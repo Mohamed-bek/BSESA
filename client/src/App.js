@@ -46,13 +46,10 @@ import ClubApplicationForm from "./pages/applications/ClubApplicationForm";
 import CoachApplicationForm from "./pages/applications/CoachApplicationForm";
 import { FaApple } from "react-icons/fa";
 import ManageApplications from "./pages/applications/ManageApplications";
+import ManageCoaches from "./pages/applications/ManageCoaches";
 
 function App() {
   const { user } = useUserStore();
-  useEffect(() => {
-    console.log("App initialized ,", process.env.REACT_APP_API_URL);
-  }, []);
-
   const links =
     user?.role === "admin"
       ? [
@@ -116,10 +113,6 @@ function App() {
             href: "/certificates",
           },
         ];
-
-  useEffect(() => {
-    console.log("Cnfition Of : ", !user?.role === "admin" ? "Good" : "Bad");
-  });
   return (
     <div className="App overflow-hidden min-h-[100dvh] relative font-roboto overflow-x-hidden w-full bg-blackColor">
       <Message />
@@ -155,6 +148,7 @@ function App() {
           <Route path="manage-applications" element={<AdminBlogs />}>
             <Route path="" element={<ManageApplications />} />
             <Route path="new-blog" element={<CreateBlog />} />
+            <Route path="coaches/:id" element={<ManageCoaches />} />
             <Route path="update-blog/:id" element={<UpdateBlog />} />
           </Route>
           <Route path="new-course" element={<CreateCourse />} />

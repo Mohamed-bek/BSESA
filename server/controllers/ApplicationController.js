@@ -92,15 +92,19 @@ export const getApplicationById = async (req, res) => {
 
 export const getCoachces = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
-
+    const { name, status, page = 1, limit = 10 } = req.query;
+    const filter = {};
+    if (name) filter.name = name;
+    if (status) filter.status = status;
     const coaches = await CoachApplication.find({
       applicationId: req.params.id,
+      ...filter,
     })
       .skip((page - 1) * limit)
       .limit(limit);
     const coachesNb = await CoachApplication.countDocuments({
       applicationId: req.params.id,
+      ...filter,
     });
 
     if (!coaches) {

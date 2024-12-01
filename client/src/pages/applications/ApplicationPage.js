@@ -13,6 +13,7 @@ const ApplicationPage = () => {
         const { data } = await axios.get(
           `https://bsesa-ksem.vercel.app/application/${id}`
         );
+        console.log("data: " + data);
         setapplication(data);
       } catch (error) {}
     };

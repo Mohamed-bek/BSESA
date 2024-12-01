@@ -21,7 +21,7 @@ function Applications() {
         }
       );
       console.log("Applications : ", data);
-      setApplications(data);
+      setApplications(data.applications);
     } catch (error) {
       console.error("Error fetching applications:", error);
     } finally {

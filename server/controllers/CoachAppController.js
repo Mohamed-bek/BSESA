@@ -23,7 +23,7 @@ export const createCoachApplication = async (req, res) => {
       currentClub,
       biography,
       achievements,
-      CoachingLevel,
+      coachingLevel,
       languagesSpoken,
     } = req.body;
 
@@ -58,7 +58,7 @@ export const createCoachApplication = async (req, res) => {
       currentClub,
       biography,
       achievements,
-      CoachingLevel,
+      coachingLevel,
       languagesSpoken,
       image: imageUrl,
     });

@@ -28,7 +28,6 @@ const ManageCoaches = () => {
         );
         console.log("Data :", data);
         setCoaches(data.coaches);
-        setNbOfPages(data.NbOfPages);
       } catch (error) {
         console.log(error);
       }

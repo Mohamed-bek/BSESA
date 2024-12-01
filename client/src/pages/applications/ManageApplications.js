@@ -133,7 +133,8 @@ const ManageApplications = () => {
 
       <div className="h-[calc(100%-160px)] overflow-y-auto">
         {applications.map((application) => (
-          <div
+          <Link
+            to={`/dashboard/manage-applications/coaches/${application._id}`}
             key={application._id}
             className="flex items-center justify-between p-4 border-b font-normal text-[1.1rem] border-secondary hover:bg-secondary"
           >
@@ -172,7 +173,7 @@ const ManageApplications = () => {
                 <FaTrash />
               </button>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
