@@ -76,17 +76,21 @@ const ApplicationPage = () => {
                 {application?.steps?.map((step, index) => (
                   <div
                     key={step._id || index}
-                    className="bg-secondary p-4 rounded-lg border-l-4 border-primary"
+                    className="bg-secondary p-4 flex flex-wrap items-start justify-start gap-2 rounded-lg border-l-4 border-primary"
                   >
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="text-lg font-medium text-blackColor">
-                        Step {index + 1}: {step.title}
+                    {step?.image && (
+                      <div>
+                        <img src={step.image} className="w-[120px]" />
+                      </div>
+                    )}
+                    <div className="min-w-[300px]">
+                      <h3 className="text-lg text-blackColor font-semibold">
+                        {step.title}
                       </h3>
-                      <span className="text-sm text-secondary0">
-                        In Progress
-                      </span>
+                      <p className="text-blackColor block pl-2 ">
+                        {step.description}
+                      </p>
                     </div>
-                    <p className="text-blackColor">{step.description}</p>
                   </div>
                 ))}
               </div>
