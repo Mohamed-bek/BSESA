@@ -47,6 +47,7 @@ import CoachApplicationForm from "./pages/applications/CoachApplicationForm";
 import { FaApple } from "react-icons/fa";
 import ManageApplications from "./pages/applications/ManageApplications";
 import ManageCoaches from "./pages/applications/ManageCoaches";
+import ManageClubs from "./pages/applications/ManageClubs";
 
 function App() {
   const { user } = useUserStore();
@@ -149,6 +150,7 @@ function App() {
             <Route path="" element={<ManageApplications />} />
             <Route path="new-blog" element={<CreateBlog />} />
             <Route path="coaches/:id" element={<ManageCoaches />} />
+            <Route path="clubs/:id" element={<ManageClubs />} />
             <Route path="update-blog/:id" element={<UpdateBlog />} />
           </Route>
           <Route path="new-course" element={<CreateCourse />} />

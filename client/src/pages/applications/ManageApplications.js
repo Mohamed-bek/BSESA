@@ -134,7 +134,11 @@ const ManageApplications = () => {
       <div className="h-[calc(100%-160px)] overflow-y-auto">
         {applications.map((application) => (
           <Link
-            to={`/dashboard/manage-applications/coaches/${application._id}`}
+            to={
+              application.applicantType === "CoachApplication"
+                ? `/dashboard/manage-applications/coaches/${application._id}`
+                : `/dashboard/manage-applications/clubs/${application._id}`
+            }
             key={application._id}
             className="flex items-center justify-between p-4 border-b font-normal text-[1.1rem] border-secondary hover:bg-secondary"
           >

@@ -118,21 +118,22 @@ export const getCoachces = async (req, res) => {
 };
 export const getClubs = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
+    const { name, status, page = 1, limit = 10 } = req.query;
+    const filter = {};
+    if (name) filter.name = { $regex: name, $options: "i" };
+    if (status) filter.status = status;
 
     const clubs = await ClubApplications.find({
       applicationId: req.params.id,
+      ...filter,
     })
       .skip((page - 1) * limit)
       .limit(limit);
     const clubsNb = await ClubApplications.countDocuments({
       applicationId: req.params.id,
+      ...filter,
     });
-
-    if (!clubs) {
-      return res.status(404).json({ message: "Application not found" });
-    }
-    res.status(200).json({ coaches, NbOfPages: Math.ceil(clubsNb / limit) });
+    res.status(200).json({ clubs, NbOfPages: Math.ceil(clubsNb / limit) });
   } catch (error) {
     res.status(500).json({ message: "Error fetching application", error });
   }
