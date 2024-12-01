@@ -4,6 +4,8 @@ import {
   deleteApplication,
   getApplicationById,
   getApplications,
+  getClubs,
+  getCoachces,
   updateApplication,
 } from "../controllers/ApplicationController.js";
 import { authenticateToken, authorizeRoles } from "../middleware/Auth.js";
@@ -20,6 +22,20 @@ ApplicationRouter.post(
 ApplicationRouter.get("/applications", getApplications);
 
 ApplicationRouter.get("/application/:id", getApplicationById);
+
+ApplicationRouter.get(
+  "/coaches/:id",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  getCoachces
+);
+
+ApplicationRouter.get(
+  "/clubs/:id",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  getClubs
+);
 
 ApplicationRouter.put(
   "/application/:id",

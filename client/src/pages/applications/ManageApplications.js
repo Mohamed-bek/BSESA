@@ -138,7 +138,11 @@ const ManageApplications = () => {
             className="flex items-center justify-between p-4 border-b font-normal text-[1.1rem] border-secondary hover:bg-secondary"
           >
             <div className="flex-1 min-w-[250px]">{application.name}</div>
-            <div className="w-[120px] text-center">{application.type}</div>
+            <div className="w-[120px] text-center">
+              {application.applicantType === "CoachApplication"
+                ? "Coach"
+                : "Club"}
+            </div>
             <div className="w-[120px] text-center">
               {new Date(application.deadline).toLocaleDateString()}
             </div>

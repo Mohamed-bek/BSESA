@@ -1,5 +1,7 @@
 import Application from "../models/Application.js";
 import uploadToSpaces from "../utitlitis/awsDigitalOcean.js";
+import CoachApplication from "../models/CoachApplication.js";
+import ClubApplications from "../models/ClubApplications.js";
 
 // Create a new application
 export const createApplication = async (req, res) => {
@@ -83,6 +85,49 @@ export const getApplicationById = async (req, res) => {
       return res.status(404).json({ message: "Application not found" });
     }
     res.status(200).json(application);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching application", error });
+  }
+};
+
+export const getCoachces = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+
+    const coaches = await CoachApplication.find({
+      applicationId: req.params.id,
+    })
+      .skip((page - 1) * limit)
+      .limit(limit);
+    const coachesNb = await CoachApplication.countDocuments({
+      applicationId: req.params.id,
+    });
+
+    if (!coaches) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+    res.status(200).json({ coaches, NbOfPages: Math.ceil(coachesNb / limit) });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching application", error });
+  }
+};
+export const getClubs = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+
+    const clubs = await ClubApplications.find({
+      applicationId: req.params.id,
+    })
+      .skip((page - 1) * limit)
+      .limit(limit);
+    const clubsNb = await ClubApplications.countDocuments({
+      applicationId: req.params.id,
+    });
+
+    if (!clubs) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+    res.status(200).json({ coaches, NbOfPages: Math.ceil(clubsNb / limit) });
   } catch (error) {
     res.status(500).json({ message: "Error fetching application", error });
   }
