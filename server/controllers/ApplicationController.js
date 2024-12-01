@@ -4,35 +4,101 @@ import CoachApplication from "../models/CoachApplication.js";
 import ClubApplications from "../models/ClubApplications.js";
 
 // Create a new application
+// export const createApplication = async (req, res) => {
+//   try {
+//     const { applicantType, desiredDevelopment, name, steps, deadline, level } =
+//       req.body;
+//     const file = req.file;
+//     if (!file)
+//       return res
+//         .status(404)
+//         .json({ error: "The Application Must Have An Image" });
+//     const fileUrl = await uploadToSpaces(file, "/ApplicationImages");
+//     const newApplication = new Application({
+//       applicantType,
+//       desiredDevelopment,
+//       steps,
+//       name,
+//       deadline,
+//       level,
+//       image: fileUrl,
+//     });
+
+//     await newApplication.save();
+//     res.status(201).json({
+//       message: "Application created successfully",
+//       application: newApplication,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: "Error creating application", error });
+//   }
+// };
+
 export const createApplication = async (req, res) => {
   try {
-    const { applicantType, desiredDevelopment, name, steps, deadline, level } =
+    const { name, applicantType, desiredDevelopment, level, deadline, steps } =
       req.body;
-    const file = req.file;
-    if (!file)
+
+    // Main image upload
+    const mainFile = req.files["file"][0];
+    if (!mainFile) {
       return res
-        .status(404)
+        .status(400)
         .json({ error: "The Application Must Have An Image" });
-    const fileUrl = await uploadToSpaces(file, "/ApplicationImages");
+    }
+
+    // Upload main image
+    const mainFileUrl = await uploadToSpaces(mainFile, "/ApplicationImages");
+
+    // Prepare steps with image uploads
+    const processedSteps = await Promise.all(
+      JSON.parse(steps).map(async (step, index) => {
+        // Check if there's a step image in the uploaded files
+        const stepImageFile = req.files[`steps[${index}][image]`]
+          ? req.files[`steps[${index}][image]`][0]
+          : null;
+
+        // Upload step image if exists
+        const stepImageUrl = stepImageFile
+          ? await uploadToSpaces(stepImageFile, "/ApplicationStepImages")
+          : null;
+
+        return {
+          title: step.title,
+          description: step.description,
+          image: stepImageUrl,
+        };
+      })
+    );
+
+    // Create new application
     const newApplication = new Application({
+      name,
       applicantType,
       desiredDevelopment,
-      steps,
-      name,
-      deadline,
       level,
-      image: fileUrl,
+      deadline: new Date(deadline),
+      image: mainFileUrl,
+      steps: processedSteps,
     });
 
+    // Save application
     await newApplication.save();
+
     res.status(201).json({
       message: "Application created successfully",
       application: newApplication,
     });
   } catch (error) {
-    res.status(500).json({ message: "Error creating application", error });
+    console.error("Application creation error:", error);
+    res.status(500).json({
+      message: "Error creating application",
+      error: error.message,
+    });
   }
 };
+
+// Update the router to handle multiple file uploads
 
 // Get all applications
 export const getApplications = async (req, res) => {

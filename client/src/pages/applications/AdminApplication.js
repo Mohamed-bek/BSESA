@@ -28,7 +28,7 @@ function AdminApplication() {
           </NavLink>
         ))}
       </div>
-      <div className="h-[calc(100%-50px)] overflow-hidden">
+      <div className="h-[calc(100%-50px)] overflow-hidden ">
         <Outlet />
       </div>
     </div>

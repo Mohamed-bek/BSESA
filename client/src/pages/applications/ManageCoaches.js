@@ -114,7 +114,10 @@ const ManageCoaches = () => {
           className="w-[260px] p-2 focus:outline-none bg-secondary border border-primary rounded-lg"
           placeholder="Search by title"
         />
-        <select onChange={(e) => setstatusCoach(e.target.value)}>
+        <select
+          className="px-4 py-2 focus:outline-none border-primary border-solid border bg-secondary rounded-md"
+          onChange={(e) => setstatusCoach(e.target.value)}
+        >
           <option value="">All</option>
           <option value="pending">Pending</option>
           <option value="rejected">Rejected</option>

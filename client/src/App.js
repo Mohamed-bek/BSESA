@@ -48,6 +48,8 @@ import { FaApple } from "react-icons/fa";
 import ManageApplications from "./pages/applications/ManageApplications";
 import ManageCoaches from "./pages/applications/ManageCoaches";
 import ManageClubs from "./pages/applications/ManageClubs";
+import AdminApplication from "./pages/applications/AdminApplication";
+import CreateApplication from "./pages/applications/CreateApplication";
 
 function App() {
   const { user } = useUserStore();
@@ -146,9 +148,9 @@ function App() {
             <Route path="new-blog" element={<CreateBlog />} />
             <Route path="update-blog/:id" element={<UpdateBlog />} />
           </Route>
-          <Route path="manage-applications" element={<AdminBlogs />}>
+          <Route path="manage-applications" element={<AdminApplication />}>
             <Route path="" element={<ManageApplications />} />
-            <Route path="new-blog" element={<CreateBlog />} />
+            <Route path="new-application" element={<CreateApplication />} />
             <Route path="coaches/:id" element={<ManageCoaches />} />
             <Route path="clubs/:id" element={<ManageClubs />} />
             <Route path="update-blog/:id" element={<UpdateBlog />} />

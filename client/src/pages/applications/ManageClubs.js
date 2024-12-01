@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import ClubProfileCard from "../../components/ClubProfileCard";
 import CoachProfileCard from "../../components/CoachProfileCard";
 
 const ManageClubs = () => {
@@ -71,10 +72,10 @@ const ManageClubs = () => {
   return (
     <div className="w-full h-full overflow-y-auto relative cursor-pointer">
       {isVisible && (
-        <CoachProfileCard
+        <ClubProfileCard
           setisVisible={setisVisible}
           isVisible={isVisible}
-          coach={clubCard}
+          club={clubCard}
         />
       )}
       <div
@@ -115,7 +116,10 @@ const ManageClubs = () => {
           className="w-[260px] p-2 focus:outline-none bg-secondary border border-primary rounded-lg"
           placeholder="Search by title"
         />
-        <select onChange={(e) => setstatusClub(e.target.value)}>
+        <select
+          className="px-4 py-2 focus:outline-none border-primary border-solid border bg-secondary rounded-md"
+          onChange={(e) => setstatusClub(e.target.value)}
+        >
           <option value="">All</option>
           <option value="pending">Pending</option>
           <option value="rejected">Rejected</option>
@@ -126,7 +130,7 @@ const ManageClubs = () => {
         <div className="flex-1 min-w-[250px]">Name</div>
         <div className="w-[250px] text-center">Email</div>
         <div className="w-[200px] text-center">Location</div>
-        <div className="w-[120px] text-center">Level</div>
+        <div className="w-[150px] text-center">Level</div>
         <div className="w-[120px] text-center">Size</div>
         <div className="w-[200px] text-center"> Status </div>
       </header>
@@ -161,8 +165,8 @@ const ManageClubs = () => {
                     {club.contactEmail}
                   </div>
                   <div className="w-[200px] text-center">{club.location}</div>
-                  <div className="w-[120px] text-center">{club.level}</div>
-                  <div className="w-[120px] text-center">{club.size}</div>
+                  <div className="w-[150px] text-center">{club.level}</div>
+                  <div className="w-[120px] text-center">{club.clubSize}</div>
                   <div className="w-[200px] text-center text-white  flex items-center justify-center gap-2">
                     {club.status === "pending" ? (
                       <>
