@@ -94,8 +94,9 @@ export const getCoachces = async (req, res) => {
   try {
     const { name, status, page = 1, limit = 10 } = req.query;
     const filter = {};
-    if (name) filter.name = name;
+    if (name) filter.name = { $regex: name, $options: "i" };
     if (status) filter.status = status;
+
     const coaches = await CoachApplication.find({
       applicationId: req.params.id,
       ...filter,

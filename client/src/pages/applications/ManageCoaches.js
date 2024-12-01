@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
-import { FaFilter, FaLanguage, FaStar, FaUser } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import CoachProfileCard from "../../components/CoachProfileCard";
 
@@ -22,6 +21,7 @@ const ManageCoaches = () => {
           {
             params: {
               page: 1,
+              name: searchQuery,
             },
             withCredentials: true,
           }
@@ -34,7 +34,7 @@ const ManageCoaches = () => {
       }
     };
     getCoachces();
-  }, [id]);
+  }, [id, searchQuery]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
