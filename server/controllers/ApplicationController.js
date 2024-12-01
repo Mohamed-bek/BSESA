@@ -66,10 +66,10 @@ export const getApplications = async (req, res) => {
     const applications = await Application.find(filter).skip(
       (page - 1) * limit
     );
-    const NbOfApps = Application.countDocuments(filter);
+    const NbOfApps = await Application.countDocuments(filter);
     res
       .status(200)
-      .json({ applications, NbOfApps, NbOfPages: Math.ceil(NbOfApps / limit) });
+      .json({ applications, NbOfPages: Math.ceil(NbOfApps / limit) });
   } catch (error) {
     res.status(500).json({ message: "Error fetching applications", error });
   }
