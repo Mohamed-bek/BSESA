@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useRef } from "react";
 import { FaUpload } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
@@ -93,22 +94,76 @@ const CreateApplication = () => {
     setSteps(newSteps);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Prepare form data for submission
-    const submitData = {
-      ...formData,
-      image: mainImage?.file,
-      steps: steps.map((step) => ({
-        ...step,
-        image: step.image?.file,
-      })),
-    };
 
-    // TODO: Implement actual submission logic
-    console.log("Submitted Application:", submitData);
+    // Create FormData object for multipart/form-data submission
+    const formDataToSubmit = new FormData();
+
+    // Add main form fields
+    formDataToSubmit.append("name", formData.name);
+    formDataToSubmit.append("applicantType", formData.applicantType);
+    formDataToSubmit.append("desiredDevelopment", formData.desiredDevelopment);
+    formDataToSubmit.append("level", formData.level);
+    formDataToSubmit.append("deadline", formData.deadline);
+
+    // Add main image
+    if (mainImage?.file) {
+      formDataToSubmit.append("file", mainImage.file);
+    }
+
+    // Add steps
+    const processedSteps = steps.map((step, index) => ({
+      title: step.title,
+      description: step.description,
+    }));
+    formDataToSubmit.append("steps", JSON.stringify(processedSteps));
+
+    // Add step images
+    steps.forEach((step, index) => {
+      if (step.image?.file) {
+        formDataToSubmit.append(`steps[${index}][image]`, step.image.file);
+      }
+    });
+
+    try {
+      const response = await axios.post(
+        "https://bsesa-ksem.vercel.app/application",
+        formDataToSubmit,
+        {
+          withCredentials: true,
+        }
+      );
+      // Show success message
+      alert("Application created successfully!");
+      resetForm();
+    } catch (error) {
+      console.error("Application submission error:", error);
+    }
   };
 
+  const resetForm = () => {
+    // Reset form data
+    setFormData({
+      name: "",
+      applicantType: "",
+      desiredDevelopment: "",
+      level: "",
+      deadline: "",
+    });
+
+    // Reset images
+    setMainImage(null);
+    setSteps([{ title: "", description: "", image: null }]);
+
+    // Reset file inputs
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    stepFileInputRefs.current.forEach((ref) => {
+      if (ref) ref.value = "";
+    });
+  };
   return (
     <div className="py-8 bg-secondary w-full h-full overflow-y-auto">
       <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
