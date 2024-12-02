@@ -4,41 +4,7 @@ import { FaFilter, FaSearch } from "react-icons/fa";
 import axios from "axios";
 
 const Researches = () => {
-  const [researches, setResearches] = useState([
-    {
-      id: "1",
-      title: "Artificial Intelligence in Modern Healthcare",
-      abstract:
-        "Exploring AI technologies in medical diagnostics and patient care.",
-      tags: ["AI", "Healthcare", "Machine Learning"],
-      category: { name: "Medical Technology" },
-      views: 1245,
-      thumbnail: "/api/placeholder/400/300",
-      createdAt: new Date("2024-02-15"),
-    },
-    {
-      id: "2",
-      title: "Climate Change and Urban Sustainability",
-      abstract:
-        "Analyzing urban strategies for mitigating climate change impacts. Analyzing urban strategies for mitigating climate change impacts. Analyzing urban strategies for mitigating climate change impacts.",
-      tags: ["Environment", "Urban Planning", "Sustainability"],
-      category: { name: "Environmental Science" },
-      views: 876,
-      thumbnail: "/api/placeholder/400/300",
-      createdAt: new Date("2024-01-20"),
-    },
-    {
-      id: "3",
-      title: "Quantum Computing Breakthrough",
-      abstract: "Recent advancements in quantum computing technologies.",
-      tags: ["Quantum Computing", "Technology", "Innovation"],
-      category: { name: "Computer Science" },
-      views: 1523,
-      thumbnail: "/api/placeholder/400/300",
-      createdAt: new Date("2024-03-10"),
-    },
-    // Add more research items as needed
-  ]);
+  const [researches, setResearches] = useState([]);
   const [title, setTitle] = useState("");
   const [categorie, setCategorie] = useState("");
   const [categories, setCategories] = useState([]);
@@ -56,6 +22,21 @@ const Researches = () => {
     };
 
     fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const getResaerches = async () => {
+      console.log("getResaerches");
+      try {
+        const { data } = await axios.get(
+          "https://bsesa-ksem.vercel.app/researches/"
+        );
+        setResearches(data);
+      } catch (error) {
+        console.error("Error fetching researches:", error);
+      }
+    };
+    getResaerches();
   }, []);
 
   return (

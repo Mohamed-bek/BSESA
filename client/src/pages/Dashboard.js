@@ -54,7 +54,7 @@ const Dashboard = ({ links }) => {
             </button>
           </div>
         </div>
-        <div className="flex-1 bg-blackColor h-full rounded-2xl overflow-hidden">
+        <div className="flex-1 bg-blackColor h-full rounded-2xl overflow-hidden overflow-y-auto">
           <Outlet />
         </div>
       </div>

@@ -4,7 +4,7 @@ import { FaBookOpen, FaEye } from "react-icons/fa";
 function ResearchBox({ research }) {
   return (
     <div
-      key={research.id}
+      key={research._id}
       className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
     >
       {/* Thumbnail */}

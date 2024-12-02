@@ -54,29 +54,36 @@ export const createResearch = async (req, res) => {
 // Get all research articles with optional filters
 export const getResearches = async (req, res) => {
   try {
+    console.log("getinf ");
     const { category, tags, title, limit = 20, page = 1 } = req.query;
     const filter = {};
-
+    console.log("get ");
     if (category) {
       filter.category = category;
     }
-    if (tags.length > 0) {
+    console.log("det ");
+    if (tags?.length > 0) {
+      console.log("trueeee");
       filter.tags = { $in: tags };
     }
+    console.log("set ");
     if (title) {
       filter.title = { $regex: title, $options: "i" };
     }
+    console.log("Filter: ");
 
-    const researches = await Research.find(filter)
-      .skip(limit * (page - 1))
-      .limit(limit)
-      .populate("category")
-      .populate({
-        path: "relatedResearches",
-        select: "thumbnail title",
-      });
+    const researches = await Research.find();
+    // .skip(limit * (page - 1))
+    // .limit(limit)
+    // .populate({ path: "category", select: "name" })
+    // .populate({
+    //   path: "relatedResearches",
+    //   select: "thumbnail title",
+    // });
+    console.log("Filter: ");
     res.status(200).json(researches);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Error fetching researches", error });
   }
 };
