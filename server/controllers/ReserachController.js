@@ -1,5 +1,7 @@
 import Research from "../models/Research.js";
-import uploadToSpaces from "../utitlitis/awsDigitalOcean.js";
+import uploadToSpaces, {
+  deleteFromSpaces,
+} from "../utitlitis/awsDigitalOcean.js";
 
 // Create a new research article
 export const createResearch = async (req, res) => {
@@ -110,56 +112,45 @@ export const getResearchById = async (req, res) => {
 export const updateResearch = async (req, res) => {
   try {
     const { id } = req.params;
-    const {
-      title,
-      abstract,
-      content,
-      tags,
-      references,
-      category,
-      relatedResearches,
-    } = req.body;
+    const { title, abstract, content, tags, category, relatedResearches } =
+      req.body;
 
-    const updatedResearch = await Research.findByIdAndUpdate(
-      id,
-      {
-        title,
-        abstract,
-        content,
-        tags,
-        references,
-        category,
-        relatedResearches,
-      },
-      { new: true }
-    )
-      .populate("category")
-      .populate({
-        path: "relatedResearches",
-        select: "thumbnail title",
-      });
-
-    if (!updatedResearch) {
-      return res.status(404).json({ message: "Research not found" });
+    const research = await Research.findById(id);
+    if (!research) return res.status(404).json({ error: "Research not found" });
+    if (title) research.title = title;
+    if (category) research.category = category;
+    if (content) research.content = content;
+    if (abstract) research.abstract = abstract;
+    if (tags) {
+      let TagsList = tags;
+      if (typeof tags === "string") {
+        TagsList = JSON.parse(tags);
+      }
+      research.tags = TagsList;
     }
 
-    // if (req.files) {
-    //   if (req.files.file) {
-    //     // Optionally remove the old file
-    //     if (updatedResearch.file) fs.unlinkSync(updatedResearch.file);
-    //     updatedResearch.file = req.files.file[0].path;
-    //   }
-    //   if (req.files.thumbnail) {
-    //     // Optionally remove the old thumbnail
-    //     if (updatedResearch.thumbnail) fs.unlinkSync(updatedResearch.thumbnail);
-    //     updatedResearch.thumbnail = req.files.thumbnail[0].path;
-    //   }
-    // }
+    const pdfFile = req.files && req.files["pdf"] ? req.files["pdf"][0] : null;
 
-    await updatedResearch.save();
-    res
-      .status(200)
-      .json({ message: "Research updated successfully", updatedResearch });
+    if (pdfFile) {
+      const OldPath = research.file;
+      research.file = await uploadToSpaces(pdfFile, "/ResearchPdf");
+      await deleteFromSpaces(OldPath);
+    }
+
+    const thumbnailFile =
+      req.files && req.files["thumbnail"] ? req.files["thumbnail"][0] : null;
+
+    if (thumbnailFile) {
+      const OldPath = research.thumbnail;
+      research.thumbnail = await uploadToSpaces(
+        thumbnailFile,
+        "/ResearchThumbnail"
+      );
+      await deleteFromSpaces(OldPath);
+    }
+
+    await research.save();
+    res.status(200).json({ message: "Research updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error updating research", error });
   }

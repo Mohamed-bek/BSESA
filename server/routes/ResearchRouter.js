@@ -31,6 +31,7 @@ ResearchRouter.put(
   "/:id",
   authenticateToken,
   authorizeRoles(["admin"]),
+  uploadPdfThumbnail,
   updateResearch
 );
 

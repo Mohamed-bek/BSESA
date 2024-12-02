@@ -54,6 +54,9 @@ import AboutUs from "./pages/AboutUs";
 import Research from "./pages/researches/Research";
 import Researches from "./pages/researches/Researches";
 import CreateResearch from "./pages/researches/CreateResaerch";
+import AdminResearches from "./pages/researches/AdminResearches";
+import ManageResearches from "./pages/researches/ManageResearches";
+import UpdateResearch from "./pages/researches/UpdateResearch";
 
 function App() {
   const { user } = useUserStore();
@@ -106,7 +109,7 @@ function App() {
             id: 9,
             name: "Update Heor",
             icon: <FaResearchgate />,
-            href: "/new-research",
+            href: "/manage-researches",
           },
         ]
       : [
@@ -169,8 +172,11 @@ function App() {
             <Route path="clubs/:id" element={<ManageClubs />} />
             <Route path="update-blog/:id" element={<UpdateBlog />} />
           </Route>
-          <Route path="new-course" element={<CreateCourse />} />
-          <Route path="manage-course" element={<AdminCourseManager />} />
+          <Route path="manage-researches" element={<AdminResearches />}>
+            <Route path="" element={<ManageResearches />} />
+            <Route path="new-research" element={<CreateResearch />} />
+            <Route path="update-research/:id" element={<UpdateResearch />} />
+          </Route>
           <Route path="new-membership" element={<AddMemberShip />} />
           <Route path="update-hero" element={<HeroForm />} />
         </Route>

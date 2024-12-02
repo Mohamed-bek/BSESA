@@ -409,7 +409,7 @@ export const GetNewestCourse = async (req, res) => {
 
 export const GetPopularCourses = async (req, res) => {
   try {
-    let popularityThreshold = 4; // Initial popularity threshold
+    let popularityThreshold = 4;
 
     // Find the most popular courses based on order count
     let popularCourses = await Course.aggregate([
@@ -496,11 +496,10 @@ export const GetPopularCourses = async (req, res) => {
         },
       ]);
     }
-
     // If no popular courses, return random courses
     if (popularCourses.length === 0) {
       const randomCourses = await Course.aggregate([
-        { $sample: { size: 4 } },
+        { $sample: { size: popularityThreshold } },
         {
           $lookup: {
             from: "categories",
