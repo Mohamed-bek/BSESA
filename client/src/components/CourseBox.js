@@ -33,10 +33,10 @@ function CourseBox({
       <StarRating rating={5} />
       <Link
         to={"/course/" + course?._id}
-        className="block font-semibold text-center mx-auto rounded-md text-[1.2rem] bg-primary text-whiteColor cursor-pointer w-4/5  py-2"
+        className="block font-semibold text-center mx-auto rounded-md text-[1.2rem] bg-primary text-white cursor-pointer w-4/5  py-2"
       >
         {" "}
-        {isPurchased ? "Watch" : `$${course?.price}`}
+        Go To Course
       </Link>
     </div>
   );

@@ -44,12 +44,16 @@ import Applications from "./pages/applications/Applications";
 import ApplicationPage from "./pages/applications/ApplicationPage";
 import ClubApplicationForm from "./pages/applications/ClubApplicationForm";
 import CoachApplicationForm from "./pages/applications/CoachApplicationForm";
-import { FaApple } from "react-icons/fa";
+import { FaApple, FaResearchgate } from "react-icons/fa";
 import ManageApplications from "./pages/applications/ManageApplications";
 import ManageCoaches from "./pages/applications/ManageCoaches";
 import ManageClubs from "./pages/applications/ManageClubs";
 import AdminApplication from "./pages/applications/AdminApplication";
 import CreateApplication from "./pages/applications/CreateApplication";
+import AboutUs from "./pages/AboutUs";
+import Research from "./pages/researches/Research";
+import Researches from "./pages/researches/Researches";
+import CreateResearch from "./pages/researches/CreateResaerch";
 
 function App() {
   const { user } = useUserStore();
@@ -98,6 +102,12 @@ function App() {
             icon: <CgDollar />,
             href: "/update-hero",
           },
+          {
+            id: 9,
+            name: "Update Heor",
+            icon: <FaResearchgate />,
+            href: "/new-research",
+          },
         ]
       : [
           {
@@ -117,13 +127,17 @@ function App() {
           },
         ];
   return (
-    <div className="App overflow-hidden min-h-[100dvh] relative font-roboto overflow-x-hidden w-full bg-blackColor">
+    <div className="App overflow-hidden min-h-[100dvh] relative font-roboto overflow-x-hidden w-full bg-secondary">
       <Message />
       {user?.role === "admin" ? null : <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/courses" element={<Courses />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/researches" element={<Researches />} />
+        <Route path="/research/:id" element={<Research />} />
         <Route path="/dashboard" element={<Dashboard links={links} />}>
+          <Route path="new-research" element={<CreateResearch />} />
           <Route
             path=""
             element={user?.role === "admin" ? <AdminStat /> : <Profile />}

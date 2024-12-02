@@ -35,7 +35,7 @@ function Header() {
       name: "Blogs",
       link: "/blogs",
       subLinks: [
-        { name: "Research", link: "/research", id: 0 },
+        { name: "Research", link: "/researches", id: 0 },
         { name: "Blogs", link: "/blogs", id: 1 },
         { name: "Conferences", link: "/conferences", id: 2 },
         { name: "Laboratory Visit", link: "#", id: 3 },
@@ -49,7 +49,7 @@ function Header() {
     },
     {
       name: "About Us",
-      link: "/about-us",
+      link: "/about",
       id: 4,
     },
   ]);
@@ -89,7 +89,7 @@ function Header() {
   };
 
   return (
-    <div className="w-full h-[70px] z-50 flex justify-between items-center HeaderShadow  bg-whiteColor text-blackColor  shadow-md fixed top-0  left-1/2 -translate-x-1/2 py-0 md:px-5">
+    <div className="w-full h-[70px] z-50 flex justify-between items-center  bg-whiteColor text-blackColor  shadow-md fixed top-0  left-1/2 -translate-x-1/2 py-0 md:px-5">
       <img src="/BSESA.png" className="h-[70px]" alt="BSESA" />
       <nav
         ref={navRef}

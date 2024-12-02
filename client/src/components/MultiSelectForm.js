@@ -13,7 +13,6 @@ const MultiSelectForm = ({ selectedCategories, setSelectedCategories }) => {
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/categories"
         );
-        console.log("DATAA : ", data);
         setCategories(data.categories);
       } catch (error) {
         console.error("Error fetching categories:", error);

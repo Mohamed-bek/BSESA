@@ -9,6 +9,7 @@ module.exports = {
       },
       colors: {
         primary: "var(--primary-color)",
+        primaryHover: "var(--primaryHover-color)",
         secondary: "var(--secondary-color)",
         primaryTra: "var(--primaryTra-color)",
         whiteColor: "var(--white-color)",

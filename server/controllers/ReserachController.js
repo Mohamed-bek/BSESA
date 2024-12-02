@@ -20,12 +20,16 @@ export const createResearch = async (req, res) => {
     if (!thumbnailFile) {
       return res.status(404).json({ error: "Research Must have a Thumbnail" });
     }
+    let TagsList = tags;
+    if (typeof tags === "string") {
+      TagsList = JSON.parse(tags);
+    }
     const thumbnail = await uploadToSpaces(thumbnailFile, "/ResearchThumbnail");
     const newResearch = new Research({
       title,
       abstract,
       content,
-      tags,
+      tags: TagsList,
       references,
       category,
       relatedResearches,
