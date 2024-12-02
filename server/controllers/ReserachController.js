@@ -63,8 +63,8 @@ export const getResearches = async (req, res) => {
 
     if (title) {
       filter.$or = [
-        { title: { $regex: title, $options: "i" } }, // Search in title
-        { tags: { $regex: title, $options: "i" } }, // Search in tags
+        { title: { $regex: title, $options: "i" } },
+        { tags: { $regex: title, $options: "i" } },
       ];
     }
 
@@ -75,8 +75,11 @@ export const getResearches = async (req, res) => {
       .limit(Number(limit))
       .populate({ path: "category", select: "name" })
       .populate({ path: "relatedResearches", select: "thumbnail title" });
+    const NbOfResearches = await Research.countDocuments(filter);
 
-    res.status(200).json(researches);
+    res
+      .status(200)
+      .json({ researches, NbOfPages: Math.ceil(NbOfResearches / limit) });
   } catch (error) {
     console.error("Error fetching researches:", error);
     res.status(500).json({ message: "Error fetching researches", error });
