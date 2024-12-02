@@ -29,7 +29,13 @@ const Researches = () => {
       console.log("getResaerches");
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/researches/"
+          "https://bsesa-ksem.vercel.app/researches/",
+          {
+            params: {
+              title,
+              category: categorie,
+            },
+          }
         );
         setResearches(data);
       } catch (error) {
@@ -37,7 +43,7 @@ const Researches = () => {
       }
     };
     getResaerches();
-  }, []);
+  }, [categorie, title]);
 
   return (
     <div className="container min-h-dvh mx-auto px-4 pt-[90px] pb-[20px] bg-secondary">

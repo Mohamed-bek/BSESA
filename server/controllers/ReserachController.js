@@ -54,41 +54,35 @@ export const createResearch = async (req, res) => {
 // Get all research articles with optional filters
 export const getResearches = async (req, res) => {
   try {
-    console.log("getinf ");
-    const { category, tags, title, limit = 20, page = 1 } = req.query;
+    const { category, title, limit = 20, page = 1 } = req.query;
     const filter = {};
-    console.log("get ");
+
     if (category) {
       filter.category = category;
     }
-    console.log("det ");
-    if (tags?.length > 0) {
-      console.log("trueeee");
-      filter.tags = { $in: tags };
-    }
-    console.log("set ");
-    if (title) {
-      filter.title = { $regex: title, $options: "i" };
-    }
-    console.log("Filter: ");
 
-    const researches = await Research.find();
-    // .skip(limit * (page - 1))
-    // .limit(limit)
-    // .populate({ path: "category", select: "name" })
-    // .populate({
-    //   path: "relatedResearches",
-    //   select: "thumbnail title",
-    // });
-    console.log("Filter: ");
+    if (title) {
+      filter.$or = [
+        { title: { $regex: title, $options: "i" } }, // Search in title
+        { tags: { $regex: title, $options: "i" } }, // Search in tags
+      ];
+    }
+
+    const skip = limit * (page - 1);
+
+    const researches = await Research.find(filter)
+      .skip(skip)
+      .limit(Number(limit))
+      .populate({ path: "category", select: "name" })
+      .populate({ path: "relatedResearches", select: "thumbnail title" });
+
     res.status(200).json(researches);
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching researches:", error);
     res.status(500).json({ message: "Error fetching researches", error });
   }
 };
 
-// Get a single research article by ID
 export const getResearchById = async (req, res) => {
   try {
     const { id } = req.params;

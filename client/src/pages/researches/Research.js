@@ -71,18 +71,18 @@ const Research = () => {
             </h1>
 
             {/* Metadata */}
-            <div className="grid md:grid-cols-3 gap-4 mb-6">
-              <div className="flex items-center space-x-2">
+            <div className="grid md:grid-cols-3 justify-between gap-4 mb-6">
+              <div className="flex items-center space-x-2  w-fit">
                 <FaCalendarDay className="h-5 w-5 text-blackColor" />
                 <span>
                   {new Date(displayResearch.createdAt).toLocaleDateString()}
                 </span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 w-fit">
                 <FaEye className="h-5 w-5 text-blackColor" />
                 <span>{displayResearch.views} Views</span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 w-fit">
                 <FaLink className="h-5 w-5 text-blackColor" />
                 <a
                   href={displayResearch.file}
