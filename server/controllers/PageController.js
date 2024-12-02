@@ -22,7 +22,10 @@ export const createOrUpdateHero = async (req, res) => {
         const url = await GetVideoUrl(Key, contentType);
         page.asset = {
           asset_type,
-          url: `${process.env.DO_PRESIGNED_URL}${Key}`,
+          url: `${
+            process.env.DO_PRESIGNED_URL ||
+            "https://bsesa.lon1.cdn.digitaloceanspaces.com/"
+          }${Key}`,
         };
         await page.save();
         return res.status(200).json({ message: "Updated Success", url });
