@@ -44,7 +44,7 @@ import Applications from "./pages/applications/Applications";
 import ApplicationPage from "./pages/applications/ApplicationPage";
 import ClubApplicationForm from "./pages/applications/ClubApplicationForm";
 import CoachApplicationForm from "./pages/applications/CoachApplicationForm";
-import { FaApple, FaResearchgate } from "react-icons/fa";
+import { FaApple, FaConfluence, FaResearchgate } from "react-icons/fa";
 import ManageApplications from "./pages/applications/ManageApplications";
 import ManageCoaches from "./pages/applications/ManageCoaches";
 import ManageClubs from "./pages/applications/ManageClubs";
@@ -57,6 +57,9 @@ import CreateResearch from "./pages/researches/CreateResaerch";
 import AdminResearches from "./pages/researches/AdminResearches";
 import ManageResearches from "./pages/researches/ManageResearches";
 import UpdateResearch from "./pages/researches/UpdateResearch";
+import Conferences from "./pages/conferences/Conferences";
+import Conference from "./pages/conferences/Confrenece";
+import CreateConference from "./pages/conferences/CreateConference";
 
 function App() {
   const { user } = useUserStore();
@@ -111,6 +114,12 @@ function App() {
             icon: <FaResearchgate />,
             href: "/manage-researches",
           },
+          {
+            id: 9,
+            name: "Conference",
+            icon: <FaConfluence />,
+            href: "/new-conference",
+          },
         ]
       : [
           {
@@ -138,8 +147,10 @@ function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/researches" element={<Researches />} />
+        <Route path="/conferences" element={<Conferences />} />
+        <Route path="/conferences/:id" element={<Conference />} />
         <Route path="/research/:id" element={<Research />} />
-        <Route path="/dashboard" element={<Dashboard links={links} />}>
+        <Route path="/dashboard/" element={<Dashboard links={links} />}>
           <Route path="new-research" element={<CreateResearch />} />
           <Route
             path=""
@@ -147,8 +158,6 @@ function App() {
           />
           <Route path="certificates" element={<CertificateList />} />
           <Route path="my-courses" element={<MyCourses />} />
-          <Route path="new-video" element={<AddVideo />} />
-          <Route path="new-blog" element={<CreateBlog />} />
           <Route path="manage-courses" element={<AdminCourse />}>
             <Route path="" element={<ManageCourses />} />
             <Route path="new-course" element={<CreateCourse />} />
@@ -177,6 +186,7 @@ function App() {
             <Route path="new-research" element={<CreateResearch />} />
             <Route path="update-research/:id" element={<UpdateResearch />} />
           </Route>
+          <Route path="new-conference" element={<CreateConference />} />
           <Route path="new-membership" element={<AddMemberShip />} />
           <Route path="update-hero" element={<HeroForm />} />
         </Route>

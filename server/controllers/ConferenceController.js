@@ -3,31 +3,70 @@ import uploadToSpaces from "../utitlitis/awsDigitalOcean.js";
 
 export const CreateConference = async (req, res) => {
   try {
-    const { name, description, location, date, categories, speakers } =
+    const { name, description, location, startDate, endDate, speakers } =
       req.body;
 
-    if (!req.file)
-      return res
-        .status(404)
-        .json({ error: "The Conference Image is required" });
+    // Validate required fields
+    if (!name) {
+      return res.status(400).json({ error: "Conference name is required" });
+    }
 
-    const image = await uploadToSpaces(req.file, "/Conference");
+    if (!location) {
+      return res.status(400).json({ error: "Location is required" });
+    }
+
+    if (!startDate) {
+      return res.status(400).json({ error: "Start date is required" });
+    }
+
+    // Validate main image
+    if (!req.file) {
+      return res.status(400).json({ error: "Conference image is required" });
+    }
+
+    // Upload main image
+    const mainImage = await uploadToSpaces(req.file, "/Conference");
+
+    // Prepare speakers data
+    const processedSpeakers = speakers
+      ? speakers.map((speaker) => ({
+          firstName: speaker.firstName || "",
+          lastName: speaker.lastName || "",
+          image: speaker.image
+            ? uploadToSpaces(speaker.image, "/Speakers")
+            : null,
+        }))
+      : [];
+
+    // Create conference
     const conference = await Conference.create({
       name,
       description,
       location,
-      date,
-      categories,
-      speakers,
-      image,
+      startDate,
+      endDate,
+      mainImage,
+      speakers: processedSpeakers,
     });
-    if (!conference)
-      res.status(400).json({ message: "Conference Not Created" });
-    res
-      .status(200)
-      .json({ message: "Conference Created Successefully", conference });
+
+    // Check if conference was successfully created
+    if (!conference) {
+      return res.status(500).json({
+        message: "Failed to create conference",
+      });
+    }
+
+    // Successful response
+    res.status(201).json({
+      message: "Conference created successfully",
+      conference,
+    });
   } catch (error) {
-    res.status(error.status || 500).json({ err: error.message });
+    // Error handling
+    console.error("Conference creation error:", error);
+    res.status(error.status || 500).json({
+      error: error.message || "An unexpected error occurred",
+    });
   }
 };
 

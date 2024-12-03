@@ -9,8 +9,8 @@ const Page = () => {
   const spanRef = useRef(null);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [selectedSections, setSelectedSections] = useState([]);
   const [rating, setRating] = useState(1);
+  const [selectedSections, setSelectedSections] = useState([]);
   const [NbOfPages, setNbOfPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [categories, setCategories] = useState([]);
@@ -89,21 +89,23 @@ const Page = () => {
             <h2 className="pl-3 text-[1.7rem] mb-4">Filters:</h2>
             <h3 className="pl-5 text-[1.4rem]">Category:</h3>
             <div className="px-5 text-[1.15rem] text-whiteColor">
-              {categories.map((category) => (
-                <label
-                  key={category._id}
-                  className="flex items-center mb-2 text-[1.1rem]"
-                >
-                  <input
-                    type="checkbox"
-                    value={category._id}
-                    checked={selectedSections.includes(category._id)}
-                    onChange={handleCheckboxChange}
-                    className="mr-2 w-4 h-4"
-                  />
-                  {category.name}
-                </label>
-              ))}
+              <div className="max-h-[30vh] overflow-y-auto">
+                {categories.map((category) => (
+                  <label
+                    key={category._id}
+                    className="flex items-center mb-2 text-[1.1rem]"
+                  >
+                    <input
+                      type="checkbox"
+                      value={category._id}
+                      checked={selectedSections.includes(category._id)}
+                      onChange={handleCheckboxChange}
+                      className="mr-2 w-4 h-4"
+                    />
+                    {category.name}
+                  </label>
+                ))}
+              </div>
               <div className="mb-2">
                 <label className="block mb-1 text-[1.3rem]">Min Price:</label>
                 <input
@@ -146,12 +148,25 @@ const Page = () => {
                   })}
                 </div>
               </div>
-              <button
-                onClick={() => GetFilterPlats()}
-                className="w-fit block px-4 py-2 bg-primary text-secondary cursor-pointer rounded-3xl mt-3 text-[1.5rem] font-medium mx-auto"
-              >
-                Apply Filters
-              </button>
+              <div className="w-full flex justify-center items-center gap-3">
+                <button
+                  onClick={() => {
+                    setMinPrice("");
+                    setMaxPrice("");
+                    setRating(1);
+                    setSelectedSections([]);
+                  }}
+                  className="w-fit block px-3 py-2 bg-white hover:bg-primaryTra text-primary hover:text-white cursor-pointer rounded-md mt-3 text-[1.2rem] font-medium "
+                >
+                  Reset
+                </button>
+                <button
+                  onClick={() => GetFilterPlats()}
+                  className="w-fit block px-3 py-2 bg-primary text-white hover:bg-primaryHover cursor-pointer rounded-md mt-3 text-[1.2rem] font-medium"
+                >
+                  Apply
+                </button>
+              </div>
             </div>
           </nav>
           <span

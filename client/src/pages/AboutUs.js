@@ -123,7 +123,7 @@ const AboutUs = () => {
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
             Comprehensive Course Categories
           </h2>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap md:w-[90%] mx-auto justify-center gap-4">
             {categories.map((category) => (
               <span
                 key={category._id}

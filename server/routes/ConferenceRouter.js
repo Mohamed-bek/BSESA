@@ -16,7 +16,10 @@ ConferenceRouter.post(
   "/conference/create",
   authenticateToken,
   authorizeRoles(["admin"]),
-  upload.single("file"),
+  upload.fields([
+    { name: "file", maxCount: 1 },
+    { name: "speakerImages", maxCount: 10 },
+  ]),
   CreateConference
 );
 ConferenceRouter.get("/conferences", GetConferences);
