@@ -23,7 +23,7 @@ ConferenceRouter.post(
   CreateConference
 );
 ConferenceRouter.get("/conferences", GetConferences);
-ConferenceRouter.get("/conference", GetConference);
+ConferenceRouter.get("/conference/:id", GetConference);
 ConferenceRouter.put(
   "/conference/:id",
   authenticateToken,

@@ -55,7 +55,6 @@ export const CreateConference = async (req, res) => {
       }
     }
 
-    // Create conference
     const conference = await Conference.create({
       name,
       description,
