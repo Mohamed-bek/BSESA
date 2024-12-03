@@ -18,7 +18,7 @@ function Conferences() {
     GetConferences();
   }, []);
   return (
-    <div>
+    <div className="w-[90%] mx-auto pt-[100px] pb-[20px]">
       {conferences.map((conference) => (
         <ConferenceCard conference={conference} />
       ))}

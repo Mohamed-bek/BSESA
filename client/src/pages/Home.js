@@ -26,7 +26,12 @@ function Home() {
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/course/populaire"
         );
-        setPopulaireCourses(data.courses);
+        setPopulaireCourses([
+          data.courses[0],
+          data.courses[1],
+          data.courses[2],
+          data.courses[3],
+        ]);
       } catch (error) {
         console.log(error);
       }
