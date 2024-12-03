@@ -145,8 +145,13 @@ const CreateConference = () => {
     }
 
     speakers.forEach((speaker, index) => {
-      formData.append(`speakers[${index}][firstName]`, speaker.firstName);
-      formData.append(`speakers[${index}][lastName]`, speaker.lastName);
+      formData.append(
+        `speakers[${index}]`,
+        JSON.stringify({
+          firstName: speaker.firstName,
+          lastName: speaker.lastName,
+        })
+      );
 
       if (speaker.image && speaker.image.file) {
         formData.append("speakerImages", speaker.image.file);

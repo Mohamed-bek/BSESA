@@ -5,8 +5,9 @@ export const CreateConference = async (req, res) => {
   try {
     const { name, description, location, startDate, endDate, speakers } =
       req.body;
+    const files = req.files;
 
-    // Validate required fields
+    // Validation checks
     if (!name) {
       return res.status(400).json({ error: "Conference name is required" });
     }
@@ -19,24 +20,40 @@ export const CreateConference = async (req, res) => {
       return res.status(400).json({ error: "Start date is required" });
     }
 
-    // Validate main image
-    if (!req.file) {
+    // Check for main image
+    if (!files || !files.image) {
       return res.status(400).json({ error: "Conference image is required" });
     }
 
     // Upload main image
-    const mainImage = await uploadToSpaces(req.file, "/Conference");
+    const mainImage = await uploadToSpaces(files.image[0], "/Conference");
 
-    // Prepare speakers data
-    const processedSpeakers = speakers
-      ? speakers.map((speaker) => ({
+    // Process speakers
+    const processedSpeakers = [];
+
+    // Check if speakers exist and is an array
+    if (speakers && Array.isArray(speakers)) {
+      for (let i = 0; i < speakers.length; i++) {
+        const speaker = JSON.parse(speakers[i]); // Assuming speakers are sent as stringified JSON
+
+        // Prepare speaker data
+        const speakerData = {
           firstName: speaker.firstName || "",
           lastName: speaker.lastName || "",
-          image: speaker.image
-            ? uploadToSpaces(speaker.image, "/Speakers")
-            : null,
-        }))
-      : [];
+          image: null,
+        };
+
+        // Check if speaker image exists
+        if (files.speakerImages && files.speakerImages[i]) {
+          speakerData.image = await uploadToSpaces(
+            files.speakerImages[i],
+            "/Speakers"
+          );
+        }
+
+        processedSpeakers.push(speakerData);
+      }
+    }
 
     // Create conference
     const conference = await Conference.create({
@@ -62,10 +79,11 @@ export const CreateConference = async (req, res) => {
       conference,
     });
   } catch (error) {
-    // Error handling
+    // Detailed error handling
     console.error("Conference creation error:", error);
     res.status(error.status || 500).json({
       error: error.message || "An unexpected error occurred",
+      details: error.toString(),
     });
   }
 };
