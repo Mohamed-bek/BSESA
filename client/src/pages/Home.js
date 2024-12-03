@@ -1,19 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { FaFootball } from "react-icons/fa6";
 import Hero from "../components/Hero";
 import PopulairCourses from "../components/PopulairCourses";
 import Plans from "../pages/Plans";
+import { CiBasketball, CiFootball } from "react-icons/ci";
+import { IoIosFootball } from "react-icons/io";
+import { MdOutlineSportsVolleyball } from "react-icons/md";
+import { GiBoxingGlove } from "react-icons/gi";
 
 function Home() {
   const [populaireCourses, setPopulaireCourses] = useState([]);
   const [newCourses, setnewCourses] = useState([]);
   const [categories, setCategories] = useState([]);
   const LigueImages = [
-    "/ligue/1.png",
-    "/ligue/2.png",
-    "/ligue/3.png",
-    "/ligue/4.png",
-    "/ligue/5.png",
+    <CiFootball />,
+    <IoIosFootball />,
+    <MdOutlineSportsVolleyball />,
+    <CiBasketball />,
+    <GiBoxingGlove />,
   ];
   useEffect(() => {
     const getPopulairCourses = async () => {
@@ -57,14 +62,16 @@ function Home() {
         <div className="w-full">
           <h1 className="text-[2rem] capitalize text-center font-bold mb-5 text-blackColor">
             {" "}
-            Trusted by{" "}
+            Elevating the Game
           </h1>
           <div className="flex h-[15dvh] md:h-[20dvh] justify-center items-center gap-10 py-4 animate-scroll mb-5">
             {LigueImages.map((ligue, index) => (
-              <img key={index} className="h-full" src={ligue} alt="Ligue" />
+              // <img key={index} className="h-full" src={ligue} alt="Ligue" />
+              <span className="text-[8rem]"> {ligue} </span>
             ))}
             {LigueImages.map((ligue, index) => (
-              <img key={index} className="h-full" src={ligue} alt="Ligue" />
+              // <img key={index} className="h-full" src={ligue} alt="Ligue" />
+              <span className="text-[8rem]"> {ligue} </span>
             ))}
           </div>
           <PopulairCourses
