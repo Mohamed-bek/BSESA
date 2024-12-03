@@ -20,13 +20,13 @@ export const CreateConference = async (req, res) => {
       return res.status(400).json({ error: "Start date is required" });
     }
 
-    // Check for main image
-    if (!files || !files.image) {
-      return res.status(400).json({ error: "Conference image is required" });
+    const mainFile = req.files["file"][0];
+    if (!mainFile) {
+      return res.status(400).json({ error: "Conference Must Have An Image" });
     }
 
     // Upload main image
-    const mainImage = await uploadToSpaces(files.image[0], "/Conference");
+    const mainImage = await uploadToSpaces(mainFile, "/Conference");
 
     // Process speakers
     const processedSpeakers = [];
