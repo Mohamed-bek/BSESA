@@ -44,7 +44,15 @@ import Applications from "./pages/applications/Applications";
 import ApplicationPage from "./pages/applications/ApplicationPage";
 import ClubApplicationForm from "./pages/applications/ClubApplicationForm";
 import CoachApplicationForm from "./pages/applications/CoachApplicationForm";
-import { FaApple, FaConfluence, FaResearchgate } from "react-icons/fa";
+import {
+  FaApple,
+  FaCertificate,
+  FaConfluence,
+  FaResearchgate,
+  FaSearch,
+  FaUser,
+  FaUserGraduate,
+} from "react-icons/fa";
 import ManageApplications from "./pages/applications/ManageApplications";
 import ManageCoaches from "./pages/applications/ManageCoaches";
 import ManageClubs from "./pages/applications/ManageClubs";
@@ -60,7 +68,8 @@ import UpdateResearch from "./pages/researches/UpdateResearch";
 import Conferences from "./pages/conferences/Conferences";
 import Conference from "./pages/conferences/Confrenece";
 import CreateConference from "./pages/conferences/CreateConference";
-
+import { GiArchiveResearch } from "react-icons/gi";
+import { PiAirplaneTiltFill } from "react-icons/pi";
 function App() {
   const { user } = useUserStore();
   const links =
@@ -74,13 +83,13 @@ function App() {
           },
           {
             id: 2,
-            name: "Manage Course",
-            icon: <SiCoursera />,
+            name: "Courses",
+            icon: <FaUserGraduate />,
             href: "/manage-courses",
           },
           {
             id: 4,
-            name: "Manage Video",
+            name: "Videos",
             icon: <IoVideocam />,
             href: "/manage-videos",
           },
@@ -93,7 +102,7 @@ function App() {
           {
             id: 6,
             name: "Applications",
-            icon: <FaApple />,
+            icon: <PiAirplaneTiltFill />,
             href: "/manage-applications",
           },
           {
@@ -104,14 +113,14 @@ function App() {
           },
           {
             id: 8,
-            name: "Update Heor",
+            name: "Landing Page",
             icon: <CgDollar />,
             href: "/update-hero",
           },
           {
             id: 9,
-            name: "Update Heor",
-            icon: <FaResearchgate />,
+            name: "Researches",
+            icon: <GiArchiveResearch />,
             href: "/manage-researches",
           },
           {
@@ -126,16 +135,19 @@ function App() {
             id: 1,
             name: "Profile",
             href: "/",
+            icon: <FaUser />,
           },
           {
             id: 2,
             name: "My Courses",
             href: "/my-courses",
+            icon: <FaUserGraduate />,
           },
           {
             id: 3,
             name: "Certificates",
             href: "/certificates",
+            icon: <FaCertificate />,
           },
         ];
   return (

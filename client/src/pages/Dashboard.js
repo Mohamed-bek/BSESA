@@ -32,17 +32,16 @@ const Dashboard = ({ links }) => {
             {links &&
               links.map((link) => (
                 <NavLink
-                  className="dshb text-nowrap px-5 text-white text-center flex justify-center items-center mx-auto w-4/5 mb-5 rounded-3xl py-2 text-[1.2rem] font-semibold cursor-pointer"
+                  className="dshb group relative text-nowrap px-5 text-white text-center flex justify-center items-center mx-auto w-4/5 mb-5 rounded-3xl py-2 text-[1.2rem] font-semibold cursor-pointer"
                   to={"/dashboard" + link.href}
                 >
-                  {" "}
-                  {link?.icon ? (
-                    <span className="text-[1.8rem] w-fit block mx-auto font-normal">
-                      {link?.icon}
-                    </span>
-                  ) : (
-                    link.name
-                  )}{" "}
+                  <span className="text-[1.8rem] w-fit block mx-auto font-normal">
+                    {link?.icon}
+                  </span>
+                  <div className="absolute hidden group-hover:block z-50 top-1/2 right-1 px-3 py-2 rounded-lg -translate-y-full translate-x-full bg-whiteColor border border-solid border-blackColor text-blackColor">
+                    {" "}
+                    {link?.name}{" "}
+                  </div>
                 </NavLink>
               ))}
             <button

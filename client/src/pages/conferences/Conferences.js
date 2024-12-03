@@ -1,28 +1,27 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import ConferenceCard from "../../components/ConferenceCard";
 
 function Conferences() {
-  const conferenceData = {
-    name: "Tech Innovators Summit",
-    image: "/path/to/conference-image.jpg",
-    location: "San Francisco, CA",
-    date: {
-      start: new Date("2024-09-15"),
-      end: new Date("2024-09-17"),
-    },
-    description:
-      "A cutting-edge conference exploring the latest in technology and innovation.",
-    speakers: [
-      {
-        firstName: "Jane",
-        lastName: "Doe",
-        image: "/path/to/speaker-image.jpg",
-      },
-    ],
-  };
+  const [conferences, setConferences] = useState([]);
+  useEffect(() => {
+    const GetConferences = async () => {
+      try {
+        const { data } = await axios.get(
+          "https://bsesa-ksem.vercel.app/conferences"
+        );
+        setConferences(data.conferences);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    GetConferences();
+  }, []);
   return (
     <div>
-      <ConferenceCard conference={conferenceData} />
+      {conferences.map((conference) => (
+        <ConferenceCard conference={conference} />
+      ))}
     </div>
   );
 }
