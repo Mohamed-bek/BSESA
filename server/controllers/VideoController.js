@@ -6,9 +6,27 @@ import uploadToSpaces, {
 import Course from "../models/Course.js";
 import User from "../models/User.js";
 
+export const GetUrlForVideo = async (req, res) => {
+  try {
+    const { filename, contentType } = req.body;
+    const Key = `${Date.now()}-${filename}`;
+    const videoUrl = await GetVideoUrl(Key, contentType);
+    res.status(201).json({
+      message: "Upload successful and video saved",
+      url: videoUrl,
+      realUrl: `${
+        process.env.DO_PRESIGNED_URL ||
+        "https://bsesa.lon1.cdn.digitaloceanspaces.com/"
+      }${Key}`,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 export const CreateVideo = async (req, res) => {
   try {
-    const { title, description, links, filename, contentType } = req.body;
+    const { title, description, links, url } = req.body;
     const thumbnailFile = req.file;
 
     if (!filename || !contentType) {
@@ -18,13 +36,10 @@ export const CreateVideo = async (req, res) => {
     if (!thumbnailFile) {
       return res.status(400).json({ message: "No thumbnail file uploaded" });
     }
-
     const thumbnailUrl = await uploadToSpaces(
       thumbnailFile,
       "/VideoThumbnails"
     );
-    const Key = `${Date.now()}-${filename}`;
-    const videoUrl = await GetVideoUrl(Key, contentType);
 
     let linksArray = [];
     if (typeof links === "string") {
@@ -40,7 +55,7 @@ export const CreateVideo = async (req, res) => {
     const newVideo = new Video({
       title,
       description,
-      url: `${process.env.DO_PRESIGNED_URL}${Key}`,
+      url,
       thumbnail: thumbnailUrl,
       links: linksArray,
     });
@@ -48,7 +63,6 @@ export const CreateVideo = async (req, res) => {
     await newVideo.save();
     res.status(201).json({
       message: "Upload successful and video saved",
-      url: videoUrl,
     });
   } catch (error) {
     console.error(error);

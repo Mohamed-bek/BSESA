@@ -89,8 +89,8 @@ const ManageResearches = () => {
   };
 
   return (
-    <div className="w-full h-full overflow-y-auto relative">
-      <div className="mb-8 flex flex-col md:flex-row gap-4">
+    <div className="w-full h-full relative pt-3">
+      <div className="mb-3 flex flex-col md:flex-row gap-4 px-5">
         {/* Search Input */}
         <div className="relative flex-grow">
           <input
@@ -135,7 +135,7 @@ const ManageResearches = () => {
       {!isLoading && (
         <>
           {" "}
-          <div className="h-[calc(100%-160px)] overflow-y-auto">
+          <div className="h-[calc(100%-155px)] overflow-y-auto">
             {researches.map((research) => (
               <div
                 key={research._id}

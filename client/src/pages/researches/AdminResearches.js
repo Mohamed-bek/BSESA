@@ -21,14 +21,14 @@ function AdminResearches() {
         {links.map((link) => (
           <NavLink
             className="subLink"
-            to={"/dashboard/manage-applications" + link.href}
+            to={"/dashboard/manage-researches" + link.href}
           >
             {" "}
             {link.name}{" "}
           </NavLink>
         ))}
       </div>
-      <div className="h-[calc(100%-50px)] overflow-hidden ">
+      <div className="h-[calc(100%-50px)] overflow-y-auto ">
         <Outlet />
       </div>
     </div>

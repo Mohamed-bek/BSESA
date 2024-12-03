@@ -9,9 +9,11 @@ import {
   FaTag,
 } from "react-icons/fa";
 import { FiUploadCloud } from "react-icons/fi";
-import { FaXmark } from "react-icons/fa6";
+import { FaXmark, FaCheck } from "react-icons/fa6";
+import { useMessageData } from "../../context/UserContext";
 
 const CreateResearch = () => {
+  const { setErr, setMessage, setShow, setIcon } = useMessageData();
   const [title, setTitle] = useState("");
   const [abstract, setAbstract] = useState("");
   const [content, setContent] = useState("");
@@ -121,13 +123,22 @@ const CreateResearch = () => {
       setNewTag("");
       setThumbnail(null);
       setResearchFile(null);
+      setErr(false);
+      setMessage("Blog Created Successfully");
+      setIcon(<FaCheck />);
+      setShow(true);
+      setTimeout(() => setShow(false), 1200);
     } catch (error) {
-      console.log(error);
+      setErr(true);
+      setMessage(" Fail To Create Blog");
+      setIcon(<FaXmark />);
+      setShow(true);
+      setTimeout(() => setShow(false), 1200);
     }
   };
 
   return (
-    <div className="w-full min-h-[calc(100vh-80px)] flex justify-center items-center bg-whiteColor overflow-y-auto">
+    <div className="w-full min-h-[calc(100vh-90px)] flex justify-center items-center bg-whiteColor overflow-y-auto">
       <div className=" overflow-y-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">
           Create New Research
@@ -135,7 +146,7 @@ const CreateResearch = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-6 flex justify-center items-start gap-10 flex-wrap "
+          className="flex justify-center items-start gap-10 flex-wrap "
         >
           <div className="w-full md:w-2/5 md:min-w-[400px]">
             <div>
@@ -180,7 +191,8 @@ const CreateResearch = () => {
                 required
               />
             </div>
-
+          </div>
+          <div className="w-full md:w-2/5 md:mt-0 md:min-w-[400px]">
             <div>
               <label className=" text-gray-700 font-semibold mb-2 flex items-center">
                 <FaBookOpen className="mr-2 h-5 w-5 text-gray-500" />
@@ -200,8 +212,6 @@ const CreateResearch = () => {
                 ))}
               </select>
             </div>
-          </div>
-          <div className="w-full md:w-2/5 md:mt-0 md:min-w-[400px]">
             <div>
               <label className=" text-gray-700 font-semibold mb-2 flex items-center">
                 <FaTag className="mr-2 h-5 w-5 text-gray-500" />
@@ -346,7 +356,6 @@ const CreateResearch = () => {
               </div>
             </div>
           </div>
-
           {/* Submit Button */}
           <div className="text-center">
             <button

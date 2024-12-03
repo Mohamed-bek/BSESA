@@ -3,6 +3,7 @@ import {
   CreateVideo,
   deleteVideoAndRemoveFromCourses,
   GetAllVideos,
+  GetUrlForVideo,
   GetVideo,
   GetVideoForAdmin,
   UpdateVideo,
@@ -20,6 +21,14 @@ VideoRouter.post(
   upload.single("file"),
   CreateVideo
 );
+
+VideoRouter.post(
+  "/video/url",
+  authenticateToken,
+  authorizeRoles(["admin"]),
+  GetUrlForVideo
+);
+
 VideoRouter.get(
   "/videos",
   authenticateToken,

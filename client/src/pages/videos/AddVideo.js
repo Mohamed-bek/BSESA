@@ -33,22 +33,38 @@ const AddVideo = () => {
         formData.append(key, value);
       }
     }
-
     if (imageFile) {
       formData.append("file", imageFile);
     } else {
       alert("Please upload an image before submitting.");
       return;
     }
-    if (videoFile) {
-      formData.append("filename", videoFile.name);
-      formData.append("contentType", videoFile.type);
-    } else {
+    if (!videoFile) {
       alert("Please upload a video before submitting.");
       return;
     }
     try {
       setIsLoading(true);
+      const { dataUrls } = await axios.post(
+        "https://bsesa-ksem.vercel.app/video/url",
+        {
+          filename: videoFile.name,
+          contentType: videoFile.type,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      await axios.put(dataUrls?.url, videoFile, {
+        headers: {
+          "Content-Type": videoFile.type,
+          "x-amz-acl": "public-read",
+        },
+      });
+
+      formData.append("url", dataUrls.realUrl);
+
       const { data } = await axios.post(
         "https://bsesa-ksem.vercel.app/video/create",
         formData,
@@ -59,17 +75,13 @@ const AddVideo = () => {
           withCredentials: true,
         }
       );
-      await axios.put(data?.url, videoFile, {
-        headers: {
-          "Content-Type": videoFile.type,
-          "x-amz-acl": "public-read",
-        },
-      });
+
       setPlate({
         title: "",
         description: "",
         links: [],
       });
+
       setImagePreview(null);
       setVideoPreview(null);
       setErr(false);

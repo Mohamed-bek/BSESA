@@ -9,11 +9,14 @@ import {
   FaTag,
 } from "react-icons/fa";
 import { FiUploadCloud } from "react-icons/fi";
-import { FaXmark } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
+import { FaXmark, FaCheck } from "react-icons/fa6";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMessageData } from "../../context/UserContext";
 
 const UpdateResearch = () => {
+  const { setErr, setMessage, setShow, setIcon } = useMessageData();
   const { id } = useParams();
+  const navigate = useNavigate();
   const [researchData, setResearchData] = useState(null);
   const [title, setTitle] = useState(researchData?.title || "");
   const [abstract, setAbstract] = useState(researchData?.abstract || "");
@@ -121,10 +124,20 @@ const UpdateResearch = () => {
         formDataToSend,
         { withCredentials: true }
       );
-
-      alert("Research updated successfully!");
+      setErr(false);
+      setMessage("Research Updated Successfully");
+      setIcon(<FaCheck />);
+      setShow(true);
+      setTimeout(() => {
+        setShow(false);
+        navigate("/dashboard/manage-researches");
+      }, 1200);
     } catch (error) {
-      console.error("Error updating research:", error);
+      setErr(true);
+      setMessage("Fail To Update Research");
+      setIcon(<FaXmark />);
+      setShow(true);
+      setTimeout(() => setShow(false), 1200);
     }
   };
 
