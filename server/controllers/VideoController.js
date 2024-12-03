@@ -29,10 +29,6 @@ export const CreateVideo = async (req, res) => {
     const { title, description, links, url } = req.body;
     const thumbnailFile = req.file;
 
-    if (!filename || !contentType) {
-      return res.status(400).json({ message: "No video file uploaded" });
-    }
-
     if (!thumbnailFile) {
       return res.status(400).json({ message: "No thumbnail file uploaded" });
     }
