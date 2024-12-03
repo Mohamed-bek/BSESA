@@ -45,7 +45,7 @@ const AddVideo = () => {
     }
     try {
       setIsLoading(true);
-      const { dataUrls } = await axios.post(
+      const { data: dataUrls } = await axios.post(
         "https://bsesa-ksem.vercel.app/video/url",
         {
           filename: videoFile.name,
