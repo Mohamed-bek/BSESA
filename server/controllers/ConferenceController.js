@@ -60,8 +60,10 @@ export const CreateConference = async (req, res) => {
       name,
       description,
       location,
-      startDate,
-      endDate,
+      date: {
+        start: startDate,
+        end: endDate,
+      },
       mainImage,
       speakers: processedSpeakers,
     });

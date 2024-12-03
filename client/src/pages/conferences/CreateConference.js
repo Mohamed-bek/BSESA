@@ -141,6 +141,7 @@ const CreateConference = () => {
     formData.append("description", description);
 
     if (mainImage && mainImage.file) {
+      console.log("Image Main : ", mainImage.file);
       formData.append("file", mainImage.file);
     }
 
