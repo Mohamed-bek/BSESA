@@ -55,14 +55,14 @@ const AddVideo = () => {
           withCredentials: true,
         }
       );
-
+      console.log("Getting Urls : ", dataUrls);
       await axios.put(dataUrls?.url, videoFile, {
         headers: {
           "Content-Type": videoFile.type,
           "x-amz-acl": "public-read",
         },
       });
-
+      console.log("Uploading success to digital ocean : ");
       formData.append("url", dataUrls.realUrl);
 
       const { data } = await axios.post(
@@ -75,7 +75,7 @@ const AddVideo = () => {
           withCredentials: true,
         }
       );
-
+      console.log("Uploading success to sever : ");
       setPlate({
         title: "",
         description: "",
@@ -90,7 +90,7 @@ const AddVideo = () => {
       setShow(true);
       setTimeout(() => setShow(false), 1200);
     } catch (error) {
-      console.error("Error saving plate:", error);
+      console.log("Error saving plate:", error);
       setErr(true);
       setMessage("Fail To Create Video");
       setIcon(<MdCancel />);
