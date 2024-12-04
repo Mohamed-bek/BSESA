@@ -96,7 +96,7 @@ function Home() {
           <div className="flex h-[180px] justify-center gap-10 py-8 animate-scroll mb-5">
             {categories.map((categorie, i) => (
               <div
-                className={`px-5 py-7 h-[90px] bg-whiteColor relative text-[1.4rem] ShadowCLass ${
+                className={`px-5 rounded-md w-[180px] h-[90px] flex justify-center items-center bg-whiteColor relative text-[1.4rem] ShadowCLass ${
                   i % 2 == 0 ? "self-start" : "self-end"
                 } ${
                   i % 3 === 0
