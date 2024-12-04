@@ -8,7 +8,7 @@ export const generateTokens = (user) => {
     { id: user._id },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "3m",
+      expiresIn: "1m",
     }
   );
 
