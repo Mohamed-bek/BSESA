@@ -20,8 +20,9 @@ export const CheckAuthetication = async () => {
     console.log("Good Token");
     return true;
   } catch (error) {
+    console.log("Error: " + error);
     console.log("Bad Token");
-    window.localStorage.removeItem("user");
+    // window.localStorage.removeItem("user");
     return false;
   }
 };

@@ -156,19 +156,21 @@ export const RefreshToken = (req, res) => {
   try {
     const { refreshToken } = req.cookies;
 
-    if (!refreshToken) return res.sendStatus(401);
+    if (!refreshToken)
+      return res.status(401).json({ error: "Refresh token Not Found" });
 
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
       async (err, userData) => {
-        if (err) return res.sendStatus(403);
+        if (err)
+          return res.sendStatus(401).json({ error: "Refresh token Not Valid" });
         console.log("the user : ", userData);
         const userId = userData.id;
 
         const user = await User.findById(userId);
         if (!user || user.refreshToken !== refreshToken)
-          return res.sendStatus(403);
+          return res.status(403).json({ error: "Refresh token Not match" });
 
         const newTokens = generateTokens(user);
         user.refreshToken = newTokens.refreshToken;
