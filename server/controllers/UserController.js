@@ -92,9 +92,6 @@ export const ActivateUser = async (req, res) => {
     }
     const { accessToken, refreshToken } = generateTokens(newUser);
 
-    newUser.refreshToken = refreshToken;
-    await newUser.save();
-
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       sameSite: "None",
@@ -129,9 +126,6 @@ export const Login = async (req, res) => {
 
     const { accessToken, refreshToken } = generateTokens(user);
 
-    user.refreshToken = refreshToken;
-    await user.save();
-
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       sameSite: "None",
@@ -165,17 +159,8 @@ export const RefreshToken = (req, res) => {
       async (err, userData) => {
         if (err)
           return res.sendStatus(401).json({ error: "Refresh token Not Valid" });
-        console.log("the user : ", userData);
-        const userId = userData.id;
 
-        const user = await User.findById(userId);
-        if (!user) return res.status(401).json({ error: "User Not Found" });
-        if (user.refreshToken != refreshToken)
-          return res.status(401).json({ error: "Refresh token Not match" });
-
-        const newTokens = generateTokens(user);
-        user.refreshToken = newTokens.refreshToken;
-        await user.save();
+        const newTokens = generateTokens(userData);
 
         res.cookie("accessToken", newTokens.accessToken, {
           httpOnly: true,
@@ -184,7 +169,7 @@ export const RefreshToken = (req, res) => {
           maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        res.cookie("refreshToken", user.refreshToken, {
+        res.cookie("refreshToken", newTokens.refreshToken, {
           httpOnly: true,
           sameSite: "None",
           secure: process.env.NODE_ENV === "production",
@@ -192,7 +177,7 @@ export const RefreshToken = (req, res) => {
         });
         res.status(200).json({
           message: "Refresh token Succeeded",
-          refreshToken: user.refreshToken,
+          refreshToken: newTokens.refreshToken,
         });
       }
     );

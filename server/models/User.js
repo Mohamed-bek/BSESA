@@ -32,8 +32,6 @@ const UserSchema = new Schema(
       enum: ["client", "admin", "coach"],
       default: "client",
     },
-    resetToken: { type: String },
-    resetTokenExpiration: { type: Date },
   },
   {
     timestamps: true,

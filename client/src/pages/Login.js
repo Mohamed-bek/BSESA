@@ -14,9 +14,11 @@ import { IoClose } from "react-icons/io5";
 
 export const CheckAuthetication = async () => {
   try {
-    await axios.get("https://bsesa-ksem.vercel.app/refresh", {
+    const { data } = await axios.get("https://bsesa-ksem.vercel.app/refresh", {
       withCredentials: true,
     });
+    console.log("Good Token");
+    console.log(data);
     console.log("Good Token");
     return true;
   } catch (error) {
