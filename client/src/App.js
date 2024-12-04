@@ -60,8 +60,13 @@ import Conference from "./pages/conferences/Confrenece";
 import CreateConference from "./pages/conferences/CreateConference";
 import { GiArchiveResearch } from "react-icons/gi";
 import { PiAirplaneTiltFill, PiVideoConferenceLight } from "react-icons/pi";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    console.log("The API URL is : ", process.env.REACT_APP_API_URL);
+  }, []);
+
   const { user } = useUserStore();
   const links =
     user?.role === "admin"
