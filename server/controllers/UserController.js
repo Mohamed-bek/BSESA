@@ -146,7 +146,7 @@ export const Login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({ message: "Login successful", user });
+    res.status(200).json({ message: "Login successful", user, refreshToken });
   } catch (error) {
     res.status(error.status || 500).json({ err: error.message });
   }
@@ -169,7 +169,8 @@ export const RefreshToken = (req, res) => {
         const userId = userData.id;
 
         const user = await User.findById(userId);
-        if (!user || user.refreshToken !== refreshToken)
+        if (!user) return res.status(401).json({ error: "User Not Found" });
+        if (user.refreshToken != refreshToken)
           return res.status(401).json({ error: "Refresh token Not match" });
 
         const newTokens = generateTokens(user);

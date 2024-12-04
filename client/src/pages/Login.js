@@ -21,7 +21,7 @@ export const CheckAuthetication = async () => {
     return true;
   } catch (error) {
     console.log("Bad Token");
-    console.log("Error: " + error);
+    console.log(error);
     console.log("Bad Token");
     // window.localStorage.removeItem("user");
     return false;
