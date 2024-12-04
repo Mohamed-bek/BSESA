@@ -58,7 +58,7 @@ function AdminStat() {
         console.log(error);
       }
     };
-    GetCourseState();
+    // GetCourseState();
   }, []);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ function AdminStat() {
         console.log(error);
       }
     };
-    GetOrderState();
+    // GetOrderState();
   }, []);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ function AdminStat() {
         console.log(error);
       }
     };
-    GetCountsState();
+    // GetCountsState();
   }, []);
 
   const data = {
