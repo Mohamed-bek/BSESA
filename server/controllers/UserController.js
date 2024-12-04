@@ -170,12 +170,12 @@ export const RefreshToken = (req, res) => {
 
         const user = await User.findById(userId);
         if (!user || user.refreshToken !== refreshToken)
-          return res.status(403).json({ error: "Refresh token Not match" });
+          return res.status(401).json({ error: "Refresh token Not match" });
 
         const newTokens = generateTokens(user);
         user.refreshToken = newTokens.refreshToken;
-
         await user.save();
+
         res.cookie("accessToken", newTokens.accessToken, {
           httpOnly: true,
           sameSite: "None",
