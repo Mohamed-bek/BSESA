@@ -78,7 +78,7 @@ const UpdateVideo = () => {
         return;
       }
       const { data } = await axios.put(
-        "https://bsesa-ksem.vercel.app/admin/video/" + videoId,
+        process.env.REACT_APP_API_URL + "admin/video/" + videoId,
         formData,
         {
           headers: {

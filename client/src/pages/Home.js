@@ -26,7 +26,7 @@ function Home() {
     const getPopulairCourses = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/course/populaire"
+          process.env.REACT_APP_API_URL + "course/populaire"
         );
         setPopulaireCourses([
           data.courses[0],
@@ -41,7 +41,7 @@ function Home() {
     const getNewestCourses = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/course/newest"
+          process.env.REACT_APP_API_URL + "course/newest"
         );
         setnewCourses(data.courses);
       } catch (error) {
@@ -51,7 +51,7 @@ function Home() {
     const getCategories = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/categories"
+          process.env.REACT_APP_API_URL + "categories"
         );
         setCategories([...data.categories, ...data.categories]);
       } catch (error) {

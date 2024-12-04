@@ -18,7 +18,7 @@ function MyCourses() {
         return;
       }
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/my-courses",
+        process.env.REACT_APP_API_URL + "my-courses",
         {
           withCredentials: true,
         }

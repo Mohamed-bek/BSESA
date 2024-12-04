@@ -8,7 +8,7 @@ function Conferences() {
     const GetConferences = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/conferences"
+          process.env.REACT_APP_API_URL + "conferences"
         );
         setConferences(data.conferences);
       } catch (error) {

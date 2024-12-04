@@ -7,12 +7,15 @@ function Hero() {
   useEffect(() => {
     const getHero = async () => {
       try {
-        const { data } = await axios.get("https://bsesa-ksem.vercel.app/page", {
-          withCredentials: true,
-          params: {
-            name: "hero",
-          },
-        });
+        const { data } = await axios.get(
+          process.env.REACT_APP_API_URL + "page",
+          {
+            withCredentials: true,
+            params: {
+              name: "hero",
+            },
+          }
+        );
         setPage(data.page);
       } catch (error) {
         console.log(error);

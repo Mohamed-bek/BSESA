@@ -5,7 +5,6 @@ import CreateCourse from "./pages/courses/CreateCourse";
 import CreateBlog from "./pages/blogs/CreateBlog";
 import Header from "./components/Header";
 import Login from "./pages/Login";
-import { useEffect } from "react";
 import Activation from "./pages/Activation";
 import Courses from "./pages/courses/Courses";
 import Course from "./pages/courses/Course";
@@ -24,9 +23,8 @@ import CertificateList from "./pages/CertificateList";
 import MyCourses from "./pages/courses/MyCourses";
 import { useUserStore } from "./context/UserContext";
 import AdminCourseManager from "./pages/courses/AdminCourseManager";
-import { MdOutlineDashboard, MdOutlineManageHistory } from "react-icons/md";
-import { SiCoursera } from "react-icons/si";
-import { FaBloggerB, FaLandMineOn } from "react-icons/fa6";
+import { MdOutlineDashboard } from "react-icons/md";
+import { FaBloggerB } from "react-icons/fa6";
 import { CgDollar, CgWebsite } from "react-icons/cg";
 import { IoVideocam } from "react-icons/io5";
 import AdminStat from "./pages/AdminStat";
@@ -44,15 +42,7 @@ import Applications from "./pages/applications/Applications";
 import ApplicationPage from "./pages/applications/ApplicationPage";
 import ClubApplicationForm from "./pages/applications/ClubApplicationForm";
 import CoachApplicationForm from "./pages/applications/CoachApplicationForm";
-import {
-  FaApple,
-  FaCertificate,
-  FaConfluence,
-  FaResearchgate,
-  FaSearch,
-  FaUser,
-  FaUserGraduate,
-} from "react-icons/fa";
+import { FaCertificate, FaUser, FaUserGraduate } from "react-icons/fa";
 import ManageApplications from "./pages/applications/ManageApplications";
 import ManageCoaches from "./pages/applications/ManageCoaches";
 import ManageClubs from "./pages/applications/ManageClubs";

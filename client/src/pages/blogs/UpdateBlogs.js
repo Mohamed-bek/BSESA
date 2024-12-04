@@ -47,7 +47,7 @@ function UpdateBlog() {
   const GetBlog = async () => {
     try {
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/blog/" + id
+        process.env.REACT_APP_API_URL + "blog/" + id
       );
       setBlog(data.blog);
       setImagePreview(data?.blog?.thumbnailUrl);

@@ -21,7 +21,7 @@ const CertificateList = () => {
           return;
         }
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/certificate",
+          process.env.REACT_APP_API_URL + "certificate",
           {
             withCredentials: true,
           }

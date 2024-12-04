@@ -139,7 +139,7 @@ const CreateApplication = () => {
       const isLogin = CheckAuthetication();
       if (!isLogin) throw new Error("Please login");
       const response = await axios.post(
-        "https://bsesa-ksem.vercel.app/application",
+        process.env.REACT_APP_API_URL + "application",
         formDataToSubmit,
         {
           withCredentials: true,

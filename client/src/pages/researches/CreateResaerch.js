@@ -84,7 +84,7 @@ const CreateResearch = () => {
       console.log("Getting categories :");
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/categories"
+          process.env.REACT_APP_API_URL + "categories"
         );
         setCategories(data.categories);
       } catch (error) {
@@ -120,8 +120,8 @@ const CreateResearch = () => {
         navigate("/login");
         return;
       }
-      const { data } = await axios.post(
-        "https://bsesa-ksem.vercel.app/researches/",
+      await axios.post(
+        process.env.REACT_APP_API_URL + "researches/",
         formDataToSend,
         { withCredentials: true }
       );

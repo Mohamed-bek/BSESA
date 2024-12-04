@@ -36,7 +36,7 @@ export default function Accountsetting() {
       return;
     try {
       const { data } = await axios.put(
-        "https://bsesa-ksem.vercel.app/update",
+        process.env.REACT_APP_API_URL + "update",
         {
           firstName,
           lastName,
@@ -63,7 +63,7 @@ export default function Accountsetting() {
       const formData = new FormData();
       formData.append("file", file);
       const { data } = await axios.put(
-        "https://bsesa-ksem.vercel.app/avatar",
+        process.env.REACT_APP_API_URL + "avatar",
         formData,
         {
           withCredentials: true,

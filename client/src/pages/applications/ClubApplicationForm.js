@@ -94,7 +94,7 @@ const ClubApplicationForm = () => {
     }
     try {
       const { data } = await axios.post(
-        "https://bsesa-ksem.vercel.app/club/application",
+        process.env.REACT_APP_API_URL + "club/application",
         formDataSend
       );
       setIcon(<FaCheck />);

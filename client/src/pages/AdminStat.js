@@ -33,7 +33,7 @@ function AdminStat() {
   const GetUserState = async () => {
     try {
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/admin/user_analytics",
+        process.env.REACT_APP_API_URL + "admin/user_analytics",
         { withCredentials: true }
       );
       setusersData(data);
@@ -43,7 +43,7 @@ function AdminStat() {
   const GetCourseState = async () => {
     try {
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/admin/course_analytics",
+        process.env.REACT_APP_API_URL + "admin/course_analytics",
         { withCredentials: true }
       );
       setcourseData(data);
@@ -53,7 +53,7 @@ function AdminStat() {
   const GetOrderState = async () => {
     try {
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/admin/order_analytics",
+        process.env.REACT_APP_API_URL + "admin/order_analytics",
         { withCredentials: true }
       );
       setorderData(data);
@@ -63,7 +63,7 @@ function AdminStat() {
   const GetCountsState = async () => {
     try {
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/admin/counts",
+        process.env.REACT_APP_API_URL + "admin/counts",
         { withCredentials: true }
       );
       setusers(data.users);
@@ -157,7 +157,7 @@ function AdminStat() {
       const formData = new FormData();
       formData.append("file", file);
       const { data } = await axios.put(
-        "https://bsesa-ksem.vercel.app/avatar",
+        process.env.REACT_APP_API_URL + "avatar",
         formData,
         {
           withCredentials: true,

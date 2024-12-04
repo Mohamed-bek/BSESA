@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 const AddVideo = () => {
   const { logout } = useUserStore();
   const navigate = useNavigate();
-  const [comprising, setComprising] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const fileRef = useRef(null);
@@ -56,7 +55,7 @@ const AddVideo = () => {
     try {
       setIsLoading(true);
       const { data: dataUrls } = await axios.post(
-        "https://bsesa-ksem.vercel.app/video/url",
+        process.env.REACT_APP_API_URL + "video/url",
         {
           filename: videoFile.name,
           contentType: videoFile.type,
@@ -73,8 +72,8 @@ const AddVideo = () => {
       });
       formData.append("url", dataUrls.realUrl);
 
-      const { data } = await axios.post(
-        "https://bsesa-ksem.vercel.app/video/create",
+      await axios.post(
+        process.env.REACT_APP_API_URL + "video/create",
         formData,
         {
           headers: {
@@ -162,22 +161,8 @@ const AddVideo = () => {
               onClick={() => videoFileRef.current?.click()}
               className="w-[160px] cursor-pointer h-[160px] p-2 absolute top-1/2 left-1/2 rounded-lg bg-gray-200 flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2"
             >
-              {comprising && (
-                <div className="text-center">
-                  {" "}
-                  <p className="text-[1.1rem] font-bold text-primary">
-                    {" "}
-                    Compressing...{" "}
-                  </p>
-                  <span className="loader block w-fit mx-auto mt-2"></span>{" "}
-                </div>
-              )}
-              {!comprising && (
-                <>
-                  <p className="text-lg text-center">Add Video</p>
-                  <IoMdAdd className="text-5xl font-bold mx-auto" />
-                </>
-              )}
+              <p className="text-lg text-center">Add Video</p>
+              <IoMdAdd className="text-5xl font-bold mx-auto" />
             </div>
           )}
           <input

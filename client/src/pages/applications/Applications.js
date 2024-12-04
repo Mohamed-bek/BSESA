@@ -12,7 +12,7 @@ function Applications() {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/applications",
+        process.env.REACT_APP_API_URL + "applications",
         {
           params: {
             applicantType:

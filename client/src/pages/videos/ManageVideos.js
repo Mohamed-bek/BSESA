@@ -21,7 +21,7 @@ const ManageVideos = () => {
     const getVideosForAdmin = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/videos",
+          process.env.REACT_APP_API_URL + "videos",
           {
             params: {
               title: searchQuery,
@@ -55,15 +55,12 @@ const ManageVideos = () => {
       return;
     }
     try {
-      const { data } = await axios.delete(
-        `https://bsesa-ksem.vercel.app/admin/video/${id}`,
-        {
-          data: {
-            password,
-          },
-          withCredentials: true,
-        }
-      );
+      await axios.delete(`https://bsesa-ksem.vercel.app/admin/video/${id}`, {
+        data: {
+          password,
+        },
+        withCredentials: true,
+      });
       deleteRef.current.classList.add("scale-0");
       const newVideos = videos.filter((v) => v._id !== id);
       setVideos(newVideos);

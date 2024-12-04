@@ -10,7 +10,7 @@ const Dashboard = ({ links }) => {
   const navigate = useNavigate();
   const logOut = async () => {
     // try {
-    //   await axios.get("https://bsesa-ksem.vercel.app/logout", {
+    //   await axios.get(process.env.REACT_APP_API_URL + "logout", {
     //     withCredentials: true,
     //   });
     // } catch (error) {

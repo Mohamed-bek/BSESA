@@ -18,7 +18,7 @@ const Research = () => {
     const getResearch = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/researches/" + id
+          process.env.REACT_APP_API_URL + "researches/" + id
         );
         setResearch(data);
       } catch (error) {

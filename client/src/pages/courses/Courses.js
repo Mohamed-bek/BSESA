@@ -33,7 +33,7 @@ const Page = () => {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/courses",
+        process.env.REACT_APP_API_URL + "courses",
         {
           params: {
             minPrice,
@@ -57,7 +57,7 @@ const Page = () => {
   const getCategories = async () => {
     try {
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/categories"
+        process.env.REACT_APP_API_URL + "categories"
       );
       setCategories(data.categories);
     } catch (error) {

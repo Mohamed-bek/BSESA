@@ -24,7 +24,7 @@ const ChartComponent = ({ data, options, type = "bar" }) => {
         chartInstance.current.destroy();
       }
     };
-  }, [data, options]);
+  }, [data, type, options]);
 
   return <canvas ref={chartRef} />;
 };

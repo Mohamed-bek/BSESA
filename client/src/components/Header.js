@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useUserStore } from "../context/UserContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 

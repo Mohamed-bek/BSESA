@@ -45,12 +45,16 @@ const CreateBlog = () => {
         navigate("/login");
         return;
       }
-      await axios.post("https://bsesa-ksem.vercel.app/blog/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-      });
+      await axios.post(
+        process.env.REACT_APP_API_URL + "blog/create",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
       setPlate({
         title: "",
         content: "",

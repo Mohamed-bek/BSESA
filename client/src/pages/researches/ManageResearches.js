@@ -22,7 +22,7 @@ const ManageResearches = () => {
     const getResaerches = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/researches/",
+          process.env.REACT_APP_API_URL + "researches/",
           {
             params: {
               title,
@@ -49,7 +49,7 @@ const ManageResearches = () => {
       setIsLoading(true);
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/categories"
+          process.env.REACT_APP_API_URL + "categories"
         );
         setCategories(data.categories);
       } catch (error) {
@@ -70,12 +70,9 @@ const ManageResearches = () => {
         navigate("/login");
         return;
       }
-      const { data } = await axios.delete(
-        `https://bsesa-ksem.vercel.app/researches/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.delete(`https://bsesa-ksem.vercel.app/researches/${id}`, {
+        withCredentials: true,
+      });
       const newResaerches = researches.filter((a) => a._id !== id);
       setResearches(newResaerches);
       setMessageData({

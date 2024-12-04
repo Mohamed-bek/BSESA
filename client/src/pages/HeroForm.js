@@ -40,7 +40,7 @@ const HeroForm = () => {
         return;
       }
       const { data } = await axios.post(
-        "https://bsesa-ksem.vercel.app/pages/hero",
+        process.env.REACT_APP_API_URL + "pages/hero",
         {
           ...formData,
           fileName: file.name,

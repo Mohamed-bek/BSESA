@@ -27,7 +27,7 @@ const ManageBlogs = () => {
           return;
         }
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/blogs",
+          process.env.REACT_APP_API_URL + "blogs",
           {
             params: {
               title: searchQuery,

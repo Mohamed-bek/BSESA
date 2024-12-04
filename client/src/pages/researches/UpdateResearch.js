@@ -33,7 +33,7 @@ const UpdateResearch = () => {
     const getResearch = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/researches/" + id
+          process.env.REACT_APP_API_URL + "researches/" + id
         );
         setTitle(data?.title);
         setAbstract(data?.abstract);
@@ -58,7 +58,7 @@ const UpdateResearch = () => {
     const fetchCategories = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/categories"
+          process.env.REACT_APP_API_URL + "categories"
         );
         setCategories(data.categories);
       } catch (error) {

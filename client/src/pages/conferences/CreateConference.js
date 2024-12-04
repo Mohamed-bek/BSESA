@@ -172,7 +172,7 @@ const CreateConference = () => {
         return;
       }
       const response = await axios.post(
-        "https://bsesa-ksem.vercel.app/conference/create",
+        process.env.REACT_APP_API_URL + "conference/create",
         formData,
         {
           headers: {

@@ -20,7 +20,7 @@ const Activation = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "https://bsesa-ksem.vercel.app/activation",
+        process.env.REACT_APP_API_URL + "activation",
         {
           activationCode,
           token: id,

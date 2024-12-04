@@ -11,7 +11,11 @@ function BlogBox({ blog, color = "white" }) {
       }`}
     >
       <div className="w-full h-[200px] rounded-md">
-        <img className="w-full h-[200px]" src={blog.thumbnailUrl} />
+        <img
+          className="w-full h-[200px]"
+          alt={`${blog?.title}`}
+          src={blog.thumbnailUrl}
+        />
       </div>
       <div className="w-full px-2 pt-2 h-[280px]">
         <h1 className="text-[1.4rem] mb-3 font-medium capitalize">

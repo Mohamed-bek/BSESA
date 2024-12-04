@@ -31,7 +31,7 @@ const ManageClubs = () => {
           return;
         }
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/clubs/" + id,
+          process.env.REACT_APP_API_URL + "clubs/" + id,
           {
             params: {
               page: 1,
@@ -66,7 +66,7 @@ const ManageClubs = () => {
         return;
       }
       await axios.put(
-        "https://bsesa-ksem.vercel.app/club/application/" + id,
+        process.env.REACT_APP_API_URL + "club/application/" + id,
         {
           status,
         },

@@ -33,13 +33,16 @@ const Blogs = () => {
   const GetFilterPlats = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.get("https://bsesa-ksem.vercel.app/blogs", {
-        params: {
-          categories: selectedSections,
-          page: currentPage,
-          limit: 12,
-        },
-      });
+      const { data } = await axios.get(
+        process.env.REACT_APP_API_URL + "blogs",
+        {
+          params: {
+            categories: selectedSections,
+            page: currentPage,
+            limit: 12,
+          },
+        }
+      );
       setBlogs(data.blogs);
       setNbOfPages(data.NbofPages);
     } catch (error) {
@@ -52,7 +55,7 @@ const Blogs = () => {
   const getCategories = async () => {
     try {
       const { data } = await axios.get(
-        "https://bsesa-ksem.vercel.app/categories"
+        process.env.REACT_APP_API_URL + "categories"
       );
       setCategories(data.categories);
     } catch (error) {

@@ -18,7 +18,7 @@ const Plans = () => {
       await CheckAuthetication();
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/memberships",
+          process.env.REACT_APP_API_URL + "memberships",
           {
             withCredentials: true,
           }

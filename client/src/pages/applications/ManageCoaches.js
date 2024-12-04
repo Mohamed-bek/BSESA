@@ -30,7 +30,7 @@ const ManageCoaches = () => {
           return;
         }
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/coaches/" + id,
+          process.env.REACT_APP_API_URL + "coaches/" + id,
           {
             params: {
               page: 1,
@@ -65,7 +65,7 @@ const ManageCoaches = () => {
         return;
       }
       await axios.put(
-        "https://bsesa-ksem.vercel.app/coach/application/" + id,
+        process.env.REACT_APP_API_URL + "coach/application/" + id,
         {
           status,
         },

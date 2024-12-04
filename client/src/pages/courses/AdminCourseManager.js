@@ -28,7 +28,7 @@ const AdminCourseManager = () => {
     const fetchCourses = async () => {
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/courses",
+          process.env.REACT_APP_API_URL + "courses",
           {
             params: {
               title: courseTitle,
@@ -59,7 +59,7 @@ const AdminCourseManager = () => {
       }
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/videos",
+          process.env.REACT_APP_API_URL + "videos",
           {
             params: {
               title: videoTitle,

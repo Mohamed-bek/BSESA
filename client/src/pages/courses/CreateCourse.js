@@ -48,7 +48,7 @@ const CreateCourse = () => {
         return;
       }
       await axios.post(
-        "https://bsesa-ksem.vercel.app/course/create",
+        process.env.REACT_APP_API_URL + "course/create",
         formData,
         {
           headers: {

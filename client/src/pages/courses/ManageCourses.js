@@ -22,7 +22,7 @@ const ManageCourses = () => {
       await CheckAuthetication();
       try {
         const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/admin/courses",
+          process.env.REACT_APP_API_URL + "admin/courses",
           {
             params: {
               title: searchQuery,

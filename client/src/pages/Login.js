@@ -14,7 +14,7 @@ import { IoClose } from "react-icons/io5";
 
 export const CheckAuthetication = async () => {
   try {
-    await axios.get("https://bsesa-ksem.vercel.app/refresh", {
+    await axios.get(process.env.REACT_APP_API_URL + "refresh", {
       withCredentials: true,
     });
     return true;
@@ -105,7 +105,7 @@ const Login = () => {
     setStatus("checking");
     try {
       const { data } = await axios.post(
-        "https://bsesa-ksem.vercel.app/userCreate",
+        process.env.REACT_APP_API_URL + "userCreate",
         {
           firstName,
           lastName,
@@ -161,7 +161,7 @@ const Login = () => {
     const email = emailIn;
     try {
       const { data } = await axios.post(
-        "https://bsesa-ksem.vercel.app/login",
+        process.env.REACT_APP_API_URL + "login",
         {
           password,
           email,
