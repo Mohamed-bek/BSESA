@@ -11,12 +11,14 @@ import {
 import { FiUploadCloud } from "react-icons/fi";
 import { FaXmark, FaCheck } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMessageData } from "../../context/UserContext";
+import { useMessageData, useUserStore } from "../../context/UserContext";
+import { CheckAuthetication } from "../Login";
 
 const UpdateResearch = () => {
+  const { logout } = useUserStore();
+  const navigate = useNavigate();
   const { setErr, setMessage, setShow, setIcon } = useMessageData();
   const { id } = useParams();
-  const navigate = useNavigate();
   const [researchData, setResearchData] = useState(null);
   const [title, setTitle] = useState(researchData?.title || "");
   const [abstract, setAbstract] = useState(researchData?.abstract || "");
@@ -119,6 +121,12 @@ const UpdateResearch = () => {
     if (researchFile) formDataToSend.append("pdf", researchFile);
 
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       await axios.put(
         `https://bsesa-ksem.vercel.app/researches/${id}`,
         formDataToSend,

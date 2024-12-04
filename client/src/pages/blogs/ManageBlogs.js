@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { FaCheck, FaEdit, FaExclamation, FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useMessageData } from "../../context/UserContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useMessageData, useUserStore } from "../../context/UserContext";
+import { CheckAuthetication } from "../Login";
 
 const ManageBlogs = () => {
   const { setShow, setMessageData } = useMessageData();
@@ -13,10 +14,18 @@ const ManageBlogs = () => {
   const [password, setPassword] = useState("");
   const deleteRef = useRef(null);
   const [id, setId] = useState(null);
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
 
   useEffect(() => {
     const getBlogsForAdmin = async () => {
       try {
+        const check = await CheckAuthetication();
+        if (!check) {
+          logout();
+          navigate("/login");
+          return;
+        }
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/blogs",
           {
@@ -44,6 +53,12 @@ const ManageBlogs = () => {
   const deleteBlog = async (e) => {
     e.preventDefault();
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const { data } = await axios.delete(
         `https://bsesa-ksem.vercel.app/admin/blog/${id}`,
         {

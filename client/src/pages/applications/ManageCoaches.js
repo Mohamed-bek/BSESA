@@ -1,9 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CoachProfileCard from "../../components/CoachProfileCard";
+import { useUserStore } from "../../context/UserContext";
+import { CheckAuthetication } from "../Login";
 
 const ManageCoaches = () => {
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
   const [isLoading, setisLoading] = useState(false);
   const [coaches, setCoaches] = useState([]);
   const [coachCard, setcoachCard] = useState(null);
@@ -19,6 +23,12 @@ const ManageCoaches = () => {
     const getCoachces = async () => {
       setisLoading(true);
       try {
+        const check = await CheckAuthetication();
+        if (!check) {
+          logout();
+          navigate("/login");
+          return;
+        }
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/coaches/" + id,
           {
@@ -48,6 +58,12 @@ const ManageCoaches = () => {
 
   const UpdateStatus = async (status, id) => {
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       await axios.put(
         "https://bsesa-ksem.vercel.app/coach/application/" + id,
         {

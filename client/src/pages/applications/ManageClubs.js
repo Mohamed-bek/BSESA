@@ -1,10 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ClubProfileCard from "../../components/ClubProfileCard";
 import CoachProfileCard from "../../components/CoachProfileCard";
+import { useUserStore } from "../../context/UserContext";
+import { CheckAuthetication } from "../Login";
 
 const ManageClubs = () => {
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
   const [isLoading, setisLoading] = useState(false);
   const [clubs, setclubs] = useState([]);
   const [clubCard, setClubCard] = useState(null);
@@ -20,6 +24,12 @@ const ManageClubs = () => {
     const getClubs = async () => {
       setisLoading(true);
       try {
+        const check = await CheckAuthetication();
+        if (!check) {
+          logout();
+          navigate("/login");
+          return;
+        }
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/clubs/" + id,
           {
@@ -49,6 +59,12 @@ const ManageClubs = () => {
 
   const UpdateStatus = async (status, id) => {
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       await axios.put(
         "https://bsesa-ksem.vercel.app/club/application/" + id,
         {

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaCheck, FaSearch } from "react-icons/fa";
-import { useMessageData } from "../../context/UserContext";
+import { useMessageData, useUserStore } from "../../context/UserContext";
 import { MdOutlineCancel } from "react-icons/md";
+import { CheckAuthetication } from "../Login";
+import { useNavigate } from "react-router-dom";
 
 const AdminCourseManager = () => {
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
   const { setErr, setMessage, setIcon, setShow } = useMessageData();
   const ShowMessage = (err, message, icon) => {
     setErr(err);
@@ -77,6 +81,12 @@ const AdminCourseManager = () => {
     console.log("Adding Video To course : ", selectedVideo);
     if (!selectedCourse || !selectedVideo) return;
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const { data } = await axios.put(
         `https://bsesa-ksem.vercel.app/course/add_video/${selectedCourse._id}/`,
         { videoId: selectedVideo?._id },

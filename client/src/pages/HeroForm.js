@@ -1,9 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
 import { FaCheck, FaExclamation } from "react-icons/fa";
-import { useMessageData } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { useMessageData, useUserStore } from "../context/UserContext";
+import { CheckAuthetication } from "./Login";
 
 const HeroForm = () => {
+  const { logout } = useUserStore();
+  const navigate = useNavigate();
   const { setMessageData, setShow } = useMessageData();
   const [formData, setFormData] = useState({
     name: "hero",
@@ -29,6 +33,12 @@ const HeroForm = () => {
       return;
     }
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const { data } = await axios.post(
         "https://bsesa-ksem.vercel.app/pages/hero",
         {

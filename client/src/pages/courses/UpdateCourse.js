@@ -4,10 +4,13 @@ import { IoMdAdd } from "react-icons/io";
 import MultiSelectForm from "../../components/MultiSelectForm";
 import { MdCancel } from "react-icons/md";
 import { FaCheck, FaPen } from "react-icons/fa";
-import { useMessageData } from "../../context/UserContext";
-import { useParams } from "react-router-dom";
+import { useMessageData, useUserStore } from "../../context/UserContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { CheckAuthetication } from "../Login";
 
 const UpdateCourse = () => {
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
   const { setErr, setMessage, setShow, setIcon } = useMessageData();
   const { id } = useParams();
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -68,6 +71,12 @@ const UpdateCourse = () => {
 
     try {
       setIsLoading(true);
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const { data } = await axios.put(
         `https://bsesa-ksem.vercel.app/course/update/${id}`,
         formData,

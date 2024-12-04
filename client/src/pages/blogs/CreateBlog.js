@@ -2,11 +2,15 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { IoMdAdd } from "react-icons/io";
 import MultiSelectForm from "../../components/MultiSelectForm";
-import { useMessageData } from "../../context/UserContext";
+import { useMessageData, useUserStore } from "../../context/UserContext";
 import { FaCheck } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
+import { CheckAuthetication } from "../Login";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
   const { setErr, setMessage, setShow, setIcon } = useMessageData();
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +39,12 @@ const CreateBlog = () => {
     }
     try {
       setIsLoading(true);
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       await axios.post("https://bsesa-ksem.vercel.app/blog/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

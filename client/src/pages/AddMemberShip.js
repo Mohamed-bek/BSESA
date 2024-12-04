@@ -3,9 +3,13 @@ import React, { useState } from "react";
 import { BiTrash } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
 import { MdOutlineCancel } from "react-icons/md";
-import { useMessageData } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { useMessageData, useUserStore } from "../context/UserContext";
+import { CheckAuthetication } from "./Login";
 
 const CreateMembership = () => {
+  const { logout } = useUserStore();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -45,6 +49,12 @@ const CreateMembership = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const { data } = await axios.post(
         "https://bsesa-ksem.vercel.app/memberships",
         { ...formData },

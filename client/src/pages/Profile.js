@@ -2,10 +2,13 @@ import { data } from "@remix-run/router";
 import axios from "axios";
 import React, { useState, useRef } from "react";
 import { FaPen, FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../context/UserContext";
+import { CheckAuthetication } from "./Login";
 
 export default function Accountsetting() {
-  const { user, login } = useUserStore();
+  const navigate = useNavigate();
+  const { user, login, logout } = useUserStore();
   const inChangeImg = useRef();
   const [firstName, setFirstName] = useState(user?.firstName);
   const [lastName, setLastName] = useState(user?.lastName);
@@ -18,6 +21,12 @@ export default function Accountsetting() {
   };
 
   const updateHandler = async (e) => {
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     e.preventDefault();
     if (
       firstName === user?.firstName &&
@@ -27,7 +36,7 @@ export default function Accountsetting() {
       return;
     try {
       const { data } = await axios.put(
-        process.env.REACT_APP_API_URL + "/update",
+        "https://bsesa-ksem.vercel.app/update",
         {
           firstName,
           lastName,
@@ -44,10 +53,15 @@ export default function Accountsetting() {
 
   const handleProfilePictureChange = async (e) => {
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append("file", file);
-      console.log("profile picture changed");
       const { data } = await axios.put(
         "https://bsesa-ksem.vercel.app/avatar",
         formData,

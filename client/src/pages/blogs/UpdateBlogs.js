@@ -11,6 +11,7 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
+import { CheckAuthetication } from "../Login";
 
 function timeAgo(createdAt) {
   const now = new Date();
@@ -34,6 +35,8 @@ function timeAgo(createdAt) {
 }
 
 function UpdateBlog() {
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
   const { setErr, setMessage, setShow, setIcon } = useMessageData();
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
@@ -68,6 +71,12 @@ function UpdateBlog() {
     if (ImageFile) formData.append("file", ImageFile);
 
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       await axios.put(`https://bsesa-ksem.vercel.app/blog/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

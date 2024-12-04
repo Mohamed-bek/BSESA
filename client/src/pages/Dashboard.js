@@ -9,16 +9,17 @@ const Dashboard = ({ links }) => {
   const { logout, user } = useUserStore();
   const navigate = useNavigate();
   const logOut = async () => {
-    try {
-      await axios.get("https://bsesa-ksem.vercel.app/logout", {
-        withCredentials: true,
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      logout();
-      navigate("/");
-    }
+    // try {
+    //   await axios.get("https://bsesa-ksem.vercel.app/logout", {
+    //     withCredentials: true,
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    // } finally {
+
+    // }
+    logout();
+    navigate("/");
   };
   return (
     <div

@@ -1,8 +1,13 @@
 import axios from "axios";
 import React, { useState, useRef } from "react";
 import { FaImage, FaPlus, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../context/UserContext";
+import { CheckAuthetication } from "../Login";
 
 const CreateConference = () => {
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
   const [conferenceName, setConferenceName] = useState("");
   const [location, setLocation] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -160,6 +165,12 @@ const CreateConference = () => {
     });
 
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const response = await axios.post(
         "https://bsesa-ksem.vercel.app/conference/create",
         formData,

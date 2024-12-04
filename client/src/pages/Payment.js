@@ -3,15 +3,25 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useUserStore } from "../context/UserContext";
+import { CheckAuthetication } from "./Login";
 
 function Payment() {
+  const { logout } = useUserStore();
+  const navigate = useNavigate();
   const [stripePromise, setstripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
   const { id } = useParams();
   const getClientKey = async () => {
     try {
       // Create an order and get the order ID
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const { data: orderData } = await axios.post(
         "https://bsesa-ksem.vercel.app/order/",
         {

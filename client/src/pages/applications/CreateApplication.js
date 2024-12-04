@@ -2,9 +2,13 @@ import axios from "axios";
 import React, { useState, useRef } from "react";
 import { FaUpload } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../context/UserContext";
 import { CheckAuthetication } from "../Login";
 
 const CreateApplication = () => {
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
   const [formData, setFormData] = useState({
     name: "",
     applicantType: "",
@@ -97,8 +101,12 @@ const CreateApplication = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Create FormData object for multipart/form-data submission
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     const formDataToSubmit = new FormData();
 
     // Add main form fields

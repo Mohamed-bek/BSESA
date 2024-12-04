@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 function AdminStat() {
   const navigate = useNavigate();
+  const { user, login, logout } = useUserStore();
   const [primaryColor, setprimaryColor] = useState("#00adb5");
   const inChangeImg = useRef();
   const [usersData, setusersData] = useState({ months: [], counts: [] });
@@ -21,7 +22,7 @@ function AdminStat() {
   const [orders, setorders] = useState(null);
   const [conferences, setconferences] = useState(null);
   const [blogs, setblogs] = useState(null);
-  const { user, login, logout } = useUserStore();
+
   useEffect(() => {
     const primaryColor = getComputedStyle(document.documentElement)
       .getPropertyValue("--primary-color")
@@ -36,9 +37,7 @@ function AdminStat() {
         { withCredentials: true }
       );
       setusersData(data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const GetCourseState = async () => {
@@ -58,9 +57,7 @@ function AdminStat() {
         { withCredentials: true }
       );
       setorderData(data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const GetCountsState = async () => {
@@ -80,7 +77,6 @@ function AdminStat() {
   useEffect(() => {
     const GetData = async () => {
       const check = await CheckAuthetication();
-      console.log("Check  : ", check);
       if (!check) {
         logout();
         navigate("/login");

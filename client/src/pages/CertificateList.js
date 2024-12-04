@@ -1,8 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserStore } from "../context/UserContext";
+import { CheckAuthetication } from "./Login";
 
 const CertificateList = () => {
+  const { logout } = useUserStore();
+  const navigate = useNavigate();
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,6 +14,12 @@ const CertificateList = () => {
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
+        const check = await CheckAuthetication();
+        if (!check) {
+          logout();
+          navigate("/login");
+          return;
+        }
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/certificate",
           {

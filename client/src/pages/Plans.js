@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUserStore } from "../context/UserContext";
+import { CheckAuthetication } from "./Login";
 
 const Plans = () => {
   const { user } = useUserStore();
@@ -14,6 +15,7 @@ const Plans = () => {
 
   useEffect(() => {
     const fetchPlans = async () => {
+      await CheckAuthetication();
       try {
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/memberships",
@@ -21,7 +23,6 @@ const Plans = () => {
             withCredentials: true,
           }
         );
-        console.log("Fetching plans", data);
         setPlans(data.plans);
         setLoading(false);
         setIsUserMemberships(data.IsUserMemberships);

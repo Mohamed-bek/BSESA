@@ -3,10 +3,13 @@ import axios from "axios";
 import { FaCheck, FaPen } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import AddLinkWithDescription from "../../context/AddLinkWithDescription";
-import { useMessageData } from "../../context/UserContext";
-import { useParams } from "react-router-dom";
+import { useMessageData, useUserStore } from "../../context/UserContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { CheckAuthetication } from "../Login";
 
 const UpdateVideo = () => {
+  const { logout } = useUserStore();
+  const navigate = useNavigate();
   const { videoId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false); // Track if we're updating
@@ -62,7 +65,12 @@ const UpdateVideo = () => {
 
     try {
       setIsLoading(true);
-
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const { data } = await axios.put(
         "https://bsesa-ksem.vercel.app/admin/video/" + videoId,
         formData,

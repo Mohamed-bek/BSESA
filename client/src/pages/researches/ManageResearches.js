@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FaCheck, FaEdit, FaExclamation, FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useMessageData } from "../../context/UserContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useMessageData, useUserStore } from "../../context/UserContext";
 import { FaFilter, FaSearch } from "react-icons/fa";
+import { CheckAuthetication } from "../Login";
 const ManageResearches = () => {
+  const navigate = useNavigate();
+  const { logout } = useUserStore();
   const [title, setTitle] = useState("");
   const [categorie, setCategorie] = useState("");
   const [categories, setCategories] = useState([]);
@@ -61,6 +64,12 @@ const ManageResearches = () => {
 
   const deleteResearch = async (id) => {
     try {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       const { data } = await axios.delete(
         `https://bsesa-ksem.vercel.app/researches/${id}`,
         {

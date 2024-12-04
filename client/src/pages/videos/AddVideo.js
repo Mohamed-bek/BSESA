@@ -3,10 +3,14 @@ import axios from "axios";
 import { IoMdAdd } from "react-icons/io";
 import { FaCheck } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
-import { useMessageData } from "../../context/UserContext";
+import { useMessageData, useUserStore } from "../../context/UserContext";
 import AddLinkWithDescription from "../../context/AddLinkWithDescription";
+import { CheckAuthetication } from "../Login";
+import { useNavigate } from "react-router-dom";
 
 const AddVideo = () => {
+  const { logout } = useUserStore();
+  const navigate = useNavigate();
   const [comprising, setComprising] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,6 +29,12 @@ const AddVideo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     const formData = new FormData();
     for (const [key, value] of Object.entries(plate)) {
       if (Array.isArray(value)) {
