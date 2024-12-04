@@ -184,7 +184,7 @@ export const RefreshToken = (req, res) => {
           maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        res.cookie("refreshToken", newTokens.refreshToken, {
+        res.cookie("refreshToken", user.refreshToken, {
           httpOnly: true,
           sameSite: "None",
           secure: process.env.NODE_ENV === "production",
