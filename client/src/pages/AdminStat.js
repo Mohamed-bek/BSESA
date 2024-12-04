@@ -30,7 +30,7 @@ function AdminStat() {
   useEffect(() => {
     const GetUserState = async () => {
       try {
-        const Check = CheckAuthetication();
+        const Check = await CheckAuthetication();
         console.log("Check  : ", Check);
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/admin/user_analytics",
