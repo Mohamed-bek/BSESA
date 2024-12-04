@@ -23,7 +23,6 @@ const CreateToken = (user) => {
 
 export const CreateUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
-  console.log(firstName, lastName);
   try {
     const userExist = await User.findOne({ email });
     if (userExist) {
@@ -90,7 +89,7 @@ export const ActivateUser = async (req, res) => {
     if (!newUser) {
       return res.status(400).json({ message: "User creation failed" });
     }
-    const { accessToken, refreshToken } = generateTokens(newUser);
+    const { accessToken, refreshToken } = generateTokens(newUser._id);
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
@@ -124,7 +123,7 @@ export const Login = async (req, res) => {
       return res.status(401).json({ message: "Password incorrect" });
     }
 
-    const { accessToken, refreshToken } = generateTokens(user);
+    const { accessToken, refreshToken } = generateTokens(user._id);
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
@@ -159,8 +158,7 @@ export const RefreshToken = (req, res) => {
       async (err, userData) => {
         if (err)
           return res.sendStatus(401).json({ error: "Refresh token Not Valid" });
-
-        const newTokens = generateTokens(userData);
+        const newTokens = generateTokens(userData.id);
 
         res.cookie("accessToken", newTokens.accessToken, {
           httpOnly: true,
@@ -177,8 +175,6 @@ export const RefreshToken = (req, res) => {
         });
         res.status(200).json({
           message: "Refresh token Succeeded",
-          refreshToken: newTokens.refreshToken,
-          userData,
         });
       }
     );
@@ -509,7 +505,6 @@ export const getUserAnalytics = async (req, res) => {
 export const userCertificate = async (req, res) => {
   try {
     const userId = req.user.id;
-    console.log("User: " + userId);
     const userQuizes = await QuizResponse.find({ userId })
       .select("certificate")
       .populate({ path: "courseId", select: "title thumbnail" });

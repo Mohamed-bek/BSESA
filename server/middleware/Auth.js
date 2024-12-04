@@ -10,11 +10,8 @@ export const authenticateToken = (req, res, next) => {
     return res.sendStatus(401).json({ error: "Access token is required" });
 
   jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
+    if (err) return res.status(403).json({ error: err });
     req.user = user;
-    return res
-      .status(200)
-      .json({ message: "The User is authenticated ", user });
     next();
   });
 };
@@ -22,10 +19,8 @@ export const authenticateToken = (req, res, next) => {
 export const authorizeRoles = (allowedRoles) => {
   return async (req, res, next) => {
     const id = req.user.id;
-
     const user = await User.findById(id);
-    if (!user)
-      return res.status(404).json({ message: `User not found ${req.user}` });
+    if (!user) return res.status(404).json({ message: `User not found` });
 
     if (!allowedRoles.includes(user.role)) {
       return res
@@ -39,7 +34,6 @@ export const authorizeRoles = (allowedRoles) => {
 
 export const getIdUser = (req, res, next) => {
   try {
-    console.log("Getting user");
     const { accessToken } = req.cookies;
     if (!accessToken) return next();
 
