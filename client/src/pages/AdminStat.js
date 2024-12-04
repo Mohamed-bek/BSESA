@@ -7,8 +7,10 @@ import { SiCoursera } from "react-icons/si";
 import { FaCartShopping } from "react-icons/fa6";
 import { FcConferenceCall } from "react-icons/fc";
 import { CheckAuthetication } from "./Login";
+import { useNavigate } from "react-router-dom";
 
 function AdminStat() {
+  const navigate = useNavigate();
   const [primaryColor, setprimaryColor] = useState("#00adb5");
   const inChangeImg = useRef();
   const [usersData, setusersData] = useState({ months: [], counts: [] });
@@ -19,7 +21,7 @@ function AdminStat() {
   const [orders, setorders] = useState(null);
   const [conferences, setconferences] = useState(null);
   const [blogs, setblogs] = useState(null);
-  const { user, login } = useUserStore();
+  const { user, login, logout } = useUserStore();
   useEffect(() => {
     const primaryColor = getComputedStyle(document.documentElement)
       .getPropertyValue("--primary-color")
@@ -27,78 +29,68 @@ function AdminStat() {
     setprimaryColor(primaryColor);
   }, []);
 
-  useEffect(() => {
-    const Check = CheckAuthetication();
-    const GetUserState = async () => {
-      try {
-        console.log("Check  : ", Check);
-        const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/admin/user_analytics",
-          { withCredentials: true }
-        );
-        setusersData(data);
-        console.log("The Data Comming is : " + data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    // GetUserState();
-  }, []);
+  const GetUserState = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://bsesa-ksem.vercel.app/admin/user_analytics",
+        { withCredentials: true }
+      );
+      setusersData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const GetCourseState = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://bsesa-ksem.vercel.app/admin/course_analytics",
+        { withCredentials: true }
+      );
+      setcourseData(data);
+    } catch (error) {}
+  };
+
+  const GetOrderState = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://bsesa-ksem.vercel.app/admin/order_analytics",
+        { withCredentials: true }
+      );
+      setorderData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const GetCountsState = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://bsesa-ksem.vercel.app/admin/counts",
+        { withCredentials: true }
+      );
+      setusers(data.users);
+      setcourses(data.courses);
+      setorders(data.orders);
+      setblogs(data.blogs);
+      setconferences(data.conferences);
+    } catch (error) {}
+  };
 
   useEffect(() => {
-    const GetCourseState = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/admin/course_analytics",
-          { withCredentials: true }
-        );
-        setcourseData(data);
-        console.log("The Data Comming is : " + data);
-      } catch (error) {
-        console.log(error);
+    const GetData = async () => {
+      const check = await CheckAuthetication();
+      console.log("Check  : ", check);
+      if (!check) {
+        logout();
+        navigate("/login");
       }
+      GetUserState();
+      GetCourseState();
+      GetCountsState();
+      GetOrderState();
     };
-    // GetCourseState();
-  }, []);
-
-  useEffect(() => {
-    const GetOrderState = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/admin/order_analytics",
-          { withCredentials: true }
-        );
-        setorderData(data);
-        console.log(
-          "The Course Data Comming is : " +
-            data.counts +
-            " records " +
-            data.months
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    // GetOrderState();
-  }, []);
-
-  useEffect(() => {
-    const GetCountsState = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://bsesa-ksem.vercel.app/admin/counts",
-          { withCredentials: true }
-        );
-        setusers(data.users);
-        setcourses(data.courses);
-        setorders(data.orders);
-        setblogs(data.blogs);
-        setconferences(data.conferences);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    // GetCountsState();
+    GetData();
   }, []);
 
   const data = {
@@ -167,7 +159,6 @@ function AdminStat() {
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append("file", file);
-      console.log("profile picture changed");
       const { data } = await axios.put(
         "https://bsesa-ksem.vercel.app/avatar",
         formData,
@@ -176,9 +167,7 @@ function AdminStat() {
         }
       );
       login(data.user);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

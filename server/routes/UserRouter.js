@@ -12,7 +12,6 @@ import {
   initiatePasswordRecovery,
   resetPassword,
   LogOut,
-  getUserAnalytics,
   userCertificate,
   userCourses,
 } from "../controllers/UserController.js";
