@@ -12,6 +12,9 @@ export const authenticateToken = (req, res, next) => {
   jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
+    return res
+      .status(200)
+      .json({ message: "The User is authenticated ", user });
     next();
   });
 };
@@ -22,7 +25,7 @@ export const authorizeRoles = (allowedRoles) => {
 
     const user = await User.findById(id);
     if (!user)
-      return res.status(404).json({ message: `User not found ${user}` });
+      return res.status(404).json({ message: `User not found ${req.user}` });
 
     if (!allowedRoles.includes(user.role)) {
       return res
