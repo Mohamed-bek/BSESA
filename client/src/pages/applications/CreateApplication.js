@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useRef } from "react";
 import { FaUpload } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
+import { CheckAuthetication } from "../Login";
 
 const CreateApplication = () => {
   const [formData, setFormData] = useState({
@@ -127,6 +128,8 @@ const CreateApplication = () => {
     });
 
     try {
+      const isLogin = CheckAuthetication();
+      if (!isLogin) throw new Error("Please login");
       const response = await axios.post(
         "https://bsesa-ksem.vercel.app/application",
         formDataToSubmit,

@@ -56,7 +56,7 @@ export const CreateUser = async (req, res) => {
       html,
     });
 
-    res.cookie("jwt", token, { sameSite: "None", maxAge: 3600 });
+    res.cookie("jwt", token, { sameSite: "None", maxAge: 3600 * 1000 * 24 });
     res.status(200).json({ token, activation });
   } catch (err) {
     console.log(err);

@@ -11,6 +11,20 @@ import { useMessageData, useUserStore } from "../context/UserContext.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
+
+export const CheckAuthetication = async () => {
+  try {
+    await axios.get("https://bsesa-ksem.vercel.app/refresh", {
+      withCredentials: true,
+    });
+    console.log("Good Token");
+    return true;
+  } catch (error) {
+    console.log("Bad Token");
+    window.localStorage.removeItem("user");
+    return false;
+  }
+};
 export const ErrorHandler = (Err, st) => {
   if (Err.current?.tagName.toLowerCase() === "input") {
     const intValue = Err.current.value;
@@ -274,14 +288,14 @@ const Login = () => {
     }
   }, []);
   return (
-    <div className="min-w-[100%] bg-whiteColor text-blackCOlor min-h-[100vh] flex justify-center items-center">
+    <div className="min-w-[100%] bg-secondary text-blackCOlor min-h-[100vh] flex justify-center items-center">
       <div
         ref={log}
         className="log duration-300 w-[90%] relative flex  items-center  h-[500px] mx-[auto] bg-transparent "
       >
         {/*-------------------- Slideer ---------------------------- */}
         <div
-          className="w-[8%] justify-self-start h-full flex flex-col items-center HeaderShadow duration-300"
+          className="w-full hidden md:flex md:w-[8%] justify-self-start h-[50px] md:h-full  md:flex-col items-center HeaderShadow duration-300"
           ref={box1}
         >
           <div
@@ -312,7 +326,7 @@ const Login = () => {
 
         {/* ---------------- Sign images ----------------------*/}
         <div
-          className="w-[54%] absolute left-[8%] top-[50%] translate-y-[-50%] z-50 duration-300 h-[105%] md:h-[110%]   bg-primary overflow-hidden HeaderShadow"
+          className=" hidden md:block md:w-[54%] absolute left-[8%] top-[50%] translate-y-[-50%] z-50 duration-300 h-[105%] md:h-[110%]   bg-primary overflow-hidden HeaderShadow"
           ref={box2}
         >
           {/* ---------------- image Sing in -------------------- */}
@@ -353,7 +367,7 @@ const Login = () => {
 
         {/* ---------------- Sign forms ----------------------*/}
         <div
-          className="w-[38%] absolute right-0 top-0 h-full overflow-hidden HeaderShadow duration-300"
+          className="block w-[350px] mx-auto  md:w-[38%] md:absolute right-0 top-0 h-[450px] md:h-full overflow-hidden HeaderShadow duration-300"
           ref={box3}
         >
           {/* ---------------- Sign In from ----------------------*/}
@@ -365,7 +379,7 @@ const Login = () => {
               <h1 className="text-[1rem] font-light text-center py-[20px]">
                 You Don't Have an account ?{" "}
                 <span
-                  className="  text-secondary font-bold  cursor-pointer"
+                  className="  text-primary font-bold  cursor-pointer"
                   onClick={() => ClickHandler("down")}
                 >
                   {" "}
@@ -432,7 +446,7 @@ const Login = () => {
               <h1 className="text-[1rem] font-light text-center py-[20px]">
                 You Have an account Already ?{" "}
                 <span
-                  className="  text-secondary font-bold   cursor-pointer"
+                  className="  text-primary font-bold   cursor-pointer"
                   onClick={() => ClickHandler("up")}
                 >
                   {" "}

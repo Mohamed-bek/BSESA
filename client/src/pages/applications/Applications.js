@@ -20,10 +20,8 @@ function Applications() {
           },
         }
       );
-      console.log("Applications : ", data);
       setApplications(data.applications);
     } catch (error) {
-      console.error("Error fetching applications:", error);
     } finally {
       setIsLoading(false);
     }

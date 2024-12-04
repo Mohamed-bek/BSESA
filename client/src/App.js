@@ -70,6 +70,7 @@ import Conference from "./pages/conferences/Confrenece";
 import CreateConference from "./pages/conferences/CreateConference";
 import { GiArchiveResearch } from "react-icons/gi";
 import { PiAirplaneTiltFill } from "react-icons/pi";
+
 function App() {
   const { user } = useUserStore();
   const links =
