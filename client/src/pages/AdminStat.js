@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 function AdminStat() {
   const navigate = useNavigate();
   const { user, login, logout } = useUserStore();
-  const [primaryColor, setprimaryColor] = useState("#00adb5");
+  const [primaryColor, setprimaryColor] = useState("#c70039");
   const inChangeImg = useRef();
   const [usersData, setusersData] = useState({ months: [], counts: [] });
   const [courseData, setcourseData] = useState({ months: [], counts: [] });
@@ -142,7 +142,8 @@ function AdminStat() {
       {
         label: "User ",
         data: orderData.counts,
-        backgroundColor: ["#FF6384", "#00adb5", "#FFCE56"],
+
+        backgroundColor: ["#009fff", "#c70039", "#029202"],
         borderColor: "rgb(0 146 68)",
         borderWidth: 1,
         barThickness: 30,
@@ -167,7 +168,7 @@ function AdminStat() {
   };
 
   return (
-    <div className="w-full h-full bg-secondary">
+    <div className="w-full h-full bg-secondary overflow-y-auto">
       <div className="w-full bg-whiteColor shadow-md flex justify-between px-4 py-2 items-center">
         <h1 className="text-[2.15rem] font-semibold">Dashboard</h1>
         <div className="flex items-start gap-1">

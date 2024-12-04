@@ -14,18 +14,11 @@ import { IoClose } from "react-icons/io5";
 
 export const CheckAuthetication = async () => {
   try {
-    const { data } = await axios.get("https://bsesa-ksem.vercel.app/refresh", {
+    await axios.get("https://bsesa-ksem.vercel.app/refresh", {
       withCredentials: true,
     });
-    console.log("Good Token");
-    console.log(data);
-    console.log("Good Token");
     return true;
   } catch (error) {
-    console.log("Bad Token");
-    console.log(error);
-    console.log("Bad Token");
-    // window.localStorage.removeItem("user");
     return false;
   }
 };

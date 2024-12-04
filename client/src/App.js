@@ -69,7 +69,7 @@ import Conferences from "./pages/conferences/Conferences";
 import Conference from "./pages/conferences/Confrenece";
 import CreateConference from "./pages/conferences/CreateConference";
 import { GiArchiveResearch } from "react-icons/gi";
-import { PiAirplaneTiltFill } from "react-icons/pi";
+import { PiAirplaneTiltFill, PiVideoConferenceLight } from "react-icons/pi";
 
 function App() {
   const { user } = useUserStore();
@@ -127,7 +127,7 @@ function App() {
           {
             id: 9,
             name: "Conference",
-            icon: <FaConfluence />,
+            icon: <PiVideoConferenceLight />,
             href: "/new-conference",
           },
         ]
