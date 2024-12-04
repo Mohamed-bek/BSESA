@@ -6,6 +6,7 @@ import { useUserStore } from "../context/UserContext";
 import { SiCoursera } from "react-icons/si";
 import { FaCartShopping } from "react-icons/fa6";
 import { FcConferenceCall } from "react-icons/fc";
+import { CheckAuthetication } from "./Login";
 
 function AdminStat() {
   const [primaryColor, setprimaryColor] = useState("#00adb5");
@@ -29,6 +30,8 @@ function AdminStat() {
   useEffect(() => {
     const GetUserState = async () => {
       try {
+        const Check = CheckAuthetication();
+        console.log("Check  : ", Check);
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/admin/user_analytics",
           { withCredentials: true }
