@@ -190,7 +190,10 @@ export const RefreshToken = (req, res) => {
           secure: process.env.NODE_ENV === "production",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         });
-        res.status(200).json({ message: "Refresh token Succeeded" });
+        res.status(200).json({
+          message: "Refresh token Succeeded",
+          refreshToken: user.refreshToken,
+        });
       }
     );
   } catch (error) {

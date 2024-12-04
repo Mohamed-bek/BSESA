@@ -175,6 +175,7 @@ const Login = () => {
           withCredentials: true,
         }
       );
+      console.log("auth successful :", data);
       login(data.user);
       setErr(false);
       setMessage("Login successfully");
