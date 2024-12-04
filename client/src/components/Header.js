@@ -14,7 +14,7 @@ function Header() {
     },
     {
       name: "Services",
-      link: "/services",
+      link: "/courses",
       subLinks: [
         { name: "Courses", link: "/courses", id: 0 },
         { name: "Academy Development", link: "#", id: 1 },
@@ -32,8 +32,8 @@ function Header() {
       id: 1,
     },
     {
-      name: "Blogs",
-      link: "/blogs",
+      name: "Academic",
+      link: "/researches",
       subLinks: [
         { name: "Research", link: "/researches", id: 0 },
         { name: "Blogs", link: "/blogs", id: 1 },

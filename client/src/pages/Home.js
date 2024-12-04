@@ -8,6 +8,8 @@ import { CiBasketball, CiFootball } from "react-icons/ci";
 import { IoIosFootball } from "react-icons/io";
 import { MdOutlineSportsVolleyball } from "react-icons/md";
 import { GiBoxingGlove } from "react-icons/gi";
+import Footer from "../components/Fotter";
+import HomePage from "../components/HomeComponent";
 
 function Home() {
   const [populaireCourses, setPopulaireCourses] = useState([]);
@@ -111,7 +113,9 @@ function Home() {
           <PopulairCourses courses={newCourses} headerText="Fresh Courses" />
         </div>
       </div>
-      <Plans />
+      <HomePage />
+      {/* <Plans /> */}
+      <Footer />
     </div>
   );
 }
