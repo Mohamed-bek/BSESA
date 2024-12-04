@@ -26,8 +26,8 @@ import { useUserStore } from "./context/UserContext";
 import AdminCourseManager from "./pages/courses/AdminCourseManager";
 import { MdOutlineDashboard, MdOutlineManageHistory } from "react-icons/md";
 import { SiCoursera } from "react-icons/si";
-import { FaBloggerB } from "react-icons/fa6";
-import { CgDollar } from "react-icons/cg";
+import { FaBloggerB, FaLandMineOn } from "react-icons/fa6";
+import { CgDollar, CgWebsite } from "react-icons/cg";
 import { IoVideocam } from "react-icons/io5";
 import AdminStat from "./pages/AdminStat";
 import HeroForm from "./pages/HeroForm";
@@ -115,7 +115,7 @@ function App() {
           {
             id: 8,
             name: "Landing Page",
-            icon: <CgDollar />,
+            icon: <CgWebsite />,
             href: "/update-hero",
           },
           {
