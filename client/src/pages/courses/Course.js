@@ -11,6 +11,7 @@ import {
 } from "react-icons/hi2";
 import { MdLock } from "react-icons/md";
 import { useUserStore } from "../../context/UserContext";
+import { CheckAuthetication } from "../Login";
 
 function CourseDetail() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function CourseDetail() {
   const [loading, setLoading] = useState(true);
 
   const getCourse = async () => {
+    await CheckAuthetication();
     try {
       setLoading(true);
       const { data } = await axios.get(

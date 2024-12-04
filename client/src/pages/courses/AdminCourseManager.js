@@ -50,8 +50,13 @@ const AdminCourseManager = () => {
   }, [courseTitle]);
 
   useEffect(() => {
-    console.log("Fetch Video");
     const fetchVideos = async () => {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       try {
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/videos",
@@ -105,6 +110,12 @@ const AdminCourseManager = () => {
 
   // Delete a video from the selected course
   const deleteVideo = async (videoId) => {
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     if (!selectedCourse) return;
     try {
       const { data } = await axios.delete(

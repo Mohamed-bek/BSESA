@@ -48,13 +48,13 @@ const ManageVideos = () => {
 
   const deleteVideo = async (e) => {
     e.preventDefault();
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     try {
-      const check = await CheckAuthetication();
-      if (!check) {
-        logout();
-        navigate("/login");
-        return;
-      }
       const { data } = await axios.delete(
         `https://bsesa-ksem.vercel.app/admin/video/${id}`,
         {

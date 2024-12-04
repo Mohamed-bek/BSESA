@@ -28,6 +28,12 @@ const UpdateVideo = () => {
     if (videoId) {
       // Make an API call to fetch the existing video data by ID
       const fetchVideoData = async () => {
+        const check = await CheckAuthetication();
+        if (!check) {
+          logout();
+          navigate("/login");
+          return;
+        }
         try {
           const { data } = await axios.get(
             `https://bsesa-ksem.vercel.app/admin/video/${videoId}`,

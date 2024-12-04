@@ -20,12 +20,6 @@ const ManageApplications = () => {
   useEffect(() => {
     const getApplicationsForAdmin = async () => {
       try {
-        const check = await CheckAuthetication();
-        if (!check) {
-          logout();
-          navigate("/login");
-          return;
-        }
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/applications",
           {
@@ -36,7 +30,6 @@ const ManageApplications = () => {
             },
           }
         );
-        console.log("Data returned: ", data);
         setApplications(data.applications);
         setNbOfPages(data.NbOfPages);
       } catch (error) {
@@ -52,6 +45,12 @@ const ManageApplications = () => {
 
   const deleteApplication = async (e) => {
     e.preventDefault();
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     try {
       const { data } = await axios.delete(
         `https://bsesa-ksem.vercel.app/admin/application/${id}`,

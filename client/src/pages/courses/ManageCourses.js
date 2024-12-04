@@ -19,6 +19,7 @@ const ManageCourses = () => {
   const [timeFilter, setTimeFilter] = useState("all");
   useEffect(() => {
     const getCoursesForAdmin = async () => {
+      await CheckAuthetication();
       try {
         const { data } = await axios.get(
           "https://bsesa-ksem.vercel.app/admin/courses",

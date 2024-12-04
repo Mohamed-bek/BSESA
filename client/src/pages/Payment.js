@@ -31,7 +31,6 @@ function Payment() {
           withCredentials: true,
         }
       );
-      console.log("orderData : ", orderData);
       const { data: paymentData } = await axios.post(
         "https://bsesa-ksem.vercel.app/payment_create",
         {

@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { CheckAuthetication } from "../pages/Login";
+import { useUserStore } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
+  const { logout } = useUserStore();
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -24,11 +29,20 @@ const Categories = () => {
   // Handle adding a new category
   const handleAddCategory = async () => {
     if (!newCategory) return;
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     try {
       const response = await axios.post(
         "https://bsesa-ksem.vercel.app/categories",
         {
           name: newCategory,
+        },
+        {
+          withCredentials: true,
         }
       );
       setCategories([...categories, response.data]); // Update categories state
@@ -46,7 +60,7 @@ const Categories = () => {
       );
       setCategories(
         categories.filter((category) => category._id !== categoryId)
-      ); // Remove the deleted category from state
+      );
     } catch (error) {
       console.error("Error deleting category:", error);
     }

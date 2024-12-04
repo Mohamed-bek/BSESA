@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { IoMdAdd } from "react-icons/io";
 import MultiSelectForm from "../../components/MultiSelectForm";
 import { MdCancel } from "react-icons/md";
 import { FaCheck, FaPen } from "react-icons/fa";
@@ -28,6 +27,12 @@ const UpdateCourse = () => {
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
+      const check = await CheckAuthetication();
+      if (!check) {
+        logout();
+        navigate("/login");
+        return;
+      }
       try {
         const { data } = await axios.get(
           `https://bsesa-ksem.vercel.app/course/${id}`,

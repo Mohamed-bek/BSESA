@@ -13,7 +13,6 @@ function Hero() {
             name: "hero",
           },
         });
-        console.log(data);
         setPage(data.page);
       } catch (error) {
         console.log(error);

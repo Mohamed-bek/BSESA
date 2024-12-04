@@ -5,7 +5,7 @@ dotenv.config();
 
 export const generateTokens = (id) => {
   const accessToken = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "1m",
+    expiresIn: "15m",
   });
 
   const refreshToken = jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {

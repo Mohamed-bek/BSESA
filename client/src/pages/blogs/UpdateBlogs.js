@@ -114,6 +114,12 @@ function UpdateBlog() {
   };
 
   const deleteComent = async (commentId) => {
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     try {
       await axios.delete(
         `https://bsesa-ksem.vercel.app/blog/comment/${commentId}`,

@@ -4,6 +4,7 @@ import { HiHeart } from "react-icons/hi2";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUserStore } from "../../context/UserContext";
 import { FaHeart, FaRegEye } from "react-icons/fa";
+import { CheckAuthetication } from "../Login";
 
 function timeAgo(createdAt) {
   const now = new Date();
@@ -28,6 +29,7 @@ function timeAgo(createdAt) {
 
 function Blog() {
   const navigate = useNavigate();
+  const { logout } = useUserStore();
   const likeRef = useRef(null);
   const { user } = useUserStore();
   const { id } = useParams();
@@ -37,6 +39,12 @@ function Blog() {
   const [likes, setLikes] = useState(0);
 
   const AddComment = async () => {
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     if (!user) return;
     if (!comment || comment === "") return;
     const commentId = Date.now().toString();
@@ -70,6 +78,12 @@ function Blog() {
   };
 
   const likeBlog = async () => {
+    const check = await CheckAuthetication();
+    if (!check) {
+      logout();
+      navigate("/login");
+      return;
+    }
     setLikes(isLiked ? likes - 1 : likes + 1);
     setIsLiked(!isLiked);
     try {

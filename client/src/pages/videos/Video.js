@@ -164,6 +164,7 @@ import {
   MdLink,
   MdPlayCircleOutline,
 } from "react-icons/md";
+import { CheckAuthetication } from "../Login";
 
 const VideoPlayer = () => {
   const { courseId, videoId } = useParams();
@@ -178,6 +179,7 @@ const VideoPlayer = () => {
 
   const getVideo = async () => {
     try {
+      await CheckAuthetication();
       const { data } = await axios.get(
         `https://bsesa-ksem.vercel.app/video/${courseId}/${videoId}`,
         { withCredentials: true }
@@ -190,6 +192,7 @@ const VideoPlayer = () => {
   };
 
   const getCourse = async () => {
+    await CheckAuthetication();
     try {
       const { data } = await axios.get(
         `https://bsesa-ksem.vercel.app/course/${courseId}`,
@@ -207,7 +210,8 @@ const VideoPlayer = () => {
     getCourse();
   }, [videoId]);
 
-  const handleProgress = (event) => {
+  const handleProgress = async (event) => {
+    await CheckAuthetication();
     const percent = Math.round(
       (event.target.currentTime / event.target.duration) * 100
     );
