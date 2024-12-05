@@ -13,10 +13,14 @@ import { IoClose } from "react-icons/io5";
 
 export const CheckAuthetication = async () => {
   try {
-    await axios.get(process.env.REACT_APP_API_URL + "refresh", {
-      withCredentials: true,
-    });
+    const { data } = await axios.get(
+      process.env.REACT_APP_API_URL + "refresh",
+      {
+        withCredentials: true,
+      }
+    );
     console.log("Checking Good");
+    console.log(data.accessToken);
     return true;
   } catch (error) {
     console.log("Checking Bad");
