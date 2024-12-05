@@ -5,7 +5,6 @@ import { HiOutlineShieldCheck } from "react-icons/hi2";
 import { RiUserAddLine } from "react-icons/ri";
 import { FaCheck, FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { FaGoogle } from "react-icons/fa";
 import Button from "../components/Button";
 import { useMessageData, useUserStore } from "../context/UserContext.js";
 import axios from "axios";
@@ -17,8 +16,10 @@ export const CheckAuthetication = async () => {
     await axios.get(process.env.REACT_APP_API_URL + "refresh", {
       withCredentials: true,
     });
+    console.log("Checking Good");
     return true;
   } catch (error) {
+    console.log("Checking Bad");
     return false;
   }
 };

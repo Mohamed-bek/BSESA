@@ -10,7 +10,7 @@ export const authenticateToken = (req, res, next) => {
     return res.sendStatus(401).json({ error: "Access token is required" });
 
   jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: err });
+    if (err) return res.status(403).json({ error: err, accessToken });
     req.user = user;
     next();
   });

@@ -175,6 +175,7 @@ export const RefreshToken = (req, res) => {
         });
         res.status(200).json({
           message: "Refresh token Succeeded",
+          accessToken: newTokens.accessToken,
         });
       }
     );

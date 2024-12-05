@@ -37,7 +37,9 @@ function AdminStat() {
         { withCredentials: true }
       );
       setusersData(data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const GetCourseState = async () => {
@@ -47,7 +49,9 @@ function AdminStat() {
         { withCredentials: true }
       );
       setcourseData(data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const GetOrderState = async () => {
@@ -108,12 +112,12 @@ function AdminStat() {
       y: {
         beginAtZero: true,
         grid: {
-          display: false, // Remove grid lines for the y-axis
+          display: false,
         },
       },
       x: {
         grid: {
-          display: false, // Remove grid lines for the y-axis
+          display: false,
         },
       },
     },
