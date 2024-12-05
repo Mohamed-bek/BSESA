@@ -28,11 +28,9 @@ const app = express();
 
 // Use PaymentRouter for payment-related routes with raw middleware for webhook
 
-const allowedOrigins = ["https://bsesa.vercel.app"];
-
 app.use(
   cors({
-    origin: ["https://bsesa.vercel.app", "http://localhost:3000"], // Frontend URL
+    origin: process.env.ORIGIN,
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
     credentials: true, // If using cookies or authentication
   })
