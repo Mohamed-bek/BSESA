@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import AddVideo from "./pages/videos/AddVideo";
 import CreateCourse from "./pages/courses/CreateCourse";
 import CreateBlog from "./pages/blogs/CreateBlog";
@@ -63,11 +63,14 @@ import { PiAirplaneTiltFill, PiVideoConferenceLight } from "react-icons/pi";
 import { useEffect } from "react";
 
 function App() {
+  const { user } = useUserStore();
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log("The API URL is : ", process.env.REACT_APP_API_URL);
+    if (user && user?.role === "admin") {
+      navigate("/dashboard");
+    }
   }, []);
 
-  const { user } = useUserStore();
   const links =
     user?.role === "admin"
       ? [
