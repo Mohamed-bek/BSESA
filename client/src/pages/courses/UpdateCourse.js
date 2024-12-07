@@ -35,7 +35,7 @@ const UpdateCourse = () => {
       }
       try {
         const { data } = await axios.get(
-          `https://bsesa-ksem.vercel.app/course/${id}`,
+          process.env.REACT_APP_API_URL + `course/${id}`,
           { withCredentials: true }
         );
         const { title, description, price, categorys, thumbnail } = data.course;
@@ -83,7 +83,7 @@ const UpdateCourse = () => {
         return;
       }
       const { data } = await axios.put(
-        `https://bsesa-ksem.vercel.app/course/update/${id}`,
+        process.env.REACT_APP_API_URL + `course/update/${id}`,
         formData,
         {
           headers: {

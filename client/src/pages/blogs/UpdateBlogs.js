@@ -77,7 +77,7 @@ function UpdateBlog() {
         navigate("/login");
         return;
       }
-      await axios.put(`https://bsesa-ksem.vercel.app/blog/${id}`, formData, {
+      await axios.put(process.env.REACT_APP_API_URL + `blog/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -122,7 +122,7 @@ function UpdateBlog() {
     }
     try {
       await axios.delete(
-        `https://bsesa-ksem.vercel.app/blog/comment/${commentId}`,
+        process.env.REACT_APP_API_URL + `blog/comment/${commentId}`,
         {
           params: {
             blogId: id,

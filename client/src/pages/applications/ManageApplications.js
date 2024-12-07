@@ -53,7 +53,7 @@ const ManageApplications = () => {
     }
     try {
       const { data } = await axios.delete(
-        `https://bsesa-ksem.vercel.app/admin/application/${id}`,
+        process.env.REACT_APP_API_URL + `admin/application/${id}`,
         {
           data: {
             password,

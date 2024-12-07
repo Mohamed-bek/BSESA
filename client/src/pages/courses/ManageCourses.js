@@ -61,7 +61,7 @@ const ManageCourses = () => {
         return;
       }
       const { data } = await axios.delete(
-        `https://bsesa-ksem.vercel.app/course/${id}`,
+        process.env.REACT_APP_API_URL + `course/${id}`,
         {
           data: {
             password,

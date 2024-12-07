@@ -216,8 +216,8 @@ const CreateResearch = () => {
               >
                 <option value="">Select a category</option>
                 {categories.map((cat) => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.name}
+                  <option key={cat?._id} value={cat?._id}>
+                    {cat?.name}
                   </option>
                 ))}
               </select>

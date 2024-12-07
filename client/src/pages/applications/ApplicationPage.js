@@ -11,7 +11,7 @@ const ApplicationPage = () => {
     const getApplication = async (req, res) => {
       try {
         const { data } = await axios.get(
-          `https://bsesa-ksem.vercel.app/application/${id}`
+          process.env.REACT_APP_API_URL + `application/${id}`
         );
         setapplication(data);
       } catch (error) {}

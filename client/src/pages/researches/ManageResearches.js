@@ -70,7 +70,7 @@ const ManageResearches = () => {
         navigate("/login");
         return;
       }
-      await axios.delete(`https://bsesa-ksem.vercel.app/researches/${id}`, {
+      await axios.delete(process.env.REACT_APP_API_URL + `researches/${id}`, {
         withCredentials: true,
       });
       const newResaerches = researches.filter((a) => a._id !== id);

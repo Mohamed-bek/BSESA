@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FaFootball } from "react-icons/fa6";
 import Hero from "../components/Hero";
 import PopulairCourses from "../components/PopulairCourses";
-import Plans from "../pages/Plans";
 import { CiBasketball, CiFootball } from "react-icons/ci";
 import { IoIosFootball } from "react-icons/io";
 import { MdOutlineSportsVolleyball } from "react-icons/md";
@@ -28,12 +26,7 @@ function Home() {
         const { data } = await axios.get(
           process.env.REACT_APP_API_URL + "course/populaire"
         );
-        setPopulaireCourses([
-          data.courses[0],
-          data.courses[1],
-          data.courses[2],
-          data.courses[3],
-        ]);
+        setPopulaireCourses(data.courses?.slice(0, 4) || []);
       } catch (error) {
         console.log(error);
       }
@@ -53,7 +46,7 @@ function Home() {
         const { data } = await axios.get(
           process.env.REACT_APP_API_URL + "categories"
         );
-        setCategories([...data.categories, ...data.categories]);
+        setCategories([...data.categories]);
       } catch (error) {
         console.log(error);
       }
@@ -114,7 +107,6 @@ function Home() {
         </div>
       </div>
       <HomePage />
-      {/* <Plans /> */}
       <Footer />
     </div>
   );

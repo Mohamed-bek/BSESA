@@ -12,7 +12,7 @@ const UpdateVideo = () => {
   const navigate = useNavigate();
   const { videoId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [isUpdate, setIsUpdate] = useState(false); // Track if we're updating
+  const [isUpdate, setIsUpdate] = useState(false);
   const [video, setVideo] = useState({
     title: "",
     description: "",
@@ -26,7 +26,6 @@ const UpdateVideo = () => {
 
   useEffect(() => {
     if (videoId) {
-      // Make an API call to fetch the existing video data by ID
       const fetchVideoData = async () => {
         const check = await CheckAuthetication();
         if (!check) {
@@ -36,7 +35,7 @@ const UpdateVideo = () => {
         }
         try {
           const { data } = await axios.get(
-            `https://bsesa-ksem.vercel.app/admin/video/${videoId}`,
+            process.env.REACT_APP_API_URL + `admin/video/${videoId}`,
             {
               withCredentials: true,
             }

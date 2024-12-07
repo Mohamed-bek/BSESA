@@ -10,9 +10,8 @@ const CourseBox = ({ course, desc }) => {
     description,
     videos = [],
     price,
-    categorys = [],
     completed = false,
-  } = course;
+  } = course || {};
 
   const videoCount = videos.length;
   const formattedPrice = price.toLocaleString();

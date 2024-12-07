@@ -60,7 +60,7 @@ const ManageBlogs = () => {
         return;
       }
       const { data } = await axios.delete(
-        `https://bsesa-ksem.vercel.app/admin/blog/${id}`,
+        process.env.REACT_APP_API_URL + `admin/blog/${id}`,
         {
           data: {
             password,

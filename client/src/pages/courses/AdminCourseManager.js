@@ -93,7 +93,8 @@ const AdminCourseManager = () => {
         return;
       }
       const { data } = await axios.put(
-        `https://bsesa-ksem.vercel.app/course/add_video/${selectedCourse._id}/`,
+        process.env.REACT_APP_API_URL +
+          `course/add_video/${selectedCourse._id}/`,
         { videoId: selectedVideo?._id },
         {
           withCredentials: true,
@@ -119,7 +120,8 @@ const AdminCourseManager = () => {
     if (!selectedCourse) return;
     try {
       const { data } = await axios.delete(
-        `https://bsesa-ksem.vercel.app/course/delete_video/${selectedCourse._id}/`,
+        process.env.REACT_APP_API_URL +
+          `course/delete_video/${selectedCourse._id}/`,
         {
           params: {
             videoId,

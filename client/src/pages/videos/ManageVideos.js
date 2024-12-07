@@ -55,7 +55,7 @@ const ManageVideos = () => {
       return;
     }
     try {
-      await axios.delete(`https://bsesa-ksem.vercel.app/admin/video/${id}`, {
+      await axios.delete(process.env.REACT_APP_API_URL + `admin/video/${id}`, {
         data: {
           password,
         },

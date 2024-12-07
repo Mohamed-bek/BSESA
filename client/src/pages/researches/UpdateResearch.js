@@ -128,7 +128,7 @@ const UpdateResearch = () => {
         return;
       }
       await axios.put(
-        `https://bsesa-ksem.vercel.app/researches/${id}`,
+        process.env.REACT_APP_API_URL + `researches/${id}`,
         formDataToSend,
         { withCredentials: true }
       );

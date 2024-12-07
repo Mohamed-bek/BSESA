@@ -26,7 +26,7 @@ function CourseDetail() {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `https://bsesa-ksem.vercel.app/course/${id}`,
+        process.env.REACT_APP_API_URL + `course/${id}`,
         { withCredentials: true }
       );
       setCourse(data.course);

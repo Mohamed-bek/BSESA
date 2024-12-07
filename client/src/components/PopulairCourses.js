@@ -1,32 +1,11 @@
-// import React from "react";
-// import CourseBox from "./CourseBox";
-
-// function PopulairCourses({ courses, headerText }) {
-//   return (
-//     <div className=" rounded-xl container h-fit bg-secondary text-blackColor py-5 pb-10">
-//       <h1 className="text-[2.8rem] font-bold mb-8 text-center">
-//         {" "}
-//         {headerText}{" "}
-//       </h1>
-//       <div className="w-full px-2 flex justify-center  items-stretch gap-5 flex-wrap">
-//         {courses.map((course) => (
-//           <CourseBox key={course._id} course={course} />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default PopulairCourses;
-
 import React, { useEffect, useState } from "react";
 import CourseBox from "./CourseBox";
 
-function PopulairCourses({ courses, headerText }) {
+function PopulairCourses({ courses = [], headerText }) {
   const [visibleIndexes, setVisibleIndexes] = useState([]);
 
   useEffect(() => {
-    if (courses.length === 0) return; // Prevent running if no courses
+    if (courses.length === 0) return;
 
     const observer = new IntersectionObserver(
       (entries) => {

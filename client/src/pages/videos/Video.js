@@ -23,7 +23,7 @@ const VideoPlayer = () => {
     try {
       await CheckAuthetication();
       const { data } = await axios.get(
-        `https://bsesa-ksem.vercel.app/video/${courseId}/${videoId}`,
+        process.env.REACT_APP_API_URL + `video/${courseId}/${videoId}`,
         { withCredentials: true }
       );
       setSelectedVideo(data.video);
@@ -36,7 +36,7 @@ const VideoPlayer = () => {
     await CheckAuthetication();
     try {
       const { data } = await axios.get(
-        `https://bsesa-ksem.vercel.app/course/${courseId}`,
+        process.env.REACT_APP_API_URL + `course/${courseId}`,
         { withCredentials: true }
       );
       setCourse(data.course);
