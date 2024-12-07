@@ -25,16 +25,25 @@ import PageRouter from "./routes/PageRouter.js";
 dotenv.config();
 
 const app = express();
-
-// Use PaymentRouter for payment-related routes with raw middleware for webhook
-
+const allowedOrigins = ["https://www.bsesac.co.uk", "https://bsesac.co.uk"];
 app.use(
   cors({
-    origin: process.env.ORIGIN,
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
-    credentials: true, // If using cookies or authentication
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like Postman or server-to-server)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: "GET, POST, PUT, DELETE, OPTIONS",
+    allowedHeaders: "Content-Type, Authorization, X-Requested-With",
+    credentials: true,
   })
 );
+app.options("*", cors());
 
 app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
