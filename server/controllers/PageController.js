@@ -1,16 +1,11 @@
-import { fstat } from "fs";
 import Page from "../models/Page.js";
-import uploadToSpaces, {
-  deleteFromSpaces,
-  GetVideoUrl,
-} from "../utitlitis/awsDigitalOcean.js";
-import fs from "fs";
+import { deleteFromSpaces, GetVideoUrl } from "../utitlitis/awsDigitalOcean.js";
 
 export const createOrUpdateHero = async (req, res) => {
   try {
-    const { asset_type, name, h1, p, link, fileName, contentType } = req.body;
-    console.log(asset_type, name, h1, p, link, fileName, contentType);
-    const page = await Page.findOne({ name });
+    const { asset_type, name, h1, p, link, fileName, contentType, pageNb } =
+      req.body;
+    const page = await Page.findOne({ name, pageNb });
     if (page) {
       h1 && (page.h1 = h1);
       p && (page.p = p);
@@ -37,7 +32,7 @@ export const createOrUpdateHero = async (req, res) => {
       return res.status(404).json({ error: "You Have To Upload All the Data" });
     const Key = `${Date.now()}-${fileName}`;
     const url = await GetVideoUrl(Key, contentType);
-    const newPage = await Page.create({
+    await Page.create({
       name,
       link,
       p,
@@ -46,6 +41,7 @@ export const createOrUpdateHero = async (req, res) => {
         asset_type,
         url: `${process.env.DO_PRESIGNED_URL}${Key}`,
       },
+      pageNb,
     });
     res.status(200).json({ message: "Create Hero Section Success", url });
   } catch (error) {
@@ -56,8 +52,8 @@ export const createOrUpdateHero = async (req, res) => {
 export const getPage = async (req, res) => {
   try {
     const { name } = req.query;
-    const page = await Page.findOne({ name });
-    res.status(200).json({ page });
+    const pages = await Page.find({ name }).limit(3);
+    res.status(200).json({ pages });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

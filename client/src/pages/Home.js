@@ -60,18 +60,22 @@ function Home() {
       <Hero />
       <div className="w-full h-fit py-5 bg-whiteColor overflow-hidden  flex justify-center items-center">
         <div className="w-full">
-          <h1 className="text-[2rem] capitalize text-center font-bold mb-5 text-blackColor">
+          <h1 className="text-[1.8rem] md:text-[2.6rem] capitalize text-center font-bold mb-5 text-blackColor">
             {" "}
             Elevating the Game
           </h1>
-          <div className="flex h-[15dvh] md:h-[20dvh] justify-center items-center gap-10 py-4 animate-scroll mb-5">
+          <div className="flex h-[12dvh] md:h-[20dvh] justify-center items-center gap-10 py-4 animate-scroll mb-5">
             {LigueImages.map((ligue, index) => (
-              // <img key={index} className="h-full" src={ligue} alt="Ligue" />
-              <span className="text-[8rem]"> {ligue} </span>
+              <span key={index} className="text-[5rem] md:text-[8rem]">
+                {" "}
+                {ligue}{" "}
+              </span>
             ))}
             {LigueImages.map((ligue, index) => (
-              // <img key={index} className="h-full" src={ligue} alt="Ligue" />
-              <span className="text-[8rem]"> {ligue} </span>
+              <span key={index} className="text-[5rem] md:text-[8rem]">
+                {" "}
+                {ligue}{" "}
+              </span>
             ))}
           </div>
           <PopulairCourses
@@ -82,13 +86,14 @@ function Home() {
       </div>
       <div className="w-full h-fit py-5 bg-whiteColor overflow-hidden  flex justify-center items-center pb-10">
         <div className="w-full ">
-          <h1 className="text-[2rem] capitalize text-center font-bold mb-5 text-blackColor">
+          <h1 className="text-[1.8rem] md:text-[2.8rem] capitalize text-center font-bold mb-5 text-blackColor">
             {" "}
             Popular Topic{" "}
           </h1>
           <div className="flex h-[180px] justify-center gap-10 py-8 animate-scroll mb-5">
             {categories.map((categorie, i) => (
               <div
+                key={i}
                 className={`px-5 rounded-md w-[180px] h-[90px] flex justify-center items-center bg-whiteColor relative text-[1.4rem] ShadowCLass ${
                   i % 2 == 0 ? "self-start" : "self-end"
                 } ${

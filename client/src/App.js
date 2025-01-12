@@ -61,6 +61,7 @@ import CreateConference from "./pages/conferences/CreateConference";
 import { GiArchiveResearch } from "react-icons/gi";
 import { PiAirplaneTiltFill, PiVideoConferenceLight } from "react-icons/pi";
 import { useEffect } from "react";
+import UnderConstruction from "./pages/UnderConstruction";
 
 function App() {
   const { user } = useUserStore();
@@ -156,6 +157,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/courses" element={<Courses />} />
+        <Route path="/academy-devlopment" element={<UnderConstruction />} />
+        <Route path="/laboratory-visit" element={<UnderConstruction />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/researches" element={<Researches />} />
         <Route path="/conferences" element={<Conferences />} />

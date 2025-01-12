@@ -36,7 +36,9 @@ function PopulairCourses({ courses = [], headerText }) {
 
   return (
     <div className="rounded-xl container h-fit bg-secondary text-blackColor py-5 pb-10 overflow-y-hidden">
-      <h1 className="text-[2.8rem] font-bold mb-8 text-center">{headerText}</h1>
+      <h1 className="text-[1.8rem] md:text-[2.8rem] font-bold mb-8 text-center">
+        {headerText}
+      </h1>
       <div className="w-full px-5 flex justify-center items-stretch gap-5 flex-wrap">
         {courses.map((course, index) => (
           <div

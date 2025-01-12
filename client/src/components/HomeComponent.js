@@ -1,5 +1,6 @@
 import React from "react";
 import { FaArrowRight, FaBrain, FaGlobe, FaMicroscope } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -7,31 +8,39 @@ const HomePage = () => {
       {/* Hero Section */}
       <header className="bg-gradient-to-r from-black to-[#c70039] text-white py-20">
         {" "}
-        <div className="container mx-auto px-4 grid md:grid-cols-2 items-center gap-8">
+        <div className="w-full md:w-[90%] mx-auto px-4 grid md:grid-cols-2 items-center gap-8">
           <div>
-            <h1 className="text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
               Elevate Athletic Performance Through Cutting-Edge Science
             </h1>
             <p className="text-xl mb-8 text-gray-100">
               Transforming athletes and teams with innovative research, advanced
               technologies, and holistic performance strategies.
             </p>
-            <div className="flex space-x-4">
-              <button className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center">
-                Explore Programs <FaArrowRight className="ml-2" />
-              </button>
-              <button className="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors">
+            <div className="flex gap-2">
+              <NavLink
+                to="/courses"
+                className="bg-white text-primary px-3 md:px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center"
+              >
+                Explore Courses <FaArrowRight className="ml-2" />
+              </NavLink>
+              <a
+                href="mailto:Edu@bsesac.co.uk"
+                className="border border-white text-white px-2 md:px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors"
+              >
                 Contact Us
-              </button>
+              </a>
             </div>
           </div>
-          <div className="hidden md:block">
-            <div className="bg-white/20 p-8 rounded-xl backdrop-blur-md">
-              <img
-                src="/api/placeholder/500/400"
-                alt="Sports Performance Lab"
-                className="rounded-lg shadow-2xl transform hover:scale-105 transition-transform"
-              />
+          <div className="hidden md:block overflow-hidden p-0">
+            <div className="bg-white/10 overflow-hidden rounded-xl backdrop-blur-md p-6">
+              <div className="bg-transparent overflow-hidden rounded-xl backdrop-blur-md p-6">
+                <img
+                  src="/pc.png"
+                  alt="Sports Performance Lab"
+                  className="rounded-lg shadow-2xl scale-110 transform hover:scale-125  duration-300 transition-transform"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -117,7 +126,7 @@ const HomePage = () => {
             <div className="hidden md:block">
               <div className="bg-white p-8 rounded-xl shadow-lg">
                 <img
-                  src="/api/placeholder/600/500"
+                  src="/cata1.jpeg"
                   alt="Research Lab"
                   className="rounded-lg"
                 />
@@ -145,7 +154,7 @@ const HomePage = () => {
             </p>
             <div className="flex items-center">
               <img
-                src="/api/placeholder/80/80"
+                src="/default-avatar.jpg"
                 alt="Athlete Testimonial"
                 className="w-16 h-16 rounded-full mr-4"
               />
@@ -163,7 +172,7 @@ const HomePage = () => {
             </p>
             <div className="flex items-center">
               <img
-                src="/api/placeholder/80/80"
+                src="/default-avatar.jpg"
                 alt="Team Coach Testimonial"
                 className="w-16 h-16 rounded-full mr-4"
               />
@@ -181,7 +190,7 @@ const HomePage = () => {
             </p>
             <div className="flex items-center">
               <img
-                src="/api/placeholder/80/80"
+                src="/default-avatar.jpg"
                 alt="Performance Analyst Testimonial"
                 className="w-16 h-16 rounded-full mr-4"
               />

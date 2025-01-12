@@ -5,6 +5,10 @@ const pageSchema = new Schema(
     name: {
       type: String,
       required: true,
+    },
+    pageNb: {
+      type: Number,
+      required: true,
       unique: true,
     },
     asset: {

@@ -35,7 +35,7 @@ export const CreateUser = async (req, res) => {
       password,
     });
 
-    const actiavtionUrl = `${process.env.FRONTEND_URL}/activate_account/${token}`;
+    const actiavtionUrl = `https://www.bsesac.co.uk/activate_account/${token}`;
 
     const template = fs.readFileSync(
       path.join(__dirname, "../mail/mail.ejs"),

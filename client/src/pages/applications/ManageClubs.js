@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ClubProfileCard from "../../components/ClubProfileCard";
-import CoachProfileCard from "../../components/CoachProfileCard";
 import { useUserStore } from "../../context/UserContext";
 import { CheckAuthetication } from "../Login";
 

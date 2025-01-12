@@ -12,40 +12,28 @@ import axios from "axios";
 const AboutUs = () => {
   const services = [
     {
-      icon: <FaBookOpen className="w-12 h-12 text-primary" />,
-      title: "Transformative Educational Experiences",
-      description:
-        "Revolutionize your sports knowledge with our meticulously crafted online learning ecosystem. Our expert-led courses blend cutting-edge theoretical insights with practical, real-world applications across multiple sports disciplines.",
+      icon: <FaBookOpen className="w-16 h-16 text-primary" />,
+      title: "Sport Performance",
     },
     {
-      icon: <FaUsers className="w-12 h-12 text-primary" />,
-      title: "Elite Team Performance Integration",
-      description:
-        "Experience unprecedented coaching innovation through our immersive team embedding program. Our experts live, breathe, and transform team dynamics, providing unparalleled strategic insights and performance optimization techniques.",
+      icon: <FaUsers className="w-16 h-16 text-primary" />,
+      title: "Academy & Club Expertise",
     },
     {
-      icon: <FaAward className="w-12 h-12 text-primary" />,
-      title: "Comprehensive Academy Transformation",
-      description:
-        "Elevate sports academies from good to extraordinary with our holistic development approach. We integrate advanced technologies, data-driven strategies, nutrition science, and psychological frameworks to unlock peak athletic potential.",
+      icon: <FaAward className="w-16 h-16 text-primary" />,
+      title: "Health & Well-being",
     },
     {
-      icon: <FaGlobe className="w-12 h-12 text-primary" />,
-      title: "Global Knowledge Exchange Platforms",
-      description:
-        "Connect with the world's leading sports science minds through our internationally renowned conferences. Break through traditional boundaries, share groundbreaking research, and shape the future of athletic performance.",
+      icon: <FaGlobe className="w-16 h-16 text-primary" />,
+      title: "Nutrition",
     },
     {
-      icon: <FaMicroscope className="w-12 h-12 text-primary" />,
-      title: "Cutting-Edge Research Experiences",
-      description:
-        "Gain exclusive access to our state-of-the-art sports science laboratories. Dive deep into advanced research methodologies, innovative testing protocols, and breakthrough performance measurement techniques that redefine athletic excellence.",
+      icon: <FaMicroscope className="w-16 h-16 text-primary" />,
+      title: "Cutting-Edge Research",
     },
     {
-      icon: <FaBrain className="w-12 h-12 text-primary" />,
-      title: "Comprehensive Sports Intelligence Platform",
-      description:
-        "Unlock a world of sports knowledge through our expansive digital research ecosystem. Navigate through in-depth analytical insights, expert publications, and interdisciplinary research spanning nutrition, psychology, biomechanics, and beyond.",
+      icon: <FaBrain className="w-16 h-16 text-primary" />,
+      title: "And More",
     },
   ];
   const [categories, setCategories] = useState([]);
@@ -83,21 +71,22 @@ const AboutUs = () => {
       <div className="bg-primary text-white py-20 relative z-10">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            British Academy of Sports Science and Technology
+            Britannia Sport and Exercise Science Academy:
           </h1>
-          <p className="text-xl max-w-2xl mx-auto">
-            Pioneering Transformative Performance through Innovative Research
-            and Strategic Education
+          <p className="text-xl max-w-[70%] mx-auto">
+            At the heart of the Britannia Sport and Exercise Science Academy is
+            a passionate and highly skilled team of scientists, coaches, and
+            sports professionals, based in the United Kingdom with a global
+            presence in countries including Sweden, France, Morocco, Tunisia,
+            Algeria, Saudi Arabia, Oman and Kuwait.
           </p>
         </div>
       </div>
-
-      {/* Services Section */}
       <div className="container mx-auto px-4 py-16 relative z-20 bg-transparent">
         <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-          Our Innovative Services
+          We specialise in a wide array of areas, including:
         </h2>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 md:w-[90%] mx-auto gap-8">
           {services.map((service, index) => (
             <div
               key={index}
@@ -105,19 +94,16 @@ const AboutUs = () => {
               transform transition relative duration-300 hover:scale-105 hover:shadow-xl"
             >
               <div className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#80808013] scale-0 duration-300 cursor-pointer group-hover:scale-100 "></div>
-              <div className="flex items-center mb-4">
+              <div className="flex items-center text-[5rem] justify-center mb-4">
                 {service.icon}
-                <h3 className="ml-4 text-xl font-semibold text-gray-800">
-                  {service.title}
-                </h3>
               </div>
-              <p className="text-gray-600">{service.description}</p>
+              <h3 className="ml-4 text-[1.4rem] font-semibold text-gray-800 text-center">
+                {service.title}
+              </h3>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Course Categories */}
       <div className="bg-gray-100/80 backdrop-blur-sm py-16 relative z-10">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
@@ -136,26 +122,6 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-
-      {/* Mission Statement */}
-      {/* <div className="container mx-auto px-4 py-16 text-center relative z-10">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">
-          Our Visionary Mission
-        </h2>
-        <p className="max-w-3xl mx-auto text-lg text-gray-700">
-          We are a pioneering institution committed to revolutionizing sports
-          performance through an integrated approach of advanced research,
-          strategic education, and holistic athlete development. Our mission
-          transcends traditional boundaries, empowering athletes, coaches, and
-          organizations to achieve extraordinary performance by bridging
-          scientific innovation with practical excellence. We believe in
-          nurturing not just athletic skills, but comprehensive human
-          potential—combining cutting-edge sports science, psychological
-          resilience, technological innovation, and a deep understanding of
-          individual and team dynamics to create transformative sporting
-          experiences.
-        </p>
-      </div> */}
       <div className="relative py-16 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div
@@ -206,9 +172,13 @@ const AboutUs = () => {
 
                 <div className="flex flex-col justify-center">
                   <p className="text-lg text-gray-800 leading-relaxed">
-                    At the British Academy of Sports Science and Technology, we
-                    don't just train athletes—we transform human potential. Our
-                    approach combines rigorous scientific research,
+                    At the{" "}
+                    <span className=" font-bold">
+                      {" "}
+                      BRITANNIA SPORT AND EXERCISE SCIENCE ACADEMY{" "}
+                    </span>{" "}
+                    , we don't just train athletes—we transform human potential.
+                    Our approach combines rigorous scientific research,
                     psychological resilience, and technological innovation to
                     create a comprehensive ecosystem of athletic excellence.
                   </p>

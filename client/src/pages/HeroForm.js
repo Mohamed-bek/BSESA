@@ -8,6 +8,7 @@ import { CheckAuthetication } from "./Login";
 const HeroForm = () => {
   const { logout } = useUserStore();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const { setMessageData, setShow } = useMessageData();
   const [formData, setFormData] = useState({
     name: "hero",
@@ -15,6 +16,7 @@ const HeroForm = () => {
     p: "",
     link: "",
     asset_type: "image",
+    pageNb: 1,
   });
   const [file, setFile] = useState(null);
 
@@ -32,6 +34,7 @@ const HeroForm = () => {
       alert("Please upload a video before submitting.");
       return;
     }
+    setIsLoading(true);
     try {
       const check = await CheckAuthetication();
       if (!check) {
@@ -50,15 +53,7 @@ const HeroForm = () => {
           withCredentials: true,
         }
       );
-      console.log("Url : ", data.url);
       if (data.url) {
-        // const response = await axios.put(data?.url, file, {
-        //   headers: {
-        //     "Content-Type": file.type,
-        //     "x-amz-acl": "public-read",
-        //   },
-        // });
-        // console.log("Response: ", ...response);
         const response = await fetch(data.url, {
           method: "PUT",
           headers: {
@@ -75,8 +70,6 @@ const HeroForm = () => {
           throw new Error("Upload failed");
         }
 
-        console.log(response);
-        // console.log(...response);
         console.log(response?.text());
       }
 
@@ -85,6 +78,14 @@ const HeroForm = () => {
         icon: <FaCheck />,
         err: false,
         show: true,
+      });
+      setFormData({
+        name: "hero",
+        h1: "",
+        p: "",
+        link: "",
+        asset_type: "image",
+        pageNb: 1,
       });
       setTimeout(() => setShow(false), 1200);
     } catch (err) {
@@ -96,29 +97,36 @@ const HeroForm = () => {
         show: true,
       });
       setTimeout(() => setShow(false), 1200);
+    } finally {
+      setIsLoading(false);
     }
   };
-
   return (
     <div className="w-full h-full flex justify-center items-center bg-whiteColor">
       {" "}
+      {isLoading && (
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black/10 z-[999999]">
+          <div className="loader"></div>
+        </div>
+      )}
       <div className="mx-auto bg-secondary rounded-lg shadow-lg overflow-hidden">
         <h1 className="text-2xl font-bold mb-4 bg-primary text-whiteColor text-center px-6 py-4">
           Create or Update Hero Section
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4 px-6 pb-5">
-          {/* <div>
-      <label className="block font-medium mb-1">Page Name</label>
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleInputChange}
-        className="w-full p-2 border rounded focus:outline-none"
-        placeholder="Enter the page name"
-        required
-      />
-    </div> */}
+          <div>
+            <label className="block font-medium mb-1">Page Number</label>
+            <select
+              name="pageNb"
+              value={formData.pageNb}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded focus:outline-none"
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+            </select>
+          </div>
           <div>
             <label className="block font-medium mb-1">Heading (H1)</label>
             <input
